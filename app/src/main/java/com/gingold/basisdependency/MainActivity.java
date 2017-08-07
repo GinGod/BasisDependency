@@ -43,6 +43,7 @@ public class MainActivity extends BaseActivity {
                                 break;
                             case MainData.LOG:
                                 BasisLogUtils.e(TAG, getStringById(R.string.long_string));
+                                BasisLogUtils.e(getStringById(R.string.long_string));
                                 break;
                             case MainData.LVADAPTER:
                                 startActivity(MultiLvActivity.class);
