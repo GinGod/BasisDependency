@@ -46,7 +46,7 @@ public abstract class BasisBaseActivity extends Activity implements OnClickListe
     private BroadcastReceiver mReceiver;//广播
     private IntentFilter mFilter;//广播接受过滤器
 
-    private final String TAG = this.getClass().getSimpleName() + "TAG";//类名日志tag
+    public final String TAG = this.getClass().getSimpleName() + "TAG";//类名日志tag
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

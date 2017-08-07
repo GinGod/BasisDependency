@@ -9,6 +9,7 @@ import com.gingold.basisdependency.data.MainData;
 import com.gingold.basisdependency.data.TestData;
 import com.gingold.basislibrary.adapter.lvgv.BasisLvGvAdapter;
 import com.gingold.basislibrary.adapter.lvgv.BasisViewHolder;
+import com.gingold.basislibrary.utils.BasisLogUtils;
 
 public class MainActivity extends BaseActivity {
 
@@ -39,6 +40,9 @@ public class MainActivity extends BaseActivity {
                         switch (data.des) {
                             case MainData.SP:
                                 startActivity(SPActivity.class);
+                                break;
+                            case MainData.LOG:
+                                BasisLogUtils.e(TAG, getStringById(R.string.long_string));
                                 break;
                             case MainData.LVADAPTER:
                                 startActivity(MultiLvActivity.class);
