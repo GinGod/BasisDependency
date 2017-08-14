@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -529,6 +530,13 @@ public abstract class BasisBaseActivity extends Activity implements OnClickListe
      */
     public GridView findGridView(int id) {
         return (GridView) findViewById(id);
+    }
+
+    /**
+     * RecyclerView查找
+     */
+    public RecyclerView findRecyclerView(int id) {
+        return (RecyclerView) findViewById(id);
     }
 
     /**

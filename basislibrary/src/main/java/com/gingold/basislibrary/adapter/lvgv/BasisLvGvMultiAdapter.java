@@ -13,21 +13,24 @@ import java.util.List;
  *
  * @param <T> item的数据类型
  */
-public class BasisLvGvMultiAdapter<T> extends BaseAdapter {
+public abstract class BasisLvGvMultiAdapter<T> extends BaseAdapter {
     protected Context mContext;
     protected List<T> mDatas;
 
-    private ItemViewDelegateManager mItemViewDelegateManager;
-
+    private BasisLvGvItemViewDelegateManager mItemViewDelegateManager;
 
     public BasisLvGvMultiAdapter(Context context, List<T> datas) {
         this.mContext = context;
         this.mDatas = datas;
-        mItemViewDelegateManager = new ItemViewDelegateManager();
+        mItemViewDelegateManager = new BasisLvGvItemViewDelegateManager();
+
+        addItemViewDelegate();
     }
 
+    public abstract void addItemViewDelegate();
+
     //增加item的类型
-    public BasisLvGvMultiAdapter addItemViewDelegate(BasisItemViewDelegate<T> itemViewDelegate) {
+    public BasisLvGvMultiAdapter addItemViewDelegate(BasisLvGvItemViewDelegate<T> itemViewDelegate) {
         mItemViewDelegateManager.addDelegate(itemViewDelegate);
         return this;
     }
@@ -58,17 +61,17 @@ public class BasisLvGvMultiAdapter<T> extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        BasisItemViewDelegate itemViewDelegate = mItemViewDelegateManager.getItemViewDelegate(mDatas.get(position), position);
+        BasisLvGvItemViewDelegate itemViewDelegate = mItemViewDelegateManager.getItemViewDelegate(mDatas.get(position), position);
         int layoutId = itemViewDelegate.getItemViewLayoutId();
 
-        BasisViewHolder basisViewHolder = null;
+        BasisLvGvViewHolder basisViewHolder = null;
         if (convertView == null) {
             View itemView = LayoutInflater.from(mContext).inflate(layoutId, parent, false);
-            basisViewHolder = new BasisViewHolder(mContext, itemView, parent, position);
+            basisViewHolder = new BasisLvGvViewHolder(mContext, itemView, parent, position);
             basisViewHolder.mLayoutId = layoutId;
             onViewHolderCreated(basisViewHolder, basisViewHolder.getConvertView());
         } else {
-            basisViewHolder = (BasisViewHolder) convertView.getTag();
+            basisViewHolder = (BasisLvGvViewHolder) convertView.getTag();
             basisViewHolder.mPosition = position;
         }
 
@@ -78,16 +81,16 @@ public class BasisLvGvMultiAdapter<T> extends BaseAdapter {
     }
 
     //初始化布局和数据
-    protected void initView(BasisViewHolder basisViewHolder, T data, int position) {
+    protected void initView(BasisLvGvViewHolder basisViewHolder, T data, int position) {
         mItemViewDelegateManager.initView(basisViewHolder, data, position);
     }
 
-    public void onViewHolderCreated(BasisViewHolder holder, View itemView) {
+    public void onViewHolderCreated(BasisLvGvViewHolder holder, View itemView) {
     }
 
     @Override
     public int getCount() {
-        return mDatas.size();
+        return mDatas == null ? 0 : mDatas.size();
     }
 
     @Override
