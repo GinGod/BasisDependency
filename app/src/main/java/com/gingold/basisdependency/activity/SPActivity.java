@@ -7,7 +7,7 @@ import com.gingold.basisdependency.R;
 import com.gingold.basisdependency.data.SPData;
 import com.gingold.basisdependency.data.TestData;
 import com.gingold.basislibrary.adapter.lvgv.BasisLvGvAdapter;
-import com.gingold.basislibrary.adapter.lvgv.BasisViewHolder;
+import com.gingold.basislibrary.adapter.lvgv.BasisLvGvViewHolder;
 import com.gingold.basislibrary.utils.BasisSPUtils;
 
 /**
@@ -36,7 +36,7 @@ public class SPActivity extends BaseActivity {
     public void logicDispose() {
         findListView(R.id.lv_sp).setAdapter(new BasisLvGvAdapter<String>(mActivity, R.layout.item_textview, TestData.SPList) {
             @Override
-            protected void initView(BasisViewHolder basisViewHolder, final String data, int position) {
+            protected void initView(BasisLvGvViewHolder basisViewHolder, final String data, int position) {
                 basisViewHolder.setTvTextListener(R.id.tv_item_main, data, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

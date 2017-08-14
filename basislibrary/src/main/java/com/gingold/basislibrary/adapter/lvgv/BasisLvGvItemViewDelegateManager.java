@@ -1,11 +1,13 @@
 package com.gingold.basislibrary.adapter.lvgv;
 
-
 import android.support.v4.util.SparseArrayCompat;
 
-public class ItemViewDelegateManager<T> {
-    //item类型
-    SparseArrayCompat<BasisItemViewDelegate<T>> delegates = new SparseArrayCompat();
+/**
+ * item多类型管理器
+ */
+public class BasisLvGvItemViewDelegateManager<T> {
+    //item类型集合
+    SparseArrayCompat<BasisLvGvItemViewDelegate<T>> delegates = new SparseArrayCompat();
 
     //item不同类型总数
     public int getItemViewDelegateCount() {
@@ -13,7 +15,7 @@ public class ItemViewDelegateManager<T> {
     }
 
     //添加新的类型的item
-    public ItemViewDelegateManager<T> addDelegate(BasisItemViewDelegate<T> delegate) {
+    public BasisLvGvItemViewDelegateManager<T> addDelegate(BasisLvGvItemViewDelegate<T> delegate) {
         int viewType = delegates.size();
         if (delegate != null) {
             delegates.put(viewType, delegate);
@@ -22,21 +24,21 @@ public class ItemViewDelegateManager<T> {
         return this;
     }
 
-    public ItemViewDelegateManager<T> addDelegate(int viewType, BasisItemViewDelegate<T> delegate) {
+    public BasisLvGvItemViewDelegateManager<T> addDelegate(int viewType, BasisLvGvItemViewDelegate<T> delegate) {
         if (delegates.get(viewType) != null) {
             throw new IllegalArgumentException(
-                    "An BasisItemViewDelegate is already registered for the viewType = "
+                    "An BasisLvGvItemViewDelegate is already registered for the viewType = "
                             + viewType
-                            + ". Already registered BasisItemViewDelegate is "
+                            + ". Already registered BasisLvGvItemViewDelegate is "
                             + delegates.get(viewType));
         }
         delegates.put(viewType, delegate);
         return this;
     }
 
-    public ItemViewDelegateManager<T> removeDelegate(BasisItemViewDelegate<T> delegate) {
+    public BasisLvGvItemViewDelegateManager<T> removeDelegate(BasisLvGvItemViewDelegate<T> delegate) {
         if (delegate == null) {
-            throw new NullPointerException("BasisItemViewDelegate is null");
+            throw new NullPointerException("BasisLvGvItemViewDelegate is null");
         }
         int indexToRemove = delegates.indexOfValue(delegate);
 
@@ -46,7 +48,7 @@ public class ItemViewDelegateManager<T> {
         return this;
     }
 
-    public ItemViewDelegateManager<T> removeDelegate(int itemType) {
+    public BasisLvGvItemViewDelegateManager<T> removeDelegate(int itemType) {
         int indexToRemove = delegates.indexOfKey(itemType);
 
         if (indexToRemove >= 0) {
@@ -59,20 +61,20 @@ public class ItemViewDelegateManager<T> {
     public int getItemViewType(T data, int position) {
         int delegatesCount = delegates.size();
         for (int i = delegatesCount - 1; i >= 0; i--) {
-            BasisItemViewDelegate<T> delegate = delegates.valueAt(i);
-            if (delegate.isForViewType(data, position)) {//是符合类型的 BasisItemViewDelegate
+            BasisLvGvItemViewDelegate<T> delegate = delegates.valueAt(i);
+            if (delegate.isForViewType(data, position)) {//是符合类型的 BasisLvGvItemViewDelegate
                 return delegates.keyAt(i);
             }
         }
         throw new IllegalArgumentException(
-                "No BasisItemViewDelegate added that matches position=" + position + " in data source");
+                "No BasisLvGvItemViewDelegate added that matches position=" + position + " in data source");
     }
 
     //初始化布局和数据
-    public void initView(BasisViewHolder holder, T data, int position) {
+    public void initView(BasisLvGvViewHolder holder, T data, int position) {
         int delegatesCount = delegates.size();
         for (int i = 0; i < delegatesCount; i++) {
-            BasisItemViewDelegate<T> delegate = delegates.valueAt(i);
+            BasisLvGvItemViewDelegate<T> delegate = delegates.valueAt(i);
             if (delegate.isForViewType(data, position)) {
                 //初始化布局和数据
                 delegate.initView(holder, data, position);
@@ -80,7 +82,7 @@ public class ItemViewDelegateManager<T> {
             }
         }
         throw new IllegalArgumentException(
-                "No ItemViewDelegateManager added that matches position=" + position + " in data source");
+                "No BasisLvGvItemViewDelegateManager added that matches position=" + position + " in data source");
     }
 
 
@@ -88,21 +90,21 @@ public class ItemViewDelegateManager<T> {
         return delegates.get(viewType).getItemViewLayoutId();
     }
 
-    public int getItemViewType(BasisItemViewDelegate itemViewDelegate) {
+    public int getItemViewType(BasisLvGvItemViewDelegate itemViewDelegate) {
         return delegates.indexOfValue(itemViewDelegate);
     }
 
     //根据data和position获取ItemViewDelegate
-    public BasisItemViewDelegate getItemViewDelegate(T data, int position) {
+    public BasisLvGvItemViewDelegate getItemViewDelegate(T data, int position) {
         int delegatesCount = delegates.size();
         for (int i = delegatesCount - 1; i >= 0; i--) {
-            BasisItemViewDelegate<T> delegate = delegates.valueAt(i);
+            BasisLvGvItemViewDelegate<T> delegate = delegates.valueAt(i);
             if (delegate.isForViewType(data, position)) {
                 return delegate;
             }
         }
         throw new IllegalArgumentException(
-                "No BasisItemViewDelegate added that matches position=" + position + " in data source");
+                "No BasisLvGvItemViewDelegate added that matches position=" + position + " in data source");
     }
 
     public int getItemViewLayoutId(T item, int position) {

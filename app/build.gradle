@@ -16,6 +16,25 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    signingConfigs {
+        release {
+            storeFile file("D:/workspace/keystore/NeZaApp/nezepublish.keystore")
+            storePassword "fhlwlsys"
+            keyAlias "fhlwlsys.neza"
+            keyPassword "fhlwlsys"
+        }
+    }
+
+
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.release
+        }
+        release {
+            signingConfig signingConfigs.release
+        }
+    }
 }
 
 dependencies {
