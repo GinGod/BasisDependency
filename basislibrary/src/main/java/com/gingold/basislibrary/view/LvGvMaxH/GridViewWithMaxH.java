@@ -1,29 +1,29 @@
-package com.gingold.basislibrary.view;
+package com.gingold.basislibrary.view.LvGvMaxH;
 
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
-import android.widget.ListView;
+import android.widget.GridView;
 
 /**
- * 显示所有item的ListView
+ * 显示所有item的GridView
  */
-
-public class ListViewWithMaxH extends ListView {
-    public ListViewWithMaxH(Context context) {
-        super(context);
-    }
-
-    public ListViewWithMaxH(Context context, AttributeSet attrs) {
+public class GridViewWithMaxH extends GridView {
+    public GridViewWithMaxH(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public ListViewWithMaxH(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
+    public GridViewWithMaxH(Context context) {
+        super(context);
+    }
+
+    public GridViewWithMaxH(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
     }
 
     @Override
     public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+
         int expandSpec = MeasureSpec.makeMeasureSpec(
                 Integer.MAX_VALUE >> 2, MeasureSpec.AT_MOST);
         super.onMeasure(widthMeasureSpec, expandSpec);

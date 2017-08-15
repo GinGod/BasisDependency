@@ -5,6 +5,7 @@ import android.view.View;
 import com.gingold.basisdependency.Base.BaseActivity;
 import com.gingold.basisdependency.activity.MultiLvActivity;
 import com.gingold.basisdependency.activity.MultiRvActivity;
+import com.gingold.basisdependency.activity.RvRefreshActivity;
 import com.gingold.basisdependency.activity.SPActivity;
 import com.gingold.basisdependency.data.MainData;
 import com.gingold.basisdependency.data.TestData;
@@ -51,6 +52,9 @@ public class MainActivity extends BaseActivity {
                                 break;
                             case MainData.RVADAPTER:
                                 startActivity(MultiRvActivity.class);
+                                break;
+                            case MainData.RVREFRESH:
+                                startActivity(RvRefreshActivity.class);
                                 break;
                         }
                     }
