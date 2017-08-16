@@ -15,6 +15,8 @@ import com.gingold.basisdependency.data.LVRVData;
 import com.gingold.basislibrary.adapter.rv.BasisRvEmptyWrapper;
 import com.gingold.basislibrary.adapter.rv.BasisRvHeaderAndFooterWrapper;
 import com.gingold.basislibrary.adapter.rv.BasisRvViewHolder;
+import com.gingold.basislibrary.utils.BasisLogUtils;
+import com.gingold.basislibrary.view.RvRefresh.BasisRecyclerView;
 
 import java.util.ArrayList;
 
@@ -22,23 +24,25 @@ import java.util.ArrayList;
  *
  */
 
-public class MultiRvActivity extends BaseActivity {
-    private RecyclerView rv_multirv;
+public class RvRefreshActivity extends BaseActivity {
+    private BasisRecyclerView rv_refresh;
     public MultiRvAdapter mMultiRvAdapter;
     public ArrayList<LVRVData.LVBean> mData;
     public BasisRvEmptyWrapper mEmptyWrapper;
-    public BasisRvHeaderAndFooterWrapper mHeaderAndFooterWrapper, mHeaderAndFooterWrapperRepeat;
-    public RecyclerView.Adapter mAdapter;
+    public BasisRvHeaderAndFooterWrapper mHeaderAndFooterWrapper;
+    public RecyclerView.Adapter<ViewHolder> mAdapter;
+    public BasisRvHeaderAndFooterWrapper mHeaderAndFooterWrapperRepeat;
+    private ArrayList<TextView> mViews = new ArrayList<>();
 
     @Override
     public void setupViewLayout() {
-        setContentView(R.layout.activity_multirv);
+        setContentView(R.layout.activity_rvrefresh);
         initTitle("rv测试", "");
     }
 
     @Override
     public void initView() {
-        rv_multirv = findRecyclerView(R.id.rv_multirv);
+        rv_refresh = (BasisRecyclerView) findViewById(R.id.rv_refresh);
     }
 
     @Override
@@ -58,6 +62,12 @@ public class MultiRvActivity extends BaseActivity {
     @Override
     public void logicDispose() {
         mData = LVRVData.getData();
+
+        for (int i = 0; i < 12; i++) {
+            TextView view = new TextView(mActivity);
+            view.setText("布局" + i);
+            mViews.add(view);
+        }
 
         /**
          * 一般adapter
@@ -89,11 +99,9 @@ public class MultiRvActivity extends BaseActivity {
             public void onItemClickListener(View v, BasisRvViewHolder viewHolder, LVRVData.LVBean data, int position) {
                 super.onItemClickListener(v, viewHolder, data, position);
                 toast(data.des + " ... " + position);
-                if (position == mData.size() - 1) {
-                    toast("清空数据");
-                    mData.clear();
-                    mHeaderAndFooterWrapperRepeat.notifyDataSetChanged();
-                }
+//                toast("清空数据");
+//                mData.clear();
+                rv_refresh.notifyDataSetChanged();
             }
 
             @Override
@@ -104,8 +112,8 @@ public class MultiRvActivity extends BaseActivity {
 
             @Override
             public boolean isSpecific(int position) {//设置那些位置条目占据一行
-//                BasisLogUtils.e("position: " + position);
-                if (position == 5/* || position == 9  || position == mData.size() - 1 || position == mData.size() - 2*/) {
+                if (position == 8 || position == 5 || position == mData.size() - 3 || position == mData.size() - 6) {
+                    BasisLogUtils.e("position: " + position);
                     return true;
                 }
                 return super.isSpecific(position);
@@ -150,35 +158,34 @@ public class MultiRvActivity extends BaseActivity {
         StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
 
         // 如果可以确定每个item的高度是固定的，设置这个选项可以提高性能
-//        rv_multirv.setHasFixedSize(true);
-        rv_multirv.setLayoutManager(linearLayoutManager);
-        rv_multirv.setLayoutManager(gridLayoutManager);
-        rv_multirv.setLayoutManager(staggeredGridLayoutManager);
+//        rv_refresh.setHasFixedSize(true);
+        rv_refresh.setLayoutManager(linearLayoutManager);
+//        rv_refresh.setLayoutManager(gridLayoutManager);
+//        rv_refresh.setLayoutManager(staggeredGridLayoutManager);
 
         /**
          * 添加头布局和脚布局
          */
         mHeaderAndFooterWrapper = new BasisRvHeaderAndFooterWrapper(mMultiRvAdapter);
-        TextView headView1 = new TextView(mActivity);
-        headView1.setText("头布局1");
-        mHeaderAndFooterWrapper.addHeaderView(headView1);
 
-        TextView headView2 = new TextView(mActivity);
-        headView2.setText("头布局2");
-        mHeaderAndFooterWrapper.addHeaderView(headView2);
+        mHeaderAndFooterWrapper.addHeaderView(mViews.get(0));
+        mHeaderAndFooterWrapper.addHeaderView(mViews.get(1));
 
-        TextView footView1 = new TextView(mActivity);
-        footView1.setText("脚布局1");
-        mHeaderAndFooterWrapper.addFootView(footView1);
+        mHeaderAndFooterWrapper.addFootView(mViews.get(2));
+        mHeaderAndFooterWrapper.addFootView(mViews.get(3));
 
-        TextView footView2 = new TextView(mActivity);
-        footView2.setText("脚布局2");
-        mHeaderAndFooterWrapper.addFootView(footView2);
+        mHeaderAndFooterWrapperRepeat = new BasisRvHeaderAndFooterWrapper(mHeaderAndFooterWrapper);
+
+        mHeaderAndFooterWrapperRepeat.addHeaderView(mViews.get(4));
+        mHeaderAndFooterWrapperRepeat.addHeaderView(mViews.get(5));
+
+        mHeaderAndFooterWrapperRepeat.addFootView(mViews.get(6));
+        mHeaderAndFooterWrapperRepeat.addFootView(mViews.get(7));
 
         /**
          * 空布局适配器(数据为空时,显示设置好的空布局)
          */
-        mEmptyWrapper = new BasisRvEmptyWrapper(mHeaderAndFooterWrapper);
+        mEmptyWrapper = new BasisRvEmptyWrapper(mMultiRvAdapter);
         TextView emptyView = new TextView(mActivity);
         emptyView.setText("数据为空");
         emptyView.setOnClickListener(new View.OnClickListener() {
@@ -189,27 +196,51 @@ public class MultiRvActivity extends BaseActivity {
         });
         mEmptyWrapper.setEmptyView(emptyView);
 
-        mHeaderAndFooterWrapperRepeat = new BasisRvHeaderAndFooterWrapper(mEmptyWrapper);
-        TextView headView3 = new TextView(mActivity);
-        headView3.setText("头布局3");
-        mHeaderAndFooterWrapperRepeat.addHeaderView(headView3);
+        mViews.get(8).setText("刷新头布局");
+        rv_refresh.addHeadView(mViews.get(8));
 
-        TextView headView4 = new TextView(mActivity);
-        headView4.setText("头布局4");
-        mHeaderAndFooterWrapperRepeat.addHeaderView(headView4);
+        mViews.get(9).setText("刷新脚布局");
+        rv_refresh.addFootView(mViews.get(9));
 
-        TextView footView3 = new TextView(mActivity);
-        footView3.setText("脚布局3");
-        mHeaderAndFooterWrapperRepeat.addFootView(footView3);
+        mViews.get(10).setText("数据为空");
+        rv_refresh.setEmptyView(mViews.get(10));
 
-        TextView footView4 = new TextView(mActivity);
-        footView4.setText("脚布局4");
-        mHeaderAndFooterWrapperRepeat.addFootView(footView4);
+//        rv_refresh.setAdapter(mMultiRvAdapter);//设置适配器
+//        rv_refresh.setAdapter(mHeaderAndFooterWrapper);//设置适配器
+        rv_refresh.setAdapter(mHeaderAndFooterWrapperRepeat);//设置适配器
+//        rv_refresh.setAdapter(mEmptyWrapper);//设置适配器
 
-//        rv_multirv.setAdapter(mMultiRvAdapter);//设置适配器
-//        rv_multirv.setAdapter(mHeaderAndFooterWrapper);//设置适配器
-//        rv_multirv.setAdapter(mHeaderAndFooterWrapperRepeat);//设置适配器
-        rv_multirv.setAdapter(mHeaderAndFooterWrapperRepeat);//设置适配器
+        rv_refresh.setRefreshAndLoadMoreListener(new BasisRecyclerView.OnRefreshAndLoadMoreListener() {
+            @Override
+            public void onRefresh() {
+                toast("下拉刷新");
+                postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mData.add(0, new LVRVData.LVBean("刷新数据", 1));
+                        rv_refresh.resetStatus();
+                    }
+                }, 1000);
+            }
+
+            @Override
+            public void onLoadMore() {
+                toast("加载更多");
+                postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mData.add(new LVRVData.LVBean("加载数据", 1));
+//                        for (int i = 0; i < 10; i++) {
+//                            mData.add(new LVRVData.LVBean("加载数据", 2));
+//                            mData.add(new LVRVData.LVBean("加载数据", 3));
+//                        }
+                        rv_refresh.resetStatus();
+//                        rv_refresh.setNoMoreData(true);
+                    }
+                }, 2000);
+            }
+        });
+
     }
 
     @Override

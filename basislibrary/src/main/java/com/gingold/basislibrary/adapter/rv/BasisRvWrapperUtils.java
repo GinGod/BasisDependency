@@ -17,7 +17,6 @@ public class BasisRvWrapperUtils {
 
     //对GridLayoutManager的头布局和脚布局进行特殊处理
     public static void onAttachedToRecyclerView(RecyclerView.Adapter innerAdapter, RecyclerView recyclerView, final SpanSizeCallback callback) {
-        innerAdapter.onAttachedToRecyclerView(recyclerView);
 
         RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
         if (layoutManager instanceof GridLayoutManager) {
@@ -31,18 +30,17 @@ public class BasisRvWrapperUtils {
                 }
             });
             gridLayoutManager.setSpanCount(gridLayoutManager.getSpanCount());
+        } else {
+            innerAdapter.onAttachedToRecyclerView(recyclerView);
         }
     }
 
     //对StaggeredGridLayoutManager的头布局和脚布局进行特殊处理
-    public static void setFullSpan(RecyclerView.ViewHolder holder) {
+    public static void setFullSpan(RecyclerView.ViewHolder holder, boolean state) {
         ViewGroup.LayoutParams lp = holder.itemView.getLayoutParams();
-
         if (lp != null && lp instanceof StaggeredGridLayoutManager.LayoutParams) {
-
             StaggeredGridLayoutManager.LayoutParams p = (StaggeredGridLayoutManager.LayoutParams) lp;
-
-            p.setFullSpan(true);
+            p.setFullSpan(state);
         }
     }
 }

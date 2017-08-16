@@ -132,6 +132,13 @@ public abstract class BasisRvMultiAdapter<T> extends BasisRvSpecificAdapter {
         return mDatas == null ? 0 : mDatas.size();
     }
 
+    /**
+     * 内容item总个数
+     */
+    @Override
+    public int getRealItemCount() {
+        return getItemCount();
+    }
 
     public List<T> getDatas() {
         return mDatas;
