@@ -14,7 +14,7 @@
         android:layout_marginRight="15dp"
         android:src="@drawable/arrow_down"/>
 
-    <com.gingold.basislibrary.view.CircleProgress.CircleLoadingView
+    <com.gingold.basislibrary.view.CircleProgress.CircleProgressView
         android:id="@+id/pb_y_recycleview_head_refresh_progressbar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -29,6 +29,5 @@
         android:layout_height="52dp"
         android:gravity="center"
         android:text="下拉刷新"
-        android:textSize="15sp"
         android:textColor="#000000"/>
 </LinearLayout>

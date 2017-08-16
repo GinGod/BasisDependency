@@ -5,6 +5,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.gingold.basisdependency.Base.BaseActivity;
@@ -13,11 +14,9 @@ import com.gingold.basisdependency.adapter.MultiRvAdapter;
 import com.gingold.basisdependency.data.LVRVData;
 import com.gingold.basislibrary.adapter.rv.BasisRvEmptyWrapper;
 import com.gingold.basislibrary.adapter.rv.BasisRvHeaderAndFooterWrapper;
-import com.gingold.basislibrary.adapter.rv.BasisRvLoadMoreWrapper;
 import com.gingold.basislibrary.adapter.rv.BasisRvViewHolder;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 /**
  *
@@ -25,11 +24,11 @@ import java.util.Random;
 
 public class MultiRvActivity extends BaseActivity {
     private RecyclerView rv_multirv;
-    public MultiRvAdapter mAdapter;
+    public MultiRvAdapter mMultiRvAdapter;
     public ArrayList<LVRVData.LVBean> mData;
     public BasisRvEmptyWrapper mEmptyWrapper;
-    public BasisRvLoadMoreWrapper mLoadMoreWrapper;
-    public BasisRvHeaderAndFooterWrapper mHeaderAndFooterWrapper;
+    public BasisRvHeaderAndFooterWrapper mHeaderAndFooterWrapper, mHeaderAndFooterWrapperRepeat;
+    public RecyclerView.Adapter mAdapter;
 
     @Override
     public void setupViewLayout() {
@@ -47,22 +46,53 @@ public class MultiRvActivity extends BaseActivity {
 
     }
 
+    class ViewHolder extends RecyclerView.ViewHolder {
+        TextView view;
+
+        public ViewHolder(View itemView) {
+            super(itemView);
+            view = (TextView) itemView;
+        }
+    }
+
     @Override
     public void logicDispose() {
-        mData = LVRVData.lvrvList;
+        mData = LVRVData.getData();
+
+        /**
+         * 一般adapter
+         */
+        mAdapter = new RecyclerView.Adapter<ViewHolder>() {
+            @Override
+            public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+                TextView view = new TextView(mActivity);
+                ViewHolder holder = new ViewHolder(view);
+                return holder;
+            }
+
+            @Override
+            public void onBindViewHolder(ViewHolder holder, int position) {
+                holder.view.setText(mData.get(position).des);
+            }
+
+            @Override
+            public int getItemCount() {
+                return mData.size();
+            }
+        };
 
         /**
          * 通用多类型条目适配器
          */
-        mAdapter = new MultiRvAdapter(mActivity, mData) {
+        mMultiRvAdapter = new MultiRvAdapter(mActivity, mData) {
             @Override
             public void onItemClickListener(View v, BasisRvViewHolder viewHolder, LVRVData.LVBean data, int position) {
                 super.onItemClickListener(v, viewHolder, data, position);
                 toast(data.des + " ... " + position);
                 if (position == mData.size() - 1) {
-//                    toast("清空数据");
-//                    mData.clear();
-//                    notifyDataSetChanged();
+                    toast("清空数据");
+                    mData.clear();
+                    mHeaderAndFooterWrapperRepeat.notifyDataSetChanged();
                 }
             }
 
@@ -74,14 +104,15 @@ public class MultiRvActivity extends BaseActivity {
 
             @Override
             public boolean isSpecific(int position) {//设置那些位置条目占据一行
-                if (position == 5 || position == 8 || position == mData.size() - 1 || position == mData.size() - 2) {
+//                BasisLogUtils.e("position: " + position);
+                if (position == 5/* || position == 9  || position == mData.size() - 1 || position == mData.size() - 2*/) {
                     return true;
                 }
                 return super.isSpecific(position);
             }
         };
 
-//        mAdapter.onItemClickListener(new BasisRvMultiAdapter.onItemClickListener() {
+//        mMultiRvAdapter.onItemClickListener(new BasisRvMultiAdapter.onItemClickListener() {
 //
 //            @Override
 //            public void onItemClick(View view, BasisRvViewHolder holder, int position) {
@@ -90,8 +121,8 @@ public class MultiRvActivity extends BaseActivity {
 //                mData.remove(position);
 //                mData.remove(position);
 //                mData.remove(position);
-////                mAdapter.notifyItemRemoved(position);
-//                mAdapter.notifyItemRangeRemoved(position, 3);
+////                mMultiRvAdapter.notifyItemRemoved(position);
+//                mMultiRvAdapter.notifyItemRangeRemoved(position, 3);
 //            }
 //
 //            @Override
@@ -116,18 +147,18 @@ public class MultiRvActivity extends BaseActivity {
         }*/;
 //        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(mActivity, 3, GridLayoutManager.VERTICAL, false);
-        StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(5, StaggeredGridLayoutManager.VERTICAL);
+        StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
 
         // 如果可以确定每个item的高度是固定的，设置这个选项可以提高性能
 //        rv_multirv.setHasFixedSize(true);
         rv_multirv.setLayoutManager(linearLayoutManager);
         rv_multirv.setLayoutManager(gridLayoutManager);
-//        rv_multirv.setLayoutManager(staggeredGridLayoutManager);
+        rv_multirv.setLayoutManager(staggeredGridLayoutManager);
 
         /**
          * 添加头布局和脚布局
-        */
-        mHeaderAndFooterWrapper = new BasisRvHeaderAndFooterWrapper(mAdapter);
+         */
+        mHeaderAndFooterWrapper = new BasisRvHeaderAndFooterWrapper(mMultiRvAdapter);
         TextView headView1 = new TextView(mActivity);
         headView1.setText("头布局1");
         mHeaderAndFooterWrapper.addHeaderView(headView1);
@@ -145,24 +176,9 @@ public class MultiRvActivity extends BaseActivity {
         mHeaderAndFooterWrapper.addFootView(footView2);
 
         /**
-         * 加载更多适配器(不建议使用)
-         */
-        mLoadMoreWrapper = new BasisRvLoadMoreWrapper(mHeaderAndFooterWrapper) {
-            @Override
-            public void onLoadMoreListener() {
-                mData.add(new LVRVData.LVBean("加载更多", new Random().nextInt(3) + 1));
-                notifyDataSetChanged();
-            }
-        };
-
-        TextView loadMore = new TextView(mActivity);
-        loadMore.setText("加载更多");
-        mLoadMoreWrapper.setLoadMoreView(loadMore);
-
-        /**
          * 空布局适配器(数据为空时,显示设置好的空布局)
          */
-        mEmptyWrapper = new BasisRvEmptyWrapper(mAdapter);
+        mEmptyWrapper = new BasisRvEmptyWrapper(mHeaderAndFooterWrapper);
         TextView emptyView = new TextView(mActivity);
         emptyView.setText("数据为空");
         emptyView.setOnClickListener(new View.OnClickListener() {
@@ -173,10 +189,27 @@ public class MultiRvActivity extends BaseActivity {
         });
         mEmptyWrapper.setEmptyView(emptyView);
 
-//        rv_multirv.setAdapter(mAdapter);//设置适配器
-        rv_multirv.setAdapter(mHeaderAndFooterWrapper);//设置适配器
-//        rv_multirv.setAdapter(mLoadMoreWrapper);//设置适配器
-//        rv_multirv.setAdapter(mEmptyWrapper);//设置适配器
+        mHeaderAndFooterWrapperRepeat = new BasisRvHeaderAndFooterWrapper(mEmptyWrapper);
+        TextView headView3 = new TextView(mActivity);
+        headView3.setText("头布局3");
+        mHeaderAndFooterWrapperRepeat.addHeaderView(headView3);
+
+        TextView headView4 = new TextView(mActivity);
+        headView4.setText("头布局4");
+        mHeaderAndFooterWrapperRepeat.addHeaderView(headView4);
+
+        TextView footView3 = new TextView(mActivity);
+        footView3.setText("脚布局3");
+        mHeaderAndFooterWrapperRepeat.addFootView(footView3);
+
+        TextView footView4 = new TextView(mActivity);
+        footView4.setText("脚布局4");
+        mHeaderAndFooterWrapperRepeat.addFootView(footView4);
+
+//        rv_multirv.setAdapter(mMultiRvAdapter);//设置适配器
+//        rv_multirv.setAdapter(mHeaderAndFooterWrapper);//设置适配器
+//        rv_multirv.setAdapter(mHeaderAndFooterWrapperRepeat);//设置适配器
+        rv_multirv.setAdapter(mHeaderAndFooterWrapperRepeat);//设置适配器
     }
 
     @Override

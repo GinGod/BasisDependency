@@ -4,6 +4,7 @@ import android.animation.ValueAnimator;
 import android.content.Context;
 import android.os.Handler;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -13,13 +14,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gingold.basislibrary.R;
-import com.gingold.basislibrary.view.CircleProgress.CircleLoadingView;
+import com.gingold.basislibrary.view.CircleProgress.CircleProgressView;
 
 
 /**
  * recycleview的刷新的头布局
  */
-public class YRecycleviewRefreshHeadView extends LinearLayout {
+public class BasisRvRefreshHV extends LinearLayout {
     //刷新头布局
     private LinearLayout mContentView;
     //这是一个旋转动画
@@ -39,15 +40,15 @@ public class YRecycleviewRefreshHeadView extends LinearLayout {
     private final int STATE_RELEASE_TO_REFRESH = 1;
 
     private ImageView iv_y_recycleview_head_refresh_status;
-    private CircleLoadingView pb_y_recycleview_head_refresh_progressbar;
+    private CircleProgressView pb_y_recycleview_head_refresh_progressbar;
     private TextView tv_y_recycleview_head_refresh_status;
 
-    public YRecycleviewRefreshHeadView(Context context) {
+    public BasisRvRefreshHV(Context context) {
         super(context);
         initView(context);
     }
 
-    public YRecycleviewRefreshHeadView(Context context, AttributeSet attrs) {
+    public BasisRvRefreshHV(Context context, AttributeSet attrs) {
         super(context, attrs);
         initView(context);
     }
@@ -56,6 +57,11 @@ public class YRecycleviewRefreshHeadView extends LinearLayout {
      * 初始化
      */
     private void initView(Context context) {
+        //设置内部内容居中
+        setGravity(Gravity.CENTER);
+        //设置宽高
+        setLayoutParams(new ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         mContentView = (LinearLayout) View.inflate(context, R.layout.head_recycleview_refresh, null);
 //        //宽高
 //        LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
@@ -65,17 +71,20 @@ public class YRecycleviewRefreshHeadView extends LinearLayout {
 //        this.setLayoutParams(lp);
 //        //设置内容距离布局的边界的尺寸
 //        this.setPadding(0, 0, 0, 0);
+
         //添加内容布局并且设置宽是屏幕的宽.高为0
         addView(mContentView, new LayoutParams(LayoutParams.MATCH_PARENT, 0));
+
 //        //设置内容位于布局的下方
 //        setGravity(Gravity.BOTTOM);
+
         //查找头布局控件
         //刷新状态字体
         tv_y_recycleview_head_refresh_status = (TextView) findViewById(R.id.tv_y_recycleview_head_refresh_status);
         //刷新状态的箭头
         iv_y_recycleview_head_refresh_status = (ImageView) findViewById(R.id.iv_y_recycleview_head_refresh_status);
         //正在刷新的进度条
-        pb_y_recycleview_head_refresh_progressbar = (CircleLoadingView) findViewById(R.id.pb_y_recycleview_head_refresh_progressbar);
+        pb_y_recycleview_head_refresh_progressbar = (CircleProgressView) findViewById(R.id.pb_y_recycleview_head_refresh_progressbar);
 
         initAnim();
 
@@ -168,8 +177,6 @@ public class YRecycleviewRefreshHeadView extends LinearLayout {
 
     /**
      * 返回当前的状态
-     *
-     * @return
      */
     public int getStatus() {
         return mStatus;
@@ -177,8 +184,6 @@ public class YRecycleviewRefreshHeadView extends LinearLayout {
 
     /**
      * 释放意图
-     *
-     * @return
      */
     public boolean releaseAction() {
         //是否在刷新
@@ -207,8 +212,6 @@ public class YRecycleviewRefreshHeadView extends LinearLayout {
 
     /**
      * 移动距离
-     *
-     * @param delta
      */
     public void onMove(float delta) {
         if (getVisibleHeight() > 0 || delta > 0) {
@@ -264,8 +267,6 @@ public class YRecycleviewRefreshHeadView extends LinearLayout {
 
     /**
      * 获取显示的高度
-     *
-     * @return
      */
     public int getVisibleHeight() {
         LayoutParams lp = (LayoutParams) mContentView.getLayoutParams();
@@ -274,8 +275,6 @@ public class YRecycleviewRefreshHeadView extends LinearLayout {
 
     /**
      * 设置显示的高度
-     *
-     * @param height
      */
     public void setVisibleHeight(int height) {
         if (height < 0) height = 0;

@@ -10,7 +10,7 @@ import java.util.List;
 /**
  *
  */
-public abstract class BaseProgressController {
+public abstract class CircleProgressController {
 
     private View mTarget;
 

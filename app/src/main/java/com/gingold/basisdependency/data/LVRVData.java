@@ -16,14 +16,16 @@ public class LVRVData {
     public final static String RVADAPTER = "rvAdapter";
     public final static String[] strs = new String[]{TEST, SP, LOG, LVADAPTER, RVADAPTER};
 
-    public static ArrayList<LVBean> lvrvList = new ArrayList<>();
+    public static ArrayList<LVBean> lvrvList = getData();
 
-    static {
+    public static ArrayList<LVBean> getData() {
+        ArrayList<LVBean> lvrvList = new ArrayList<>();
         lvrvList.add(new LVBean("start", 1));
         for (int i = 0; i < 52; i++) {
             lvrvList.add(new LVBean(strs[new Random().nextInt(5)], new Random().nextInt(3) + 1));
         }
         lvrvList.add(new LVBean("end", 1));
+        return lvrvList;
     }
 
     public static class LVBean {

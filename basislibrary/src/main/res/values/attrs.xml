@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="CircleLoadingView">
+    <declare-styleable name="CircleProgressView">
         <attr name="progress_color" format="color" />
     </declare-styleable>
 

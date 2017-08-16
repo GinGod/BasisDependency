@@ -6,9 +6,9 @@
 
     <include layout="@layout/activity_title"/>
 
-    <com.gingold.basislibrary.view.RvRefresh.YRecycleview
+    <com.gingold.basislibrary.view.RvRefresh.BasisRecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/rv_refresh"></com.gingold.basislibrary.view.RvRefresh.YRecycleview>
+        android:id="@+id/rv_refresh"></com.gingold.basislibrary.view.RvRefresh.BasisRecyclerView>
 
 </LinearLayout>

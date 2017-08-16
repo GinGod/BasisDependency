@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Created by yukuo on 2016/4/29.
  */
-public class CircleProgress extends BaseProgressController {
+public class CircleProgress extends CircleProgressController {
 
     public static final float SCALE = 1.0f;
 

@@ -14,34 +14,34 @@ import com.gingold.basislibrary.R;
 /**
  *
  */
-public class CircleLoadingView extends View {
+public class CircleProgressView extends View {
     public static final int DEFAULT_SIZE = 30;
     int mIndicatorColor;
     Paint mPaint;
 
-    BaseProgressController mIndicatorController;
+    CircleProgressController mIndicatorController;
 
     private boolean mHasAnimation;
 
 
-    public CircleLoadingView(Context context) {
+    public CircleProgressView(Context context) {
         super(context);
         init(null, 0);
     }
 
-    public CircleLoadingView(Context context, AttributeSet attrs) {
+    public CircleProgressView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(attrs, 0);
     }
 
-    public CircleLoadingView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public CircleProgressView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(attrs, defStyleAttr);
     }
 
     private void init(AttributeSet attrs, int defStyle) {
-        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.CircleLoadingView);
-        mIndicatorColor = a.getColor(R.styleable.CircleLoadingView_progress_color, Color.WHITE);
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.CircleProgressView);
+        mIndicatorColor = a.getColor(R.styleable.CircleProgressView_progress_color, Color.WHITE);
         a.recycle();
         mPaint = new Paint();
         mPaint.setColor(mIndicatorColor);
@@ -102,9 +102,9 @@ public class CircleLoadingView extends View {
         if (getVisibility() != v) {
             super.setVisibility(v);
             if (v == GONE || v == INVISIBLE) {
-                mIndicatorController.setAnimationStatus(BaseProgressController.AnimStatus.END);
+                mIndicatorController.setAnimationStatus(CircleProgressController.AnimStatus.END);
             } else {
-                mIndicatorController.setAnimationStatus(BaseProgressController.AnimStatus.START);
+                mIndicatorController.setAnimationStatus(CircleProgressController.AnimStatus.START);
             }
         }
     }
@@ -112,13 +112,13 @@ public class CircleLoadingView extends View {
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
-        mIndicatorController.setAnimationStatus(BaseProgressController.AnimStatus.CANCEL);
+        mIndicatorController.setAnimationStatus(CircleProgressController.AnimStatus.CANCEL);
     }
 
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        mIndicatorController.setAnimationStatus(BaseProgressController.AnimStatus.START);
+        mIndicatorController.setAnimationStatus(CircleProgressController.AnimStatus.START);
     }
 
     private void drawIndicator(Canvas canvas) {
