@@ -9,14 +9,16 @@ import android.view.ViewGroup;
  * RecyclerView.Adapter头布局脚布局装饰器
  */
 public class BasisRvHeaderAndFooterWrapper<T> extends BasisRvSpecificAdapter {
-    private static final int BASE_ITEM_TYPE_HEADER = 100000;
-    private static final int BASE_ITEM_TYPE_FOOTER = 200000;
+    private static int BASE_ITEM_TYPE_HEADER = 100000;
+    private static int BASE_ITEM_TYPE_FOOTER = 200000;
 
     private SparseArrayCompat<View> mHeaderViews = new SparseArrayCompat<>();//头布局集合
     private SparseArrayCompat<View> mFootViews = new SparseArrayCompat<>();//脚布局集合
 
     public BasisRvHeaderAndFooterWrapper(RecyclerView.Adapter adapter) {
         mInnerAdapter = adapter;//内容adapter
+        BASE_ITEM_TYPE_HEADER = BASE_ITEM_TYPE_HEADER + 252;
+        BASE_ITEM_TYPE_FOOTER = BASE_ITEM_TYPE_FOOTER + 252;
     }
 
     @Override
@@ -37,7 +39,7 @@ public class BasisRvHeaderAndFooterWrapper<T> extends BasisRvSpecificAdapter {
         if (isHeaderViewPos(position)) {
             return mHeaderViews.keyAt(position);//返回每个头布局的viewType
         } else if (isFooterViewPos(position)) {
-            return mFootViews.keyAt(position - getHeadersCount() - getRealItemCount());//返回每个脚布局的viewType
+            return mFootViews.keyAt(position - getHeadersCount() - getInnerItemCount());//返回每个脚布局的viewType
         }
         return mInnerAdapter.getItemViewType(position - getHeadersCount());
     }
@@ -55,7 +57,25 @@ public class BasisRvHeaderAndFooterWrapper<T> extends BasisRvSpecificAdapter {
 
     @Override
     public int getItemCount() {
-        return getHeadersCount() + getFootersCount() + getRealItemCount();
+        return getHeadersCount() + getFootersCount() + getInnerItemCount();
+    }
+
+    /**
+     * 获取内容item总数
+     */
+    public int getInnerItemCount() {
+        return mInnerAdapter.getItemCount();
+    }
+
+    /**
+     * 内容item总个数
+     */
+    @Override
+    public int getRealItemCount() {
+        if (mInnerAdapter instanceof BasisRvSpecificAdapter) {
+            return ((BasisRvSpecificAdapter) mInnerAdapter).getRealItemCount();
+        }
+        return getInnerItemCount();
     }
 
     /**
@@ -72,19 +92,12 @@ public class BasisRvHeaderAndFooterWrapper<T> extends BasisRvSpecificAdapter {
         return mFootViews.size();
     }
 
-    /**
-     * 内容item总个数
-     */
-    private int getRealItemCount() {
-        return mInnerAdapter.getItemCount();
-    }
-
     private boolean isHeaderViewPos(int position) {
         return position < getHeadersCount();//头布局的position
     }
 
     private boolean isFooterViewPos(int position) {
-        return position >= getHeadersCount() + getRealItemCount();//脚布局的position
+        return position >= getHeadersCount() + getInnerItemCount();//脚布局的position
     }
 
 
@@ -99,8 +112,9 @@ public class BasisRvHeaderAndFooterWrapper<T> extends BasisRvSpecificAdapter {
     @Override
     public boolean isSpecific(int position) {
         if (mInnerAdapter instanceof BasisRvSpecificAdapter) {
-            BasisRvSpecificAdapter adapter = (BasisRvSpecificAdapter) mInnerAdapter;
-            return isHeaderViewPos(position) || isFooterViewPos(position) || adapter.isSpecific(position  - getHeadersCount());
+            return isHeaderViewPos(position)
+                    || isFooterViewPos(position)
+                    || ((BasisRvSpecificAdapter) mInnerAdapter).isSpecific(position - getHeadersCount());
         }
         return isHeaderViewPos(position) || isFooterViewPos(position);
     }

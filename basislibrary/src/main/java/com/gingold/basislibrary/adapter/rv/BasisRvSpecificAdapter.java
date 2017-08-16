@@ -19,6 +19,11 @@ public abstract class BasisRvSpecificAdapter extends RecyclerView.Adapter<Recycl
     public abstract boolean isSpecific(int position);
 
     /**
+     * 获取去除头布局和脚布局后的item个数
+     */
+    public abstract int getRealItemCount();
+
+    /**
      * 对GridLayoutManager的特殊局进行特殊处理
      */
     @Override
@@ -37,6 +42,8 @@ public abstract class BasisRvSpecificAdapter extends RecyclerView.Adapter<Recycl
                     return 1;
                 }
             });
+        } else {
+
         }
 
     }
@@ -48,10 +55,12 @@ public abstract class BasisRvSpecificAdapter extends RecyclerView.Adapter<Recycl
     public void onViewAttachedToWindow(RecyclerView.ViewHolder holder) {
         super.onViewAttachedToWindow(holder);
         if (mInnerAdapter != null) {
-            mInnerAdapter.onViewAttachedToWindow(holder);
+//            mInnerAdapter.onViewAttachedToWindow(holder);
             int position = holder.getLayoutPosition();
             if (isSpecific(position)) {
-                BasisRvWrapperUtils.setFullSpan(holder);//特殊布局显示一行
+                BasisRvWrapperUtils.setFullSpan(holder, true);//特殊布局显示一行
+            } else {
+                BasisRvWrapperUtils.setFullSpan(holder, false);
             }
         }
     }

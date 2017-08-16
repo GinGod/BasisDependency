@@ -17,6 +17,7 @@
         <activity android:name=".activity.SPActivity"/>
         <activity android:name=".activity.MultiLvActivity"/>
         <activity android:name=".activity.MultiRvActivity"/>
+        <activity android:name=".activity.RvRefreshActivity"/>
     </application>
 
 </manifest>
