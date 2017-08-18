@@ -18,6 +18,8 @@
         <activity android:name=".activity.MultiLvActivity"/>
         <activity android:name=".activity.MultiRvActivity"/>
         <activity android:name=".activity.RvRefreshActivity"/>
+        <activity android:name=".activity.LvRefreshActivity"/>
+        <activity android:name=".activity.TestActivity"/>
     </application>
 
 </manifest>

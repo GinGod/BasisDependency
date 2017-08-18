@@ -114,28 +114,28 @@ public class BasisLogUtils {
     }
 
     public static void v(String tag, String message) {
-        print(tag, message, LOG_LENGTH, LOG_VERBOSE);
+        print(tag + "-" + TAG, message, LOG_LENGTH, LOG_VERBOSE);
     }
 
     public static void d(String tag, String message) {
-        print(tag, message, LOG_LENGTH, LOG_DEBUG);
+        print(tag + "-" + TAG, message, LOG_LENGTH, LOG_DEBUG);
     }
 
     public static void i(String tag, String message) {
-        print(tag, message, LOG_LENGTH, LOG_INFO);
+        print(tag + "-" + TAG, message, LOG_LENGTH, LOG_INFO);
     }
 
     public static void w(String tag, String message) {
-        print(tag, message, LOG_LENGTH, LOG_WARN);
+        print(tag + "-" + TAG, message, LOG_LENGTH, LOG_WARN);
 
     }
 
     public static void e(String tag, String message) {
-        print(tag, message, LOG_LENGTH, LOG_ERROR);
+        print(tag + "-" + TAG, message, LOG_LENGTH, LOG_ERROR);
     }
 
     public static void wtf(String tag, String message) {
-        print(tag, message, LOG_LENGTH, LOG_WTF);
+        print(tag + "-" + TAG, message, LOG_LENGTH, LOG_WTF);
     }
 
     public static void print(String tag, String message, int length, int which) {

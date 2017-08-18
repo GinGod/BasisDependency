@@ -55,7 +55,7 @@ public class BasisRvRefreshFV extends LinearLayout {
         setLayoutParams(new ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         //底部布局
-        mContentView = View.inflate(context, R.layout.foot_recycleview_loadmore, null);
+        mContentView = View.inflate(context, R.layout.rv_loadmore_footer, null);
         pb_y_recycleview_foot_loadmore_progressbar = (CircleProgressView) mContentView.findViewById(R.id.pb_y_recycleview_foot_loadmore_progressbar);
         tv_y_recycleview_foot_loadmore_status = (TextView) mContentView.findViewById(R.id.tv_y_recycleview_foot_loadmore_status);
 
