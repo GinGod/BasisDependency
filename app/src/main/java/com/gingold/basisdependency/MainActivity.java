@@ -3,10 +3,12 @@ package com.gingold.basisdependency;
 import android.view.View;
 
 import com.gingold.basisdependency.Base.BaseActivity;
+import com.gingold.basisdependency.activity.LvRefreshActivity;
 import com.gingold.basisdependency.activity.MultiLvActivity;
 import com.gingold.basisdependency.activity.MultiRvActivity;
 import com.gingold.basisdependency.activity.RvRefreshActivity;
 import com.gingold.basisdependency.activity.SPActivity;
+import com.gingold.basisdependency.activity.TestActivity;
 import com.gingold.basisdependency.data.MainData;
 import com.gingold.basisdependency.data.TestData;
 import com.gingold.basislibrary.adapter.lvgv.BasisLvGvAdapter;
@@ -40,6 +42,9 @@ public class MainActivity extends BaseActivity {
                     public void onClick(View v) {
                         toast(data.des);
                         switch (data.des) {
+                            case MainData.TEST:
+                                startActivity(TestActivity.class);
+                                break;
                             case MainData.SP:
                                 startActivity(SPActivity.class);
                                 break;
@@ -55,6 +60,9 @@ public class MainActivity extends BaseActivity {
                                 break;
                             case MainData.RVREFRESH:
                                 startActivity(RvRefreshActivity.class);
+                                break;
+                            case MainData.LVREFRESH:
+                                startActivity(LvRefreshActivity.class);
                                 break;
                         }
                     }

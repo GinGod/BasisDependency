@@ -62,7 +62,7 @@ public class BasisRvRefreshHV extends LinearLayout {
         //设置宽高
         setLayoutParams(new ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        mContentView = (LinearLayout) View.inflate(context, R.layout.head_recycleview_refresh, null);
+        mContentView = (LinearLayout) View.inflate(context, R.layout.rv_refresh_header, null);
 //        //宽高
 //        LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 //        //距离父布局的距离
