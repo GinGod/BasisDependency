@@ -40,10 +40,10 @@ public class LvRefreshActivity extends BaseActivity implements BasisListView.Bas
     @Override
     public void logicDispose() {
         geneItems();
-        mListView.setPullLoadEnable(true, true);
         mAdapter = new ArrayAdapter<String>(this, R.layout.list_item, items);
         mListView.setAdapter(mAdapter);
 //		mListView.setPullLoadEnable(false);
+        mListView.setPullLoadEnable(true, false);
 //		mListView.setPullRefreshEnable(false);
     }
 
