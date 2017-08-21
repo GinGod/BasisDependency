@@ -16,7 +16,6 @@ import android.widget.Scroller;
 import android.widget.TextView;
 
 import com.gingold.basislibrary.R;
-import com.gingold.basislibrary.utils.BasisLogUtils;
 
 /**
  * 下拉刷新上拉加载listView
@@ -61,7 +60,7 @@ public class BasisListView extends ListView implements OnScrollListener {
     // at bottom, trigger
     // load more.
     private final static float OFFSET_RADIO = 1.8f; // support iOS like pull
-    public boolean isShowLoadMore = true;
+    public boolean isShowLoadMore = true;//默认显示加载更多布局
     // feature.
 
     public BasisListView(Context context) {
@@ -146,11 +145,13 @@ public class BasisListView extends ListView implements OnScrollListener {
                     invokeOnScrolling();
                 } else if (getLastVisiblePosition() == mTotalItemCount - 1
                         && (mFooterView.getBottomMargin() > 0 || deltaY < 0)
+                        && getAdapter().getCount() > getChildCount()
                         && mEnablePullLoad) {
                     // last item, already pulled up or want to pull up.
                     updateFooterHeight(-deltaY);
                     invokeOnScrolling();
                 }
+
                 break;
             case MotionEvent.ACTION_UP:
                 mLastY = -1; // reset
