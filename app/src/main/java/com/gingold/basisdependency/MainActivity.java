@@ -6,6 +6,8 @@ import com.gingold.basisdependency.Base.BaseActivity;
 import com.gingold.basisdependency.activity.LvRefreshActivity;
 import com.gingold.basisdependency.activity.MultiLvActivity;
 import com.gingold.basisdependency.activity.MultiRvActivity;
+import com.gingold.basisdependency.activity.OkHttpActivity;
+import com.gingold.basisdependency.activity.OkHttpPicActivity;
 import com.gingold.basisdependency.activity.RvRefreshActivity;
 import com.gingold.basisdependency.activity.SPActivity;
 import com.gingold.basisdependency.activity.TestActivity;
@@ -63,6 +65,12 @@ public class MainActivity extends BaseActivity {
                                 break;
                             case MainData.LVREFRESH:
                                 startActivity(LvRefreshActivity.class);
+                                break;
+                            case MainData.OKHTTP:
+                                startActivity(OkHttpActivity.class);
+                                break;
+                            case MainData.OKHTTPPIC:
+                                startActivity(OkHttpPicActivity.class);
                                 break;
                         }
                     }

@@ -20,6 +20,8 @@
         <activity android:name=".activity.RvRefreshActivity"/>
         <activity android:name=".activity.LvRefreshActivity"/>
         <activity android:name=".activity.TestActivity"/>
+        <activity android:name=".activity.OkHttpActivity"/>
+        <activity android:name=".activity.OkHttpPicActivity"/>
     </application>
 
 </manifest>

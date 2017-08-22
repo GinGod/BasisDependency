@@ -9,7 +9,6 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -23,7 +22,6 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -189,16 +187,17 @@ public abstract class BasisBaseActivity extends Activity implements OnClickListe
      * @return true 至少有一个为空; false 全部不为空
      */
     public boolean areEmpty(CharSequence... strs) {
-        if (strs == null) {
-            return true;
-        }
-
-        for (int i = 0; i < strs.length; i++) {
-            if (TextUtils.isEmpty(strs[i])) {
-                return true;
-            }
-        }
-        return false;
+//        if (strs == null) {
+//            return true;
+//        }
+//
+//        for (int i = 0; i < strs.length; i++) {
+//            if (TextUtils.isEmpty(strs[i])) {
+//                return true;
+//            }
+//        }
+//        return false;
+        return BasisBaseUtils.areEmpty(strs);
     }
 
     /**
@@ -209,11 +208,12 @@ public abstract class BasisBaseActivity extends Activity implements OnClickListe
      * @return true 为空; false 不为空
      */
     public boolean isEmpty(CharSequence str, String message) {
-        if (TextUtils.isEmpty(str)) {
-            toast(message);
-            return true;
-        }
-        return false;
+//        if (TextUtils.isEmpty(str)) {
+//            toast(message);
+//            return true;
+//        }
+//        return false;
+        return BasisBaseUtils.isEmpty(mActivity, str, message);
     }
 
     /**
@@ -222,16 +222,17 @@ public abstract class BasisBaseActivity extends Activity implements OnClickListe
      * @return true 全不为空; false 至少有一个为空
      */
     public boolean areNotEmpty(CharSequence... strs) {
-        if (strs == null) {
-            return false;
-        }
-
-        for (int i = 0; i < strs.length; i++) {
-            if (TextUtils.isEmpty(strs[i])) {
-                return false;
-            }
-        }
-        return true;
+//        if (strs == null) {
+//            return false;
+//        }
+//
+//        for (int i = 0; i < strs.length; i++) {
+//            if (TextUtils.isEmpty(strs[i])) {
+//                return false;
+//            }
+//        }
+//        return true;
+        return BasisBaseUtils.areNotEmpty(strs);
     }
 
     /**
@@ -242,11 +243,12 @@ public abstract class BasisBaseActivity extends Activity implements OnClickListe
      * @return true 不为空; false 为空
      */
     public boolean isNotEmpty(CharSequence str, String message) {
-        if (TextUtils.isEmpty(str)) {
-            toast(message);
-            return false;
-        }
-        return true;
+//        if (TextUtils.isEmpty(str)) {
+//            toast(message);
+//            return false;
+//        }
+//        return true;
+        return BasisBaseUtils.isNotEmpty(mActivity, str, message);
     }
 
     /**
@@ -255,172 +257,188 @@ public abstract class BasisBaseActivity extends Activity implements OnClickListe
      * @return true 不为空; false 为空
      */
     public boolean areNotNull(Object... objs) {
-        if (objs == null) {
-            return false;
-        }
-
-        for (int i = 0; i < objs.length; i++) {
-            if (objs[i] == null) {
-                return false;
-            }
-        }
-        return true;
+//        if (objs == null) {
+//            return false;
+//        }
+//
+//        for (int i = 0; i < objs.length; i++) {
+//            if (objs[i] == null) {
+//                return false;
+//            }
+//        }
+//        return true;
+        return BasisBaseUtils.areNotNull(objs);
     }
 
     /**
      * 设置控件可以触摸编辑
      */
     public void setEnabledTrue(View... views) {
-        for (int i = 0; i < views.length; i++) {
-            views[i].setEnabled(true);
-        }
+//        for (int i = 0; i < views.length; i++) {
+//            views[i].setEnabled(true);
+//        }
+        BasisBaseUtils.setEnabledTrue(views);
     }
 
     /**
      * 设置控件不可以触摸编辑
      */
     public void setEnabledFalse(View... views) {
-        for (int i = 0; i < views.length; i++) {
-            views[i].setEnabled(false);
-        }
+//        for (int i = 0; i < views.length; i++) {
+//            views[i].setEnabled(false);
+//        }
+        BasisBaseUtils.setEnabledFalse(views);
     }
 
     /**
      * 设置控件可以点击
      */
     public void setClickableTrue(View... views) {
-        for (int i = 0; i < views.length; i++) {
-            views[i].setClickable(true);
-        }
+//        for (int i = 0; i < views.length; i++) {
+//            views[i].setClickable(true);
+//        }
+        BasisBaseUtils.setClickableTrue(views);
     }
 
     /**
      * 设置控件不可以点击
      */
     public void setClickableFalse(View... views) {
-        for (int i = 0; i < views.length; i++) {
-            views[i].setClickable(false);
-        }
+//        for (int i = 0; i < views.length; i++) {
+//            views[i].setClickable(false);
+//        }
+        setClickableFalse(views);
     }
 
     /**
      * 设置控件可见
      */
     public void setVisible(View... views) {
-        for (int i = 0; i < views.length; i++) {
-            views[i].setVisibility(View.VISIBLE);
-        }
+//        for (int i = 0; i < views.length; i++) {
+//            views[i].setVisibility(View.VISIBLE);
+//        }
+        BasisBaseUtils.setVisible(views);
     }
 
     /**
      * 设置控件不可见(隐藏)
      */
     public void setGone(View... views) {
-        for (int i = 0; i < views.length; i++) {
-            views[i].setVisibility(View.GONE);
-        }
+//        for (int i = 0; i < views.length; i++) {
+//            views[i].setVisibility(View.GONE);
+//        }
+        BasisBaseUtils.setGone(views);
     }
 
     /**
      * 设置控件不可见(不隐藏)
      */
     public void setInVisible(View... views) {
-        for (int i = 0; i < views.length; i++) {
-            views[i].setVisibility(View.INVISIBLE);
-        }
+//        for (int i = 0; i < views.length; i++) {
+//            views[i].setVisibility(View.INVISIBLE);
+//        }
+        BasisBaseUtils.setInVisible(views);
     }
 
     /**
      * Toast
      */
     public void toast(String message) {
-        if (message != null) {
-            Toast.makeText(mActivity, message, Toast.LENGTH_SHORT).show();
-        }
+//        if (message != null) {
+//            Toast.makeText(mActivity, message, Toast.LENGTH_SHORT).show();
+//        }
+        BasisBaseUtils.toast(mActivity, message);
     }
 
     /**
      * 将字符串转为int
      */
     public int parseInt(String str) {
-        try {
-            return Integer.parseInt(str);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return -1;
-        }
+//        try {
+//            return Integer.parseInt(str);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return -1;
+//        }
+        return BasisBaseUtils.parseInt(str);
     }
 
     /**
      * 将字符串转为int(抛出转换异常)
      */
     public int parseIntWithE(String str) throws Exception {
-        try {
-            return Integer.parseInt(str);
-        } catch (Exception e) {
-            throw e;
-        }
+//        try {
+//            return Integer.parseInt(str);
+//        } catch (Exception e) {
+//            throw e;
+//        }
+        return BasisBaseUtils.parseIntWithE(str);
     }
 
     /**
      * 将字符串转为long
      */
     public long parseLong(String str) {
-        try {
-            return Long.parseLong(str);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return -1L;
-        }
+//        try {
+//            return Long.parseLong(str);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return -1L;
+//        }
+        return BasisBaseUtils.parseLong(str);
     }
 
     /**
      * 将字符串转为long(抛出转换异常)
      */
     public long parseLongWithE(String str) throws Exception {
-        try {
-            return Long.parseLong(str);
-        } catch (Exception e) {
-            throw e;
-        }
+//        try {
+//            return Long.parseLong(str);
+//        } catch (Exception e) {
+//            throw e;
+//        }
+        return BasisBaseUtils.parseLongWithE(str);
     }
 
     /**
      * 将字符串转为Double
      */
     public Double parseDouble(String str) {
-        try {
-            return Double.parseDouble(str);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return -1d;
-        }
+//        try {
+//            return Double.parseDouble(str);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return -1d;
+//        }
+        return BasisBaseUtils.parseDouble(str);
     }
 
     /**
      * 将字符串转为Double(抛出转换异常)
      */
     public Double parseDoubleWithE(String str) throws Exception {
-        try {
-            return Double.parseDouble(str);
-        } catch (Exception e) {
-            throw e;
-        }
+//        try {
+//            return Double.parseDouble(str);
+//        } catch (Exception e) {
+//            throw e;
+//        }
+        return BasisBaseUtils.parseDoubleWithE(str);
     }
 
     /**
      * 判断对象是否相等(对象需重写equals方法)
      */
     public boolean isequals(Object obj1, Object obj2) {
-        if (obj1 == null) {
-            return obj1 == obj2;
-        } else {
-            if (obj1.equals(obj2)) {
-                return true;
-            } else {
-                return false;
-            }
-        }
+//        if (obj1 == null) {
+//            return obj1 == obj2;
+//        } else {
+//            if (obj1.equals(obj2)) {
+//                return true;
+//            } else {
+//                return false;
+//            }
+//        }
+        return BasisBaseUtils.isequals(obj1, obj2);
     }
 
     /**

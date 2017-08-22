@@ -15,6 +15,8 @@ public class MainData {
     public final static String RVADAPTER = "rvAdapter";
     public final static String RVREFRESH = "rvRefresh";
     public final static String LVREFRESH = "lvRefresh";
+    public final static String OKHTTP = "okhttp";
+    public final static String OKHTTPPIC = "okhttpPic";
 
     public static ArrayList<MainBean> mainList = new ArrayList<>();
 
@@ -26,6 +28,8 @@ public class MainData {
         mainList.add(new MainBean(RVADAPTER, null));
         mainList.add(new MainBean(RVREFRESH, null));
         mainList.add(new MainBean(LVREFRESH, null));
+        mainList.add(new MainBean(OKHTTP, null));
+        mainList.add(new MainBean(OKHTTPPIC, null));
     }
 
     public static class MainBean {
