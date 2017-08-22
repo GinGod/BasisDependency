@@ -156,7 +156,7 @@ public class BasisPostFilesBuilder extends BasisBaseUtils {
                 if (response != null && response.body() != null) {
                     message = response.body().string();
                 } else {
-                    message = "";
+                    message = ""; 
                 }
                 BasisLogUtils.e("success: " + message);
                 if (basisCallback != null) {
