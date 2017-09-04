@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <include layout="@layout/activity_title"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_glide_cacheSize"
+            android:layout_width="252dp"
+            android:layout_height="52dp"
+            android:gravity="center"
+            android:text=""/>
+
+        <TextView
+            android:id="@+id/tv_glide_clearCache"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:gravity="center"
+            android:text="清除缓存"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_glide_load"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:gravity="center"
+        android:text="加载图片"/>
+
+    <ImageView
+        android:id="@+id/iv_glide_pic"
+        android:layout_width="200dp"
+        android:layout_height="200dp"/>
+
+</LinearLayout>
