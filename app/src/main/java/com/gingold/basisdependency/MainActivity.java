@@ -3,6 +3,7 @@ package com.gingold.basisdependency;
 import android.view.View;
 
 import com.gingold.basisdependency.Base.BaseActivity;
+import com.gingold.basisdependency.activity.GlideActivity;
 import com.gingold.basisdependency.activity.LvRefreshActivity;
 import com.gingold.basisdependency.activity.MultiLvActivity;
 import com.gingold.basisdependency.activity.MultiRvActivity;
@@ -71,6 +72,9 @@ public class MainActivity extends BaseActivity {
                                 break;
                             case MainData.OKHTTPPIC:
                                 startActivity(OkHttpPicActivity.class);
+                                break;
+                            case MainData.GLIDE:
+                                startActivity(GlideActivity.class);
                                 break;
                         }
                     }

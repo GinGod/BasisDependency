@@ -22,6 +22,7 @@
         <activity android:name=".activity.TestActivity"/>
         <activity android:name=".activity.OkHttpActivity"/>
         <activity android:name=".activity.OkHttpPicActivity"/>
+        <activity android:name=".activity.GlideActivity"/>
     </application>
 
 </manifest>

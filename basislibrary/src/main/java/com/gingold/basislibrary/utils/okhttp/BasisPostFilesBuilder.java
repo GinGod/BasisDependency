@@ -1,7 +1,7 @@
 package com.gingold.basislibrary.utils.okhttp;
 
 import com.gingold.basislibrary.Base.BasisBaseUtils;
-import com.gingold.basislibrary.bean.FileInputBean;
+import com.gingold.basislibrary.bean.BasisFileInputBean;
 import com.gingold.basislibrary.utils.BasisLogUtils;
 
 import java.io.File;
@@ -29,7 +29,7 @@ public class BasisPostFilesBuilder extends BasisBaseUtils {
     private String content = "";//jsonStr
     private MediaType mediaType = MediaType.parse("image/*");//默认上传图片
     private Map<String, String> params = new HashMap<>();//上传的参数
-    private List<FileInputBean> fileList = new ArrayList<>();//文件集合
+    private List<BasisFileInputBean> fileList = new ArrayList<>();//文件集合
 
     private OkHttpClient mOkHttpClient;
     private Call mCall;
@@ -56,7 +56,7 @@ public class BasisPostFilesBuilder extends BasisBaseUtils {
      * 上传文件的集合
      */
     public BasisPostFilesBuilder addFile(String key, String name, File file) {
-        FileInputBean fileInputBean = new FileInputBean(key, name, file);
+        BasisFileInputBean fileInputBean = new BasisFileInputBean(key, name, file);
         this.fileList.add(fileInputBean);
         return this;
     }
