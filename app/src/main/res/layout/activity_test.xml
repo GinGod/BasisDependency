@@ -34,4 +34,11 @@
         android:gravity="center"
         android:text="清除动画"/>
 
+    <TextView
+        android:id="@+id/tv_test_time"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:gravity="center"
+        android:text="时间"/>
+
 </LinearLayout>
