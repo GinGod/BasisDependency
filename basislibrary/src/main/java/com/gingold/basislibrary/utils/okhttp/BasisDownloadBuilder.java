@@ -9,6 +9,7 @@ import android.text.TextUtils;
 
 import com.gingold.basislibrary.Base.BasisBaseUtils;
 import com.gingold.basislibrary.utils.BasisLogUtils;
+import com.gingold.basislibrary.utils.BasisTimesUtils;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -27,7 +28,7 @@ import okhttp3.Response;
 
 public class BasisDownloadBuilder extends BasisBaseUtils {
     private String url;//网址
-    private String fileName;//文件名
+    private String fileName = BasisTimesUtils.getDeviceTime().replace(" ", "");//文件名
 
     private OkHttpClient mOkHttpClient;
     private Call mCall;

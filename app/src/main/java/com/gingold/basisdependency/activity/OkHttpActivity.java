@@ -20,6 +20,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Response;
 
 import static com.gingold.basisdependency.R.id.tv_okhttp_result;
+import static com.gingold.basislibrary.utils.okhttp.BasisOkHttpUtils.postString;
 
 /**
  *
@@ -89,8 +90,7 @@ public class OkHttpActivity extends BaseActivity {
 
     private void request1() {
 
-        BasisOkHttpUtils
-                .postString()
+        postString()
                 .url(url)
                 .addParams("DistributionCode", "qlkd")
                 .addParams("DeptId", "1925802")
@@ -118,17 +118,19 @@ public class OkHttpActivity extends BaseActivity {
         requestBean.ExpressCompanylevel = 0;
         requestBean.currentpage = 0;
         requestBean.pagesize = 0;
+        url = "http://newpms.tswlsys.com/pms/dispatStationListByCityId_hascode.do";
+        String content = "{cityId:441900,\"distributionCode\":\"rfd\"}";
 
         BasisOkHttpUtils
                 .postString()
                 .url(url)
-//                .addParams("DistributionCode", "qlkd")
-//                .addParams("DeptId", "1925802")
+//                .addParams("DistributionCode", "rfd")
+//                .addParams("cityId", "441900")
 //                .addParams("ExpressCompanylevel", "0")
 //                .addParams("currentpage", "0")
 //                .addParams("pagesize", "0")
                 .mediaType(MediaType.parse("application/json; charset=utf-8"))
-                .content(requestBean)
+                .content(content)
                 .build()
                 .execute(new BasisCallback() {
                     @Override

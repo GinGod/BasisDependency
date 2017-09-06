@@ -8,6 +8,8 @@ import android.widget.TextView;
 
 import com.gingold.basisdependency.Base.BaseActivity;
 import com.gingold.basisdependency.R;
+import com.gingold.basislibrary.utils.BasisLogUtils;
+import com.gingold.basislibrary.utils.BasisTimesUtils;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -29,6 +31,9 @@ public class TestActivity extends BaseActivity {
     TextView mTvTestUp;
     @Bind(R.id.tv_test_clear)
     TextView mTvTestClear;
+    @Bind(R.id.tv_test_time)
+    TextView mTvTestTime;
+
 
     @Override
     public void setupViewLayout() {
@@ -69,9 +74,7 @@ public class TestActivity extends BaseActivity {
 
     }
 
-
-
-    @OnClick({R.id.tv_test_down, R.id.tv_test_up, R.id.tv_test_clear})
+    @OnClick({R.id.iv_arrow, R.id.tv_test_down, R.id.tv_test_up, R.id.tv_test_clear, R.id.tv_test_time})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_test_down:
@@ -85,6 +88,29 @@ public class TestActivity extends BaseActivity {
             case R.id.tv_test_clear:
                 mIvArrow.clearAnimation();
                 toast("clear");
+                break;
+            case R.id.tv_test_time:
+                BasisLogUtils.e(BasisTimesUtils.getDeviceTimeOfSSS());
+                BasisLogUtils.e(BasisTimesUtils.getDeviceTime());
+                BasisLogUtils.e(BasisTimesUtils.getDeviceTimeOfYMD());
+
+                BasisLogUtils.e(BasisTimesUtils.getLongTimeOfSSS(BasisTimesUtils.getDeviceTimeOfSSS()) + "");
+                BasisLogUtils.e(BasisTimesUtils.getLongTime(BasisTimesUtils.getDeviceTime()) + "");
+                BasisLogUtils.e(BasisTimesUtils.getLongTimeOfYMD(BasisTimesUtils.getDeviceTimeOfYMD()) + "");
+
+                BasisLogUtils.e(BasisTimesUtils.getStringTimeOfSSS(BasisTimesUtils.getLongTimeOfSSS(BasisTimesUtils.getDeviceTimeOfSSS())));
+                BasisLogUtils.e(BasisTimesUtils.getStringTime(BasisTimesUtils.getLongTime(BasisTimesUtils.getDeviceTime())));
+                BasisLogUtils.e(BasisTimesUtils.getStringTimeOfYMD(BasisTimesUtils.getLongTimeOfYMD(BasisTimesUtils.getDeviceTimeOfYMD())));
+
+                try {
+//                    BasisLogUtils.e(BasisTimesUtils.getStringTime(1504682829586L));
+//                    BasisLogUtils.e(BasisTimesUtils.getStringTime(150468282958L));
+//                    BasisLogUtils.e(BasisTimesUtils.getStringTime(15046828295L));
+//                    BasisLogUtils.e(BasisTimesUtils.getStringTime(1504682829L));
+//                    BasisLogUtils.e(BasisTimesUtils.getStringTime(150468282L));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 break;
         }
     }
