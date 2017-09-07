@@ -6,8 +6,8 @@ import android.widget.TextView;
 import com.gingold.basisdependency.Base.BaseActivity;
 import com.gingold.basisdependency.R;
 import com.gingold.basisdependency.bean.RequestBean;
-import com.gingold.basislibrary.utils.okhttp.BasisCallback;
-import com.gingold.basislibrary.utils.okhttp.BasisOkHttpUtils;
+import com.gingold.basislibrary.okhttp.BasisCallback;
+import com.gingold.basislibrary.okhttp.BasisOkHttpUtils;
 
 import java.io.IOException;
 
@@ -20,7 +20,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.Response;
 
 import static com.gingold.basisdependency.R.id.tv_okhttp_result;
-import static com.gingold.basislibrary.utils.okhttp.BasisOkHttpUtils.postString;
 
 /**
  *
@@ -66,13 +65,6 @@ public class OkHttpActivity extends BaseActivity {
 
     }
 
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        // TODO: add setContentView(...) invocation
-//        ButterKnife.bind(this);
-//    }
-
     @OnClick({R.id.tv_okhttp_request, R.id.tv_okhttp_request_basis, tv_okhttp_result})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -90,7 +82,8 @@ public class OkHttpActivity extends BaseActivity {
 
     private void request1() {
 
-        postString()
+        BasisOkHttpUtils.
+                postString()
                 .url(url)
                 .addParams("DistributionCode", "qlkd")
                 .addParams("DeptId", "1925802")
@@ -118,19 +111,19 @@ public class OkHttpActivity extends BaseActivity {
         requestBean.ExpressCompanylevel = 0;
         requestBean.currentpage = 0;
         requestBean.pagesize = 0;
-        url = "http://newpms.tswlsys.com/pms/dispatStationListByCityId_hascode.do";
+//        url = "http://newpms.tswlsys.com/pms/dispatStationListByCityId_hascode.do";
         String content = "{cityId:441900,\"distributionCode\":\"rfd\"}";
 
         BasisOkHttpUtils
                 .postString()
                 .url(url)
-//                .addParams("DistributionCode", "rfd")
-//                .addParams("cityId", "441900")
+//                .addParams("DistributionCode", "qlkd")
+//                .addParams("DeptId", "1925802")
 //                .addParams("ExpressCompanylevel", "0")
 //                .addParams("currentpage", "0")
 //                .addParams("pagesize", "0")
                 .mediaType(MediaType.parse("application/json; charset=utf-8"))
-                .content(content)
+                .content(json)
                 .build()
                 .execute(new BasisCallback() {
                     @Override

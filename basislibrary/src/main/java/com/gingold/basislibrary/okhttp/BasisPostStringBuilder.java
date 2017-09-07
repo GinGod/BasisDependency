@@ -1,4 +1,4 @@
-package com.gingold.basislibrary.utils.okhttp;
+package com.gingold.basislibrary.okhttp;
 
 import com.gingold.basislibrary.Base.BasisBaseUtils;
 import com.gingold.basislibrary.utils.BasisLogUtils;

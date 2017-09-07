@@ -1,4 +1,4 @@
-package com.gingold.basislibrary.utils.glide;
+package com.gingold.basislibrary.glide;
 
 import android.content.Context;
 import android.os.Handler;

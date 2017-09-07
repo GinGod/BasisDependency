@@ -34,6 +34,13 @@
         android:gravity="center"
         android:text="加载图片"/>
 
+    <TextView
+        android:id="@+id/tv_glide_download"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:gravity="center"
+        android:text="下载图片"/>
+
     <ImageView
         android:id="@+id/iv_glide_pic"
         android:layout_width="200dp"

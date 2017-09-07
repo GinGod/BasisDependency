@@ -1,7 +1,8 @@
-package com.gingold.basislibrary.utils.glide;
+package com.gingold.basislibrary.glide;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -13,8 +14,10 @@ import com.bumptech.glide.RequestBuilder;
 import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.Target;
 import com.gingold.basislibrary.utils.BasisLogUtils;
 
+import java.io.File;
 import java.util.Map;
 
 /**
@@ -93,7 +96,7 @@ public class BasisGlideUtils {
     }
 
     /**
-     * @param context    支持类型: Context, Activity, Fragment, FragmentActivity, View
+     * @param context  支持类型: Context, Activity, Fragment, FragmentActivity, View
      * @param duration 过渡动画时长
      */
     public static void load(Object context, Object model, ImageView view, int duration) {
@@ -114,7 +117,7 @@ public class BasisGlideUtils {
 
     /**
      * @param context        支持类型: Context, Activity, Fragment, FragmentActivity, View
-     * @param duration     过渡动画时长
+     * @param duration       过渡动画时长
      * @param sizeMultiplier 请求给定系数的缩略图
      */
     public static void load(Object context, Object model, ImageView view, int duration, float sizeMultiplier) {
@@ -136,7 +139,7 @@ public class BasisGlideUtils {
 
     /**
      * @param context          支持类型: Context, Activity, Fragment, FragmentActivity, View
-     * @param duration       过渡动画时长
+     * @param duration         过渡动画时长
      * @param thumbnailRequest 缩略图图片资源
      */
     public static void load(Object context, Object model, ImageView view, int duration, Object thumbnailRequest, boolean isDrawable) {
@@ -179,6 +182,53 @@ public class BasisGlideUtils {
      */
     public static boolean clearAllCacheMemory(final Context context) {
         return clearCacheMemory(context) && clearDiskCacheSelf(context);
+    }
+
+    /**
+     * 下载图片
+     */
+    public static void downloadPic(final Context context, final String url, final String fileName, final BasisCallBack callBack) {
+        new Thread() {
+            @Override
+            public void run() {
+                try {
+                    Bitmap downloadBitmap = Glide
+                            .with(context)
+                            .asBitmap()
+                            .load(url)
+                            .submit(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
+                            .get();
+
+                    BasisDownLoadPicUtil.downLoadPic(context, downloadBitmap, fileName, callBack);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    BasisDownLoadPicUtil.failure(callBack);
+                }
+            }
+        }.start();
+    }
+
+    /**
+     * 下载gif图片
+     */
+    public static void downloadGif(final Context context, final String url, final String fileName, final BasisCallBack callBack) {
+        new Thread() {
+            @Override
+            public void run() {
+                try {
+                    File file = GlideApp
+                            .with(context)
+                            .load(url)
+                            .downloadOnly(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
+                            .get();
+
+                    BasisDownLoadPicUtil.downLoadGif(context, file, fileName, callBack);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    BasisDownLoadPicUtil.failure(callBack);
+                }
+            }
+        }.start();
     }
 
     /**

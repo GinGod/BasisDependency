@@ -1,4 +1,4 @@
-package com.gingold.basislibrary.utils.okhttp;
+package com.gingold.basislibrary.okhttp;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -126,18 +126,23 @@ public class BasisDownloadBuilder extends BasisBaseUtils {
 
                     //下载文件名
                     if (TextUtils.isEmpty(fileName)) {
-                        String replace = url.replace("\\", "").replace("/", "");
-                        if (replace.length() > 15) {
-                            fileName = replace.substring(replace.length() - 15);
+                        if (TextUtils.isEmpty(url)) {
+                            fileName = BasisTimesUtils.getDeviceTime().replace(" ", "");
                         } else {
-                            fileName = replace;
+                            //截取网址最后15位作为下载的文件名
+                            String replace = url.replace("\\", "").replace("/", "");
+                            if (replace.length() > 15) {
+                                fileName = replace.substring(replace.length() - 15);
+                            } else {
+                                fileName = replace;
+                            }
                         }
                     }
 
                     //下载的文件
-                    final String filePath = savePath + "/" + fileName;
-                    File file = new File(savePath, fileName);
+                    File file = checkFile(fileDir, fileName, fileName, "");
                     fileOutputStream = new FileOutputStream(file);
+                    final String filePath = file.getAbsolutePath();
 
                     //开始下载
                     byte[] buffer = new byte[1024 * 2];
@@ -173,13 +178,42 @@ public class BasisDownloadBuilder extends BasisBaseUtils {
                         }
                     });
 
-                    BasisLogUtils.e("文件下载成功: " + savePath + fileName);
+                    BasisLogUtils.e("文件下载成功: " + filePath);
                 } catch (Exception e) {
                     e.printStackTrace();
-                }
+                } finally {
+                    if (inputStream != null) {//关流释放资源
+                        try {
+                            inputStream.close();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
 
+                    if (fileOutputStream != null) {
+                        try {
+                            fileOutputStream.close();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
             }
         });
+    }
+
+    /**
+     * 检测重复文件
+     */
+    private static File checkFile(File appDir, String fileName, String newFileName, String type) {
+        File picFile = new File(appDir, newFileName + type);
+        if (picFile.exists() && picFile.isFile() && picFile.length() > 0) {
+            //已存在相同名字的文件时, 通过添加时间区分
+            newFileName = fileName + "_" + BasisTimesUtils.getDeviceTime().replace(" ", "");
+            return checkFile(appDir, fileName, newFileName, type);
+        } else {
+            return picFile;
+        }
     }
 
     /**
