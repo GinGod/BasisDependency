@@ -1,5 +1,6 @@
 package com.gingold.basisdependency.activity;
 
+import android.graphics.Bitmap;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -9,9 +10,11 @@ import com.bumptech.glide.request.RequestOptions;
 import com.gingold.basisdependency.Base.BaseActivity;
 import com.gingold.basisdependency.R;
 import com.gingold.basisdependency.data.Urls;
-import com.gingold.basislibrary.utils.glide.BasisGlideUtils;
-import com.gingold.basislibrary.utils.glide.GlideApp;
+import com.gingold.basislibrary.glide.BasisCallBack;
+import com.gingold.basislibrary.glide.BasisGlideUtils;
+import com.gingold.basislibrary.glide.GlideApp;
 
+import java.io.File;
 import java.util.HashMap;
 
 /**
@@ -22,6 +25,7 @@ public class GlideActivity extends BaseActivity {
     private TextView tv_glide_cacheSize;
     private TextView tv_glide_clearCache;
     private TextView tv_glide_load;
+    private TextView tv_glide_download;
     private ImageView iv_glide_pic;
 
     @Override
@@ -35,6 +39,7 @@ public class GlideActivity extends BaseActivity {
         tv_glide_cacheSize = findTextView(R.id.tv_glide_cacheSize);
         tv_glide_clearCache = findTextView(R.id.tv_glide_clearCache);
         tv_glide_load = findTextView(R.id.tv_glide_load);
+        tv_glide_download = findTextView(R.id.tv_glide_download);
         iv_glide_pic = findImageView(R.id.iv_glide_pic);
     }
 
@@ -75,6 +80,21 @@ public class GlideActivity extends BaseActivity {
 //                select();
 
                 toast("加载图片中...");
+                break;
+            case R.id.tv_glide_download:
+                BasisGlideUtils.downloadGif(mActivity, Urls.picUrl1 + "---", "测试", new BasisCallBack() {
+                    @Override
+                    public void success(Bitmap bitmap, File file, String fileName) {
+                        toast(fileName);
+//                        iv_glide_pic.setImageBitmap(bitmap);
+                        BasisGlideUtils.load(mActivity, fileName, iv_glide_pic);
+                    }
+
+                    @Override
+                    public void failure() {
+                        toast("下载失败");
+                    }
+                });
                 break;
         }
     }

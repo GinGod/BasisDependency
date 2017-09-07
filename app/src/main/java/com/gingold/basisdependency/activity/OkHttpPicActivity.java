@@ -16,11 +16,12 @@ import android.widget.Toast;
 
 import com.gingold.basisdependency.Base.BaseActivity;
 import com.gingold.basisdependency.R;
+import com.gingold.basisdependency.data.Urls;
 import com.gingold.basisdependency.utils.ImageUploadUtils;
+import com.gingold.basislibrary.okhttp.BasisCallback;
+import com.gingold.basislibrary.okhttp.BasisDownloadCallback;
+import com.gingold.basislibrary.okhttp.BasisOkHttpUtils;
 import com.gingold.basislibrary.utils.BasisLogUtils;
-import com.gingold.basislibrary.utils.okhttp.BasisBitmapCallback;
-import com.gingold.basislibrary.utils.okhttp.BasisCallback;
-import com.gingold.basislibrary.utils.okhttp.BasisOkHttpUtils;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -98,7 +99,7 @@ public class OkHttpPicActivity extends BaseActivity {
                 break;
             case R.id.tv_uploadpic_save:
                 if (isNotEmpty(imagePath, "请拍照后再上传图片"))
-                upload();
+                    upload();
 //                    upload1();
                 break;
             case R.id.tv_uploadpic_download:
@@ -112,11 +113,12 @@ public class OkHttpPicActivity extends BaseActivity {
         String url = "http://expapi.tswlsys.com:80/api/file/2017/8/22/d772901344b04b7385f732047bbf185d_1503381458183.jpg";
 
         url = "http://img.juimg.com/tuku/yulantu/120926/219049-12092612154377.jpg";
+        url = Urls.picUrl1;
 
-        BasisOkHttpUtils.download().url(url).fileName(null).build().execute(/*new BasisDownloadCallback() {
+        BasisOkHttpUtils.download().url(url).fileName(null).build().execute(new BasisDownloadCallback() {
             @Override
             public void success(Call call, Response response, String filePath) {
-
+                toast(filePath);
             }
 
             @Override
@@ -126,9 +128,9 @@ public class OkHttpPicActivity extends BaseActivity {
 
             @Override
             public void failure(Call call, IOException e, String message) {
-
+                toast(message);
             }
-        }*/new BasisBitmapCallback() {
+        }/*new BasisBitmapCallback() {
             @Override
             public void success(Call call, Response response, Bitmap bitmap, String filePath) {
                 iv_uploadpic.setImageBitmap(bitmap);
@@ -136,9 +138,9 @@ public class OkHttpPicActivity extends BaseActivity {
 
             @Override
             public void failure(Call call, IOException e, String message) {
-
+                toast(message);
             }
-        });
+        }*/);
     }
 
     private void download() {

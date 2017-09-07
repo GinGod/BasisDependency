@@ -1,14 +1,34 @@
 # BasisDependency
 Basis Dependency By Gingod
 
-- Base
+###a. Base
+- BasisBaseActivity
+- BasisBaseService
+- BasisBaseFragment
+- BasisBaseUtils
+
+###b. Utils
 - Log
 - SP
 - Time
-- Adapter
-- 自定义View
-- Okhttp
-- Glide
+- file
+
+###c. Adapter
+- ListView和GridView 的适配器
+- RecyclerView 的适配器
+
+###d. 自定义View
+- ListViewWithMaxH
+- GridViewWithMaxH
+- BasisListView
+- BasisRecyclerView
+
+###e. Okhttp
+- postString
+- postFile && postFiles
+- download
+
+###f. Glide
 
 ##1. BasisBase
 一些基本类和常用方法封装
@@ -37,7 +57,10 @@ android.support.v4.app.Fragment
 
 ###d. BasisBaseUtils
 
-##2. BasisLogUtils
+##2. Utils
+常用工具类
+
+###a. BasisLogUtils
 Log日志封装
 
 ####部分参数
@@ -46,10 +69,10 @@ Log日志封装
 - LOG_TAG  
 日志标识: 默认"TAG"
 
-##3. BasisSPUtils
+###b. BasisSPUtils
 SharedPreferences常用方法封装
 
-##4. BasisTimesUtils
+###c. BasisTimesUtils
 时间工具类
 
 - getDeviceTime  
@@ -59,9 +82,9 @@ SharedPreferences常用方法封装
 - getDeviceTimeOfYMD  
 时间格式: yyyy-MM-dd
 
-##5. Adapter
+##3. Adapter
 
-###a. ListView 的适配器
+###a. ListView和GridView 的适配器
 - BasisLvGvAdapter --单类型item
 
         listview.setAdapter(new BasisLvGvAdapter<数据类型>(上下文, item布局id, 数据集 datas) {
@@ -123,7 +146,7 @@ isSpecific(int position): true 则该position显示为一整行
 - BasisRvEmptyWrapper  
 空布局适配器(数据为空时,显示设置好的空布局)  
 
-##6. 自定义View
+##4. 自定义View
 
 ###a. ListViewWithMaxH  
 显示所有item, 并禁止滑动
@@ -137,7 +160,7 @@ isSpecific(int position): true 则该position显示为一整行
 ###d. BasisRecyclerView
 上拉加载下拉刷新RecyclerView, 可以兼容前面封装的RecyclerView适配器
 
-##7. BasisOkHttpUtils
+##5. BasisOkHttpUtils
 
 ###a. postString  
 上传参数未json字符串
@@ -186,3 +209,38 @@ image/* //默认上传图片
 执行请求, 结果在主线程中执行  
 progress: 下载进度
 
+##6. BasisGlideUtils
+
+###a. load  
+图片加载
+
+####部分参数
+- context  
+支持类型: Context, Activity, Fragment, FragmentActivity, View
+- placeholder || placeholderId  
+占位图片
+- duration  
+过度时长
+- sizeMultiplier || thumbnailRequest  
+thumbnail()方法参数
+- isDrawable
+确定thumbnail()参数类别
+
+###b. cache
+缓存管理
+
+- getCacheSize  
+获取磁盘缓存大小
+- clearDiskCacheSelf  
+清除图片磁盘缓存
+- clearCacheMemory  
+清除内存缓存
+- clearAllCacheMemory  
+清除所有缓存
+
+###c. 图片下载
+
+- downloadPic  
+jpg图片下载
+- downloadGif  
+gif图片下载
