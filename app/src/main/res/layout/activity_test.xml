@@ -41,4 +41,12 @@
         android:gravity="center"
         android:text="时间"/>
 
+    <EditText
+        android:id="@+id/et_test_hide"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:imeOptions="actionSearch"
+        android:singleLine="true"
+        android:text=""/>
+
 </LinearLayout>

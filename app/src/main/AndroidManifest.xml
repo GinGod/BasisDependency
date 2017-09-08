@@ -2,13 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.gingold.basisdependency">
 
-    <!--网络权限-->
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <!--读取储存-->
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <!--写入储存-->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
     <application
         android:name="com.gingold.basisdependency.MyApplication"
         android:allowBackup="true"
@@ -31,6 +24,7 @@
         <activity android:name=".activity.OkHttpActivity"/>
         <activity android:name=".activity.OkHttpPicActivity"/>
         <activity android:name=".activity.GlideActivity"/>
+        <activity android:name=".activity.PhotoActivity"/>
     </application>
 
 </manifest>

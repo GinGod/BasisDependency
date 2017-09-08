@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,6 +38,8 @@ public class TestActivity extends BaseActivity {
     TextView mTvTestClear;
     @Bind(R.id.tv_test_time)
     TextView mTvTestTime;
+    @Bind(R.id.et_test_hide)
+    EditText mEtTestHide;
 
 
     @Override
@@ -78,7 +81,7 @@ public class TestActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.iv_arrow, R.id.tv_test_down, R.id.tv_test_up, R.id.tv_test_clear, R.id.tv_test_time})
+    @OnClick({R.id.iv_arrow, R.id.tv_test_down, R.id.tv_test_up, R.id.tv_test_clear, R.id.tv_test_time, R.id.et_test_hide})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_test_down:
@@ -123,6 +126,16 @@ public class TestActivity extends BaseActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+                break;
+            case R.id.et_test_hide:
+                toast("点击");
+                postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        toast("隐藏");
+                        hideInputMethod();
+                    }
+                }, 3000);
                 break;
         }
     }
