@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 26
-    buildToolsVersion "26.0.0"
+    buildToolsVersion "26.0.1"
     defaultConfig {
         applicationId "com.gingold.basisdependency"
         minSdkVersion 14
@@ -10,31 +10,31 @@ android {
         versionCode 1
         versionName "1.0"
     }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-    }
+//    buildTypes {
+//        release {
+//            minifyEnabled false
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+//        }
+//    }
+//
+//    signingConfigs {
+//        release {
+//            storeFile file("D:/workspace/keystore/NeZaApp/nezepublish.keystore")
+//            storePassword "fhlwlsys"
+//            keyAlias "fhlwlsys.neza"
+//            keyPassword "fhlwlsys"
+//        }
+//    }
 
-    signingConfigs {
-        release {
-            storeFile file("D:/workspace/keystore/NeZaApp/nezepublish.keystore")
-            storePassword "fhlwlsys"
-            keyAlias "fhlwlsys.neza"
-            keyPassword "fhlwlsys"
-        }
-    }
 
-
-    buildTypes {
-        debug {
-            signingConfig signingConfigs.release
-        }
-        release {
-            signingConfig signingConfigs.release
-        }
-    }
+//    buildTypes {
+//        debug {
+//            signingConfig signingConfigs.release
+//        }
+//        release {
+//            signingConfig signingConfigs.release
+//        }
+//    }
 }
 
 dependencies {
@@ -45,5 +45,6 @@ dependencies {
     compile 'com.android.support:appcompat-v7:26.+'
     compile 'com.android.support:recyclerview-v7:26.+'
     testCompile 'junit:junit:4.12'
-    compile project(':basislibrary')
+//    compile project(':basislibrary')
+    compile 'com.github.GinGod:BasisDependency:v1.0.3'
 }

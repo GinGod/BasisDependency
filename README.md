@@ -1,6 +1,22 @@
 # BasisDependency
 Basis Dependency By Gingod
 
+##How to use it?
+
+      allprojects {
+          repositories {
+              ...
+              maven { url 'https://jitpack.io' }
+          }
+      }
+      
+      dependencies {
+          ...
+          compile 'com.github.GinGod:BasisDependency:v1.0.3'
+      }
+
+##Contents
+
 ###a. Base
 - BasisBaseActivity
 - BasisBaseService
