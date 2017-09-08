@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 26
-    buildToolsVersion "26.0.0"
+    buildToolsVersion "26.0.1"
     defaultConfig {
         applicationId "com.gingold.basisdependency"
         minSdkVersion 14
@@ -45,5 +45,6 @@ dependencies {
     compile 'com.android.support:appcompat-v7:26.+'
     compile 'com.android.support:recyclerview-v7:26.+'
     testCompile 'junit:junit:4.12'
-    compile project(':basislibrary')
+//    compile project(':basislibrary')
+    compile 'com.github.GinGod:BasisDependency:v1.0.3'
 }
