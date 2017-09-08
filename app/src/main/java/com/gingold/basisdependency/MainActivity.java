@@ -9,6 +9,7 @@ import com.gingold.basisdependency.activity.MultiLvActivity;
 import com.gingold.basisdependency.activity.MultiRvActivity;
 import com.gingold.basisdependency.activity.OkHttpActivity;
 import com.gingold.basisdependency.activity.OkHttpPicActivity;
+import com.gingold.basisdependency.activity.PhotoActivity;
 import com.gingold.basisdependency.activity.RvRefreshActivity;
 import com.gingold.basisdependency.activity.SPActivity;
 import com.gingold.basisdependency.activity.TestActivity;
@@ -75,6 +76,9 @@ public class MainActivity extends BaseActivity {
                                 break;
                             case MainData.GLIDE:
                                 startActivity(GlideActivity.class);
+                                break;
+                            case MainData.PHOTO:
+                                startActivity(PhotoActivity.class);
                                 break;
                         }
                     }

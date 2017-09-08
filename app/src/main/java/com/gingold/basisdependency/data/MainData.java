@@ -18,6 +18,7 @@ public class MainData {
     public final static String OKHTTP = "okhttp";
     public final static String OKHTTPPIC = "okhttpPic";
     public final static String GLIDE = "Glide";
+    public final static String PHOTO = "Photo";
 
     public static ArrayList<MainBean> mainList = new ArrayList<>();
 
@@ -32,6 +33,7 @@ public class MainData {
         mainList.add(new MainBean(OKHTTP, null));
         mainList.add(new MainBean(OKHTTPPIC, null));
         mainList.add(new MainBean(GLIDE, null));
+        mainList.add(new MainBean(PHOTO, null));
     }
 
     public static class MainBean {

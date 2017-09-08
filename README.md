@@ -30,6 +30,9 @@ Basis Dependency By Gingod
 - download
 
 ###f. Glide
+- load
+- cache
+- download
 
 ##1. BasisBase
 一些基本类和常用方法封装
@@ -184,10 +187,10 @@ isSpecific(int position): true 则该position显示为一整行
 默认为 application/json; charset=utf-8
 - content  
 上传的json字符串, 或者封装的json对象  
-不能与addParams方法共用
+不能与addParams方法共用, 否则addParams方法不生效  
 - addParams  
 键值对提交参数  
-不能与content方法共用  
+不能与content方法共用, 否则addParams方法不生效  
 - build  
 建立请求
 - execute  
@@ -236,7 +239,7 @@ progress: 下载进度
 过度时长
 - sizeMultiplier || thumbnailRequest  
 thumbnail()方法参数
-- isDrawable
+- isDrawable  
 确定thumbnail()参数类别
 
 ###b. cache

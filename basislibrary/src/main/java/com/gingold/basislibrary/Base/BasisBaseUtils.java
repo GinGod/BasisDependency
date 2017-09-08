@@ -320,7 +320,7 @@ public class BasisBaseUtils {
      *
      * @param id
      */
-    protected static int getDimensionById(Context context, int id) {
+    public static int getDimensionById(Context context, int id) {
         return (int) context.getResources().getDimension(id);
     }
 }
