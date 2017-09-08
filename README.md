@@ -12,6 +12,7 @@ Basis Dependency By Gingod
 - SP
 - Time
 - file
+- version
 
 ###c. Adapter
 - ListView和GridView 的适配器
@@ -81,6 +82,18 @@ SharedPreferences常用方法封装
 时间格式: yyyy-MM-dd HH:mm:ss:SSS
 - getDeviceTimeOfYMD  
 时间格式: yyyy-MM-dd
+
+###d. BasisFileUtils
+
+###e.BasisVersionUtils
+版本工具类
+
+- getVersionName  
+版本名 2.5.2
+- getVersionCode  
+版本号 252
+- getDeviceInfo  
+设备信息, 包含设备型号, Android版本和API
 
 ##3. Adapter
 

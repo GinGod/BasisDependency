@@ -1,7 +1,5 @@
 package com.gingold.basislibrary.okhttp;
 
-import java.io.IOException;
-
 import okhttp3.Call;
 import okhttp3.Response;
 
@@ -24,5 +22,5 @@ public interface BasisDownloadCallback {
     /**
      * 请求网络失败
      */
-    void failure(Call call, IOException e, String message);
+    void failure(Call call, Exception e, String message);
 }
