@@ -82,7 +82,7 @@ public class GlideActivity extends BaseActivity {
                 toast("加载图片中...");
                 break;
             case R.id.tv_glide_download:
-                BasisGlideUtils.downloadGif(mActivity, Urls.picUrl1 + "---", "测试", new BasisCallBack() {
+                BasisGlideUtils.downloadPic(mActivity, Urls.picUrl1, "测试", new BasisCallBack() {
                     @Override
                     public void success(Bitmap bitmap, File file, String fileName) {
                         toast(fileName);

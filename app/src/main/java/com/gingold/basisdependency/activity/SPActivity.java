@@ -16,6 +16,7 @@ import com.gingold.basislibrary.utils.BasisSPUtils;
 
 public class SPActivity extends BaseActivity {
     private int times = 0;
+
     @Override
     public void setupViewLayout() {
         setContentView(R.layout.activity_sp);
@@ -46,17 +47,20 @@ public class SPActivity extends BaseActivity {
                                 BasisSPUtils.setStringPreferences(mActivity, "string", "string", "string" + times);
                                 toast(BasisSPUtils.getStringPreference(mActivity, "string", "错误"));
                                 toast(BasisSPUtils.getStringPreference(mActivity, "string", "string", "错误") + "第二次");
-                                break;case SPData.INT:
+                                break;
+                            case SPData.INT:
                                 BasisSPUtils.setIntPreferences(mActivity, "int", 252 + times);
                                 BasisSPUtils.setIntPreferences(mActivity, "int", "int", 252 + times);
                                 toast(BasisSPUtils.getIntPreference(mActivity, "int", 0) + "");
                                 toast(BasisSPUtils.getIntPreference(mActivity, "int", "int", 0) + "第二次");
-                                break;case SPData.LONG:
+                                break;
+                            case SPData.LONG:
                                 BasisSPUtils.setLongPreferences(mActivity, "LONG", 0 + times);
                                 BasisSPUtils.setLongPreferences(mActivity, "LONG", "LONG", 0 + times);
                                 toast(BasisSPUtils.getLongPreferences(mActivity, "LONG", 0) + "");
                                 toast(BasisSPUtils.getLongPreferences(mActivity, "LONG", "LONG", 0) + "第二次");
-                                break;case SPData.BOOLEAN:
+                                break;
+                            case SPData.BOOLEAN:
                                 BasisSPUtils.setBooleanPreferences(mActivity, "BOOLEAN", true);
                                 BasisSPUtils.setBooleanPreferences(mActivity, "BOOLEAN", "BOOLEAN", false);
                                 toast(BasisSPUtils.getBooleanPreferences(mActivity, "BOOLEAN", false) + "");

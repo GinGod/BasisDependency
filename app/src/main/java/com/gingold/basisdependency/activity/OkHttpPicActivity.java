@@ -18,8 +18,8 @@ import com.gingold.basisdependency.Base.BaseActivity;
 import com.gingold.basisdependency.R;
 import com.gingold.basisdependency.data.Urls;
 import com.gingold.basisdependency.utils.ImageUploadUtils;
+import com.gingold.basislibrary.okhttp.BasisBitmapCallback;
 import com.gingold.basislibrary.okhttp.BasisCallback;
-import com.gingold.basislibrary.okhttp.BasisDownloadCallback;
 import com.gingold.basislibrary.okhttp.BasisOkHttpUtils;
 import com.gingold.basislibrary.utils.BasisLogUtils;
 
@@ -110,14 +110,13 @@ public class OkHttpPicActivity extends BaseActivity {
     }
 
     private void download1() {
-        String url = "http://expapi.tswlsys.com:80/api/file/2017/8/22/d772901344b04b7385f732047bbf185d_1503381458183.jpg";
+        String url = "http://img.juimg.com/tuku/yulantu/120926/219049-12092612154377.jpg";
+        url = Urls.picUrl2;
 
-        url = "http://img.juimg.com/tuku/yulantu/120926/219049-12092612154377.jpg";
-        url = Urls.picUrl1;
-
-        BasisOkHttpUtils.download().url(url).fileName(null).build().execute(new BasisDownloadCallback() {
+        BasisOkHttpUtils.download().url(url).fileName(null).build().execute(new BasisBitmapCallback() {
             @Override
-            public void success(Call call, Response response, String filePath) {
+            public void success(Call call, Response response, Bitmap bitmap, String filePath) {
+                iv_uploadpic.setImageBitmap(bitmap);
                 toast(filePath);
             }
 
@@ -127,20 +126,27 @@ public class OkHttpPicActivity extends BaseActivity {
             }
 
             @Override
-            public void failure(Call call, IOException e, String message) {
+            public void failure(Call call, Exception e, String message) {
                 toast(message);
             }
-        }/*new BasisBitmapCallback() {
-            @Override
-            public void success(Call call, Response response, Bitmap bitmap, String filePath) {
-                iv_uploadpic.setImageBitmap(bitmap);
-            }
+        });
 
-            @Override
-            public void failure(Call call, IOException e, String message) {
-                toast(message);
-            }
-        }*/);
+//        BasisOkHttpUtils.download().url(url).fileName(null).build().execute(new BasisDownloadCallback() {
+//            @Override
+//            public void success(Call call, Response response, String filePath) {
+//                toast(filePath);
+//            }
+//
+//            @Override
+//            public void progress(long totalSize, long currentSize, long progress) {
+//                BasisLogUtils.e("progress: " + totalSize + " " + currentSize + " " + progress);
+//            }
+//
+//            @Override
+//            public void failure(Call call, Exception e, String message) {
+//                toast(message);
+//            }
+//        });
     }
 
     private void download() {

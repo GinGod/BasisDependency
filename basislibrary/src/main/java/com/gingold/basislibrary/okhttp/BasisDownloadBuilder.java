@@ -28,7 +28,7 @@ import okhttp3.Response;
 
 public class BasisDownloadBuilder extends BasisBaseUtils {
     private String url;//网址
-    private String fileName = BasisTimesUtils.getDeviceTime().replace(" ", "");//文件名
+    private String fileName;//文件名
 
     private OkHttpClient mOkHttpClient;
     private Call mCall;
@@ -63,21 +63,21 @@ public class BasisDownloadBuilder extends BasisBaseUtils {
     }
 
     /**
-     * 执行请求
+     * 执行请求(只下载, 不对结果进行回调)
      */
     public void execute() {
         enqueue(null);
     }
 
     /**
-     * 执行请求
+     * 执行请求(默认下载的是文件)
      */
     public void execute(final BasisDownloadCallback basisCallback) {
         enqueue(basisCallback);
     }
 
     /**
-     * 执行请求
+     * 执行请求(默认下载的是图片)
      */
     public void execute(final BasisBitmapCallback basisCallback) {
         enqueue(basisCallback);
@@ -87,47 +87,35 @@ public class BasisDownloadBuilder extends BasisBaseUtils {
         mCall.enqueue(new Callback() {
             @Override
             public void onFailure(final Call call, final IOException e) {
-                final String message;
+                String message = "";
                 if (e != null) {
                     message = e.getMessage();
-                } else {
-                    message = "";
                 }
                 BasisLogUtils.e("failure: " + message);
-                if (basisCallback != null) {
-                    mHandler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (basisCallback != null) {
-                                if (basisCallback instanceof BasisDownloadCallback) {
-                                    ((BasisDownloadCallback) basisCallback).failure(call, e, message);
-                                } else if (basisCallback instanceof BasisBitmapCallback) {
-                                    ((BasisBitmapCallback) basisCallback).failure(call, e, message);
-                                }
-                            }
-                        }
-                    });
-                }
+                failure(call, e, message, basisCallback);
             }
 
             @Override
             public void onResponse(final Call call, final Response response) throws IOException {
+                //获取返回的输入流
                 InputStream inputStream = response.body().byteStream();
-                final long totalSize = response.body().contentLength();
-                FileOutputStream fileOutputStream = null;
+                final long totalSize = response.body().contentLength();//文件总大小
+
+                FileOutputStream OutputStream = null;
+
                 try {
                     //下载储存文件夹
-                    String sdPadth = Environment.getExternalStorageDirectory() + "";
-                    String savePath = sdPadth + "/Download";
-                    File fileDir = new File(savePath);
+                    String dirPath = Environment.getExternalStorageDirectory() + "/Download";
+                    File fileDir = new File(dirPath);
                     if (!fileDir.exists()) {// 判断文件目录是否存在,不存在则创建该目录
                         fileDir.mkdir();
                     }
 
                     //下载文件名
                     if (TextUtils.isEmpty(fileName)) {
-                        if (TextUtils.isEmpty(url)) {
-                            fileName = BasisTimesUtils.getDeviceTime().replace(" ", "");
+                        if (TextUtils.isEmpty(url)) {//网址为空
+                            failure(call, new IllegalArgumentException("网址为空"), "网址为空", basisCallback);
+                            return;
                         } else {
                             //截取网址最后15位作为下载的文件名
                             String replace = url.replace("\\", "").replace("/", "");
@@ -141,7 +129,7 @@ public class BasisDownloadBuilder extends BasisBaseUtils {
 
                     //下载的文件
                     File file = checkFile(fileDir, fileName, fileName, "");
-                    fileOutputStream = new FileOutputStream(file);
+                    OutputStream = new FileOutputStream(file);
                     final String filePath = file.getAbsolutePath();
 
                     //开始下载
@@ -149,38 +137,18 @@ public class BasisDownloadBuilder extends BasisBaseUtils {
                     int len = 0;
                     long currentSize = 0;
                     while ((len = inputStream.read(buffer)) != -1) {
-                        fileOutputStream.write(buffer, 0, len);
+                        OutputStream.write(buffer, 0, len);
                         currentSize = currentSize + len;
-                        final long temp = currentSize;
-                        mHandler.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                //下载进度
-                                if (basisCallback != null && basisCallback instanceof BasisDownloadCallback) {
-                                    ((BasisDownloadCallback) basisCallback).progress(totalSize, temp, temp * 100 / totalSize);
-                                }
-                            }
-                        });
+                        process(totalSize, currentSize, basisCallback);//进度
                     }
-                    fileOutputStream.flush();
+                    OutputStream.flush();
 
-                    //下载完成
-                    mHandler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (basisCallback != null) {
-                                if (basisCallback instanceof BasisDownloadCallback) {
-                                    ((BasisDownloadCallback) basisCallback).success(call, response, filePath);
-                                } else if (basisCallback instanceof BasisBitmapCallback) {
-                                    ((BasisBitmapCallback) basisCallback).success(call, response, getBitmap(filePath), filePath);
-                                }
-                            }
-                        }
-                    });
+                    success(call, response, filePath, basisCallback);//下载完成
 
                     BasisLogUtils.e("文件下载成功: " + filePath);
                 } catch (Exception e) {
                     e.printStackTrace();
+                    failure(call, e, e.getMessage(), basisCallback);
                 } finally {
                     if (inputStream != null) {//关流释放资源
                         try {
@@ -190,12 +158,67 @@ public class BasisDownloadBuilder extends BasisBaseUtils {
                         }
                     }
 
-                    if (fileOutputStream != null) {
+                    if (OutputStream != null) {
                         try {
-                            fileOutputStream.close();
+                            OutputStream.close();
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
+                    }
+                }
+            }
+        });
+    }
+
+    /**
+     * 下载成功
+     */
+    private void success(final Call call, final Response response, final String filePath, final Object basisCallback) {
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                if (basisCallback != null) {
+                    if (basisCallback instanceof BasisDownloadCallback) {
+                        ((BasisDownloadCallback) basisCallback).success(call, response, filePath);
+                    } else if (basisCallback instanceof BasisBitmapCallback) {
+                        ((BasisBitmapCallback) basisCallback).success(call, response, getBitmap(filePath), filePath);
+                    }
+                }
+            }
+        });
+    }
+
+    /**
+     * 下载进度
+     */
+    private void process(final long totalSize, final long process, final Object basisCallback) {
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                //下载进度
+                if (basisCallback != null) {
+                    if (basisCallback instanceof BasisDownloadCallback) {
+                        ((BasisDownloadCallback) basisCallback).progress(totalSize, process, process * 100 / totalSize);
+                    } else if (basisCallback instanceof BasisBitmapCallback) {
+                        ((BasisBitmapCallback) basisCallback).progress(totalSize, process, process * 100 / totalSize);
+                    }
+                }
+            }
+        });
+    }
+
+    /**
+     * 下载失败
+     */
+    private void failure(final Call call, final Exception e, final String message, final Object basisCallback) {
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                if (basisCallback != null) {
+                    if (basisCallback instanceof BasisDownloadCallback) {
+                        ((BasisDownloadCallback) basisCallback).failure(call, e, message);
+                    } else if (basisCallback instanceof BasisBitmapCallback) {
+                        ((BasisBitmapCallback) basisCallback).failure(call, e, message);
                     }
                 }
             }
@@ -208,8 +231,8 @@ public class BasisDownloadBuilder extends BasisBaseUtils {
     private static File checkFile(File appDir, String fileName, String newFileName, String type) {
         File picFile = new File(appDir, newFileName + type);
         if (picFile.exists() && picFile.isFile() && picFile.length() > 0) {
-            //已存在相同名字的文件时, 通过添加时间区分
-            newFileName = fileName + "_" + BasisTimesUtils.getDeviceTime().replace(" ", "");
+            //已存在相同名字的文件时, 通过设备时间区分
+            newFileName = BasisTimesUtils.getDeviceTime().replace(" ", "") + "_" + fileName;
             return checkFile(appDir, fileName, newFileName, type);
         } else {
             return picFile;

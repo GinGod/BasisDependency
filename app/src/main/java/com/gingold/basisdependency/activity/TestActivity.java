@@ -1,15 +1,19 @@
 package com.gingold.basisdependency.activity;
 
+import android.content.Context;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.gingold.basisdependency.Base.BaseActivity;
+import com.gingold.basisdependency.MyApplication;
 import com.gingold.basisdependency.R;
 import com.gingold.basislibrary.utils.BasisLogUtils;
 import com.gingold.basislibrary.utils.BasisTimesUtils;
+import com.gingold.basislibrary.utils.BasisVersionUtils;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -79,7 +83,13 @@ public class TestActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.tv_test_down:
                 mIvArrow.startAnimation(mRotateDownAnim);
-                toast("down");
+//                toast("down");
+                Context context = MyApplication.getContext();
+                if (context == null) {
+                    toast("null");
+                } else {
+                    Toast.makeText(app, "context", Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.tv_test_up:
                 mIvArrow.startAnimation(mRotateUpAnim);
@@ -88,6 +98,8 @@ public class TestActivity extends BaseActivity {
             case R.id.tv_test_clear:
                 mIvArrow.clearAnimation();
                 toast("clear");
+                BasisLogUtils.e(BasisVersionUtils.getVersionName(mActivity) + " - " + BasisVersionUtils.getVersionCode(mActivity)
+                        + " - " + BasisVersionUtils.getDeviceInfo());
                 break;
             case R.id.tv_test_time:
                 BasisLogUtils.e(BasisTimesUtils.getDeviceTimeOfSSS());
