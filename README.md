@@ -1,7 +1,7 @@
 # BasisDependency
 Basis Dependency By Gingod
 
-##How to use it?
+## How to use it?
 
       allprojects {
           repositories {
@@ -17,7 +17,7 @@ Basis Dependency By Gingod
 
 ##Contents
 
-###a. Base
+### a. Base
 - BasisBaseActivity
 - BasisBaseService
 - BasisBaseFragment
