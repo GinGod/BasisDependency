@@ -15,7 +15,7 @@ Basis Dependency By Gingod
           compile 'com.github.GinGod:BasisDependency:v1.0.3'
       }
 
-##Contents
+## Contents
 
 ### a. Base
 - BasisBaseActivity
@@ -23,39 +23,39 @@ Basis Dependency By Gingod
 - BasisBaseFragment
 - BasisBaseUtils
 
-###b. Utils
+### b. Utils
 - Log
 - SP
 - Time
 - file
 - version
 
-###c. Adapter
+### c. Adapter
 - ListView和GridView 的适配器
 - RecyclerView 的适配器
 
-###d. 自定义View
+### d. 自定义View
 - ListViewWithMaxH
 - GridViewWithMaxH
 - BasisListView
 - BasisRecyclerView
 
-###e. Okhttp
+### e. Okhttp
 - postString
 - postFile && postFiles
 - download
 
-###f. Glide
+### f. Glide
 - load
 - cache
 - download
 
-##1. BasisBase
+## 1. BasisBase
 一些基本类和常用方法封装
 
-###a. BasisBaseActivity
+### a. BasisBaseActivity
 
-####部分方法
+#### 部分方法
 - initData  
 在加载视图前对一些常用对象, 如app, mActivity, context,mHandler, gson等进行初始化赋值
 - ondestory  
@@ -69,30 +69,30 @@ parseInt 转换异常时返回 -1; parseIntWithE 需要手动处理异常
 - showStr  
 str为空时返回 ""; 便于展示
 
-###b. BasisBaseService
+### b. BasisBaseService
 
-###c. BasisBaseFragment
+### c. BasisBaseFragment
 
 android.support.v4.app.Fragment
 
-###d. BasisBaseUtils
+### d. BasisBaseUtils
 
-##2. Utils
+## 2. Utils
 常用工具类
 
-###a. BasisLogUtils
+### a. BasisLogUtils
 Log日志封装
 
-####部分参数
+#### 部分参数
 - LOG_LEVEL  
 日志打印级别: LOG_ALL 打印所有级别日志; LOG_CLOSED 关闭日志
 - LOG_TAG  
 日志标识: 默认"TAG"
 
-###b. BasisSPUtils
+### b. BasisSPUtils
 SharedPreferences常用方法封装
 
-###c. BasisTimesUtils
+### c. BasisTimesUtils
 时间工具类
 
 - getDeviceTime  
@@ -102,9 +102,9 @@ SharedPreferences常用方法封装
 - getDeviceTimeOfYMD  
 时间格式: yyyy-MM-dd
 
-###d. BasisFileUtils
+### d. BasisFileUtils
 
-###e.BasisVersionUtils
+### e.BasisVersionUtils
 版本工具类
 
 - getVersionName  
@@ -114,9 +114,9 @@ SharedPreferences常用方法封装
 - getDeviceInfo  
 设备信息, 包含设备型号, Android版本和API
 
-##3. Adapter
+## 3. Adapter
 
-###a. ListView和GridView 的适配器
+### a. ListView和GridView 的适配器
 - BasisLvGvAdapter --单类型item
 
         listview.setAdapter(new BasisLvGvAdapter<数据类型>(上下文, item布局id, 数据集 datas) {
@@ -163,7 +163,7 @@ SharedPreferences常用方法封装
             }
         }
 
-###b. RecyclerView 的适配器
+### b. RecyclerView 的适配器
 
 - 使用方法  
 BasisRvAdapter  
@@ -178,23 +178,23 @@ isSpecific(int position): true 则该position显示为一整行
 - BasisRvEmptyWrapper  
 空布局适配器(数据为空时,显示设置好的空布局)  
 
-##4. 自定义View
+## 4. 自定义View
 
-###a. ListViewWithMaxH  
+### a. ListViewWithMaxH  
 显示所有item, 并禁止滑动
 
-###b. GridViewWithMaxH
+### b. GridViewWithMaxH
 显示所有item, 并禁止滑动
 
-###c. BasisListView
+### c. BasisListView
 上拉加载下拉刷新ListView
 
-###d. BasisRecyclerView
+### d. BasisRecyclerView
 上拉加载下拉刷新RecyclerView, 可以兼容前面封装的RecyclerView适配器
 
-##5. BasisOkHttpUtils
+## 5. BasisOkHttpUtils
 
-###a. postString  
+### a. postString  
 上传参数未json字符串
 
 - url  
@@ -212,7 +212,7 @@ isSpecific(int position): true 则该position显示为一整行
 - execute  
 执行请求, 结果在主线程中执行
 
-###b. postFile && postFiles
+### b. postFile && postFiles
 上传文件(默认图片)
 
 - url  
@@ -228,7 +228,7 @@ image/* //默认上传图片
 - execute  
 执行请求, 结果在主线程中执行  
 
-###c. download
+### c. download
 下载文件
 
 - url  
@@ -241,12 +241,12 @@ image/* //默认上传图片
 执行请求, 结果在主线程中执行  
 progress: 下载进度
 
-##6. BasisGlideUtils
+## 6. BasisGlideUtils
 
-###a. load  
+### a. load  
 图片加载
 
-####部分参数
+#### 部分参数
 - context  
 支持类型: Context, Activity, Fragment, FragmentActivity, View
 - placeholder || placeholderId  
@@ -258,7 +258,7 @@ thumbnail()方法参数
 - isDrawable  
 确定thumbnail()参数类别
 
-###b. cache
+### b. cache
 缓存管理
 
 - getCacheSize  
@@ -270,7 +270,7 @@ thumbnail()方法参数
 - clearAllCacheMemory  
 清除所有缓存
 
-###c. 图片下载
+### c. 图片下载
 
 - downloadPic  
 jpg图片下载
