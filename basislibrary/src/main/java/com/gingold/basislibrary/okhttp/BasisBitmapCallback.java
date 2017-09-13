@@ -14,15 +14,15 @@ public interface BasisBitmapCallback {
     /**
      * 请求网络成功
      */
-    void success(Call call, Response response, Bitmap bitmap, String filePath);
+    void onSuccess(Call call, Response response, Bitmap bitmap, String filePath);
 
     /**
      * 下载Progress
      */
-    void progress(long totalSize, long currentSize, long progress);
+    void onProgress(long totalSize, long currentSize, long progress);
 
     /**
      * 请求网络失败
      */
-    void failure(Call call, Exception e, String message);
+    void onFailure(Call call, Exception e, String message);
 }

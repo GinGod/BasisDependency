@@ -45,6 +45,6 @@ dependencies {
     compile 'com.android.support:appcompat-v7:26.+'
     compile 'com.android.support:recyclerview-v7:26.+'
     testCompile 'junit:junit:4.12'
-//    compile project(':basislibrary')
-    compile 'com.github.GinGod:BasisDependency:v1.0.3'
+    compile project(':basislibrary')
+//    compile 'com.github.GinGod:BasisDependency:v1.0.3'
 }

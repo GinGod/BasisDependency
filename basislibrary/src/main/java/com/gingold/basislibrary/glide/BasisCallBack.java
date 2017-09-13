@@ -12,10 +12,10 @@ public interface BasisCallBack {
     /**
      * 图片下载本地成功
      */
-    void success(Bitmap bitmap, File file, String fileName);
+    void onSuccess(Bitmap bitmap, File file, String fileName);
 
     /**
      * 图片下载本地失败
      */
-    void failure();
+    void onFailure();
 }

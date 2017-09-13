@@ -116,7 +116,7 @@ public class BasisDownLoadPicUtil {
             @Override
             public void run() {
                 if (callBack != null) {
-                    callBack.success(bmp, picFile, picFile.getAbsolutePath());
+                    callBack.onSuccess(bmp, picFile, picFile.getAbsolutePath());
                 }
             }
         }, 1000);
@@ -130,7 +130,7 @@ public class BasisDownLoadPicUtil {
             @Override
             public void run() {
                 if (callBack != null) {
-                    callBack.failure();
+                    callBack.onFailure();
                 }
             }
         }, 1000);
