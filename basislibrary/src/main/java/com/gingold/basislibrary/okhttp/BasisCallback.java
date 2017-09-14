@@ -14,10 +14,10 @@ public interface BasisCallback {
     /**
      * 请求网络成功
      */
-    void success(Call call, Response response, String result);
+    void onSuccess(Call call, Response response, String result);
 
     /**
      * 请求网络失败
      */
-    void failure(Call call, IOException e, String message);
+    void onFailure(Call call, IOException e, String message);
 }

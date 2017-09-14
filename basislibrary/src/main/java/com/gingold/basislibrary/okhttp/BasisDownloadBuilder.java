@@ -91,7 +91,7 @@ public class BasisDownloadBuilder extends BasisBaseUtils {
                 if (e != null) {
                     message = e.getMessage();
                 }
-                BasisLogUtils.e("failure: " + message);
+                BasisLogUtils.e("onFailure: " + message);
                 failure(call, e, message, basisCallback);
             }
 
@@ -179,9 +179,9 @@ public class BasisDownloadBuilder extends BasisBaseUtils {
             public void run() {
                 if (basisCallback != null) {
                     if (basisCallback instanceof BasisDownloadCallback) {
-                        ((BasisDownloadCallback) basisCallback).success(call, response, filePath);
+                        ((BasisDownloadCallback) basisCallback).onSuccess(call, response, filePath);
                     } else if (basisCallback instanceof BasisBitmapCallback) {
-                        ((BasisBitmapCallback) basisCallback).success(call, response, getBitmap(filePath), filePath);
+                        ((BasisBitmapCallback) basisCallback).onSuccess(call, response, getBitmap(filePath), filePath);
                     }
                 }
             }
@@ -198,9 +198,9 @@ public class BasisDownloadBuilder extends BasisBaseUtils {
                 //下载进度
                 if (basisCallback != null) {
                     if (basisCallback instanceof BasisDownloadCallback) {
-                        ((BasisDownloadCallback) basisCallback).progress(totalSize, process, process * 100 / totalSize);
+                        ((BasisDownloadCallback) basisCallback).onProgress(totalSize, process, process * 100 / totalSize);
                     } else if (basisCallback instanceof BasisBitmapCallback) {
-                        ((BasisBitmapCallback) basisCallback).progress(totalSize, process, process * 100 / totalSize);
+                        ((BasisBitmapCallback) basisCallback).onProgress(totalSize, process, process * 100 / totalSize);
                     }
                 }
             }
@@ -216,9 +216,9 @@ public class BasisDownloadBuilder extends BasisBaseUtils {
             public void run() {
                 if (basisCallback != null) {
                     if (basisCallback instanceof BasisDownloadCallback) {
-                        ((BasisDownloadCallback) basisCallback).failure(call, e, message);
+                        ((BasisDownloadCallback) basisCallback).onFailure(call, e, message);
                     } else if (basisCallback instanceof BasisBitmapCallback) {
-                        ((BasisBitmapCallback) basisCallback).failure(call, e, message);
+                        ((BasisBitmapCallback) basisCallback).onFailure(call, e, message);
                     }
                 }
             }
