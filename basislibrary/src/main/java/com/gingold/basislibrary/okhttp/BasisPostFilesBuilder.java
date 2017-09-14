@@ -139,12 +139,12 @@ public class BasisPostFilesBuilder extends BasisBaseUtils {
                 } else {
                     message = "";
                 }
-                BasisLogUtils.e("failure: " + message);
+                BasisLogUtils.e("onFailure: " + message);
                 if (basisCallback != null) {
                     mHandler.post(new Runnable() {
                         @Override
                         public void run() {
-                            basisCallback.failure(call, e, message);
+                            basisCallback.onFailure(call, e, message);
                         }
                     });
                 }
@@ -158,12 +158,12 @@ public class BasisPostFilesBuilder extends BasisBaseUtils {
                 } else {
                     message = ""; 
                 }
-                BasisLogUtils.e("success: " + message);
+                BasisLogUtils.e("onSuccess: " + message);
                 if (basisCallback != null) {
                     mHandler.post(new Runnable() {
                         @Override
                         public void run() {
-                            basisCallback.success(call, response, message);
+                            basisCallback.onSuccess(call, response, message);
                         }
                     });
                 }

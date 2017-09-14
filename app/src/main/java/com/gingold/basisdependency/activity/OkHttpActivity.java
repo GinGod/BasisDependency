@@ -93,12 +93,12 @@ public class OkHttpActivity extends BaseActivity {
                 .build()
                 .execute(new BasisCallback() {
                     @Override
-                    public void success(Call call, Response response, String result) {
+                    public void onSuccess(Call call, Response response, String result) {
                         toast(result);
                     }
 
                     @Override
-                    public void failure(Call call, IOException e, String message) {
+                    public void onFailure(Call call, IOException e, String message) {
 
                     }
                 });
@@ -127,12 +127,12 @@ public class OkHttpActivity extends BaseActivity {
                 .build()
                 .execute(new BasisCallback() {
                     @Override
-                    public void success(Call call, Response response, String result) {
+                    public void onSuccess(Call call, Response response, String result) {
                         toast(result);
                     }
 
                     @Override
-                    public void failure(Call call, IOException e, String message) {
+                    public void onFailure(Call call, IOException e, String message) {
 
                     }
                 });

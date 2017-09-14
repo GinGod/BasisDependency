@@ -49,9 +49,9 @@ public class DownLoadImageService implements Runnable {
             e.printStackTrace();
         } finally {
 //            if (file != null) {
-//                callBack.success(file);
+//                callBack.onSuccess(file);
 //            } else {
-//                callBack.failure();
+//                callBack.onFailure();
 //            }
             if (bitmap != null && currentFile.exists()) {
                 callBack.onDownLoadSuccess(bitmap);

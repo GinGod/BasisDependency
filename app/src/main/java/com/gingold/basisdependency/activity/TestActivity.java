@@ -13,6 +13,7 @@ import com.gingold.basisdependency.Base.BaseActivity;
 import com.gingold.basisdependency.MyApplication;
 import com.gingold.basisdependency.R;
 import com.gingold.basislibrary.utils.BasisLogUtils;
+import com.gingold.basislibrary.utils.BasisProgressDialog;
 import com.gingold.basislibrary.utils.BasisTimesUtils;
 import com.gingold.basislibrary.utils.BasisVersionUtils;
 
@@ -99,6 +100,7 @@ public class TestActivity extends BaseActivity {
                 toast("up");
                 break;
             case R.id.tv_test_clear:
+                BasisProgressDialog.build(mActivity).show();
                 mIvArrow.clearAnimation();
                 toast("clear");
                 BasisLogUtils.e(BasisVersionUtils.getVersionName(mActivity) + " - " + BasisVersionUtils.getVersionCode(mActivity)

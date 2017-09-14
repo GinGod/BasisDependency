@@ -239,7 +239,7 @@ image/* //默认上传图片
 建立请求
 - execute  
 执行请求, 结果在主线程中执行  
-progress: 下载进度
+onProgress: 下载进度
 
 ## 6. BasisGlideUtils
 

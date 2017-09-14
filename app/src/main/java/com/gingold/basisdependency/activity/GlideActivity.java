@@ -84,14 +84,14 @@ public class GlideActivity extends BaseActivity {
             case R.id.tv_glide_download:
                 BasisGlideUtils.downloadPic(mActivity, Urls.picUrl1, "测试", new BasisCallBack() {
                     @Override
-                    public void success(Bitmap bitmap, File file, String fileName) {
+                    public void onSuccess(Bitmap bitmap, File file, String fileName) {
                         toast(fileName);
 //                        iv_glide_pic.setImageBitmap(bitmap);
                         BasisGlideUtils.load(mActivity, fileName, iv_glide_pic);
                     }
 
                     @Override
-                    public void failure() {
+                    public void onFailure() {
                         toast("下载失败");
                     }
                 });
