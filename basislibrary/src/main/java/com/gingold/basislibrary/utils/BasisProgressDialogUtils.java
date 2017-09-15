@@ -5,24 +5,24 @@ import android.app.ProgressDialog;
 import android.content.Context;
 
 /**
- * Created by MJG on 2017/9/13.
+ * ProgressDialog 显示工具类
  */
 
-public class BasisProgressDialog {
+public class BasisProgressDialogUtils {
 
     private static ProgressDialog mProgressDialog;
-    private static BasisProgressDialog basisProgressDialog;
+    private static BasisProgressDialogUtils basisProgressDialog;
 
-    private BasisProgressDialog() {
+    private BasisProgressDialogUtils() {
     }
 
     /**
      * 单例模式
      */
-    private static BasisProgressDialog getInstance() {
-        synchronized (BasisProgressDialog.class) {
+    private static BasisProgressDialogUtils getInstance() {
+        synchronized (BasisProgressDialogUtils.class) {
             if (basisProgressDialog == null) {
-                basisProgressDialog = new BasisProgressDialog();
+                basisProgressDialog = new BasisProgressDialogUtils();
             }
         }
         return basisProgressDialog;
@@ -31,7 +31,7 @@ public class BasisProgressDialog {
     /**
      * 创建ProgressDialog
      */
-    public static BasisProgressDialog build(final Context context) {
+    public static BasisProgressDialogUtils build(final Context context) {
         if (mProgressDialog != null) {//取消上一个dialog
             mProgressDialog.dismiss();
             mProgressDialog = null;
@@ -104,20 +104,20 @@ public class BasisProgressDialog {
      * @param cancelable   设置是否可以通过点击Back键取消
      * @param touchOutSide 设置在点击Dialog外是否取消Dialog进度条
      */
-    public BasisProgressDialog setCancelable(boolean cancelable, boolean touchOutSide) {
+    public BasisProgressDialogUtils setCancelable(boolean cancelable, boolean touchOutSide) {
         mProgressDialog.setCancelable(cancelable);// 设置是否可以通过点击Back键取消
         mProgressDialog.setCanceledOnTouchOutside(touchOutSide);// 设置在点击Dialog外是否取消Dialog进度条
         return getInstance();
     }
 
-    public BasisProgressDialog setTitle(int drawableId, String title) {
+    public BasisProgressDialogUtils setTitle(int drawableId, String title) {
         mProgressDialog.setIcon(drawableId);
         // 设置提示的title的图标，默认是没有的，如果没有设置title的话只设置Icon是不会显示图标的
         mProgressDialog.setTitle(title);
         return getInstance();
     }
 
-    public BasisProgressDialog setMessage(String message) {
+    public BasisProgressDialogUtils setMessage(String message) {
         mProgressDialog.setMessage(message);
         return getInstance();
     }

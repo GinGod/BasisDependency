@@ -27,7 +27,10 @@ public class BasisRecyclerView extends RecyclerView {
     /**
      * 是否可以加载更多的常量
      */
-    private boolean loadMoreEnabled = true;
+    private boolean loadMoreEnabled = false;
+    private boolean loadMoreEnabledState = false;//记录loadMore设置状态
+    private boolean shouldLoadMore = false;//根据滑动操作判断是否应该加载更多
+    private int loadMoreThreshold = 252 / 2;//根据滑动操作判断是否应该加载更多
     /**
      * 头布局集合
      */
@@ -54,6 +57,7 @@ public class BasisRecyclerView extends RecyclerView {
      * 最后的y坐标
      */
     private float mLastY = -1;
+    private float mDownY = -1;
     private BasisRvHeaderAndFooterWrapper mWrapAdapter;
     private BasisRvEmptyWrapper mEmptyWrapper;
     private BasisRvHeaderAndFooterWrapper mHeaderAndFooterWrapper;
@@ -88,7 +92,7 @@ public class BasisRecyclerView extends RecyclerView {
     public void onScrollStateChanged(int state) {
         super.onScrollStateChanged(state);
 
-        if (state == RecyclerView.SCROLL_STATE_IDLE && refreshAndLoadMoreListener != null && !isLoadingData && loadMoreEnabled) {
+        if (state == RecyclerView.SCROLL_STATE_IDLE && refreshAndLoadMoreListener != null && !isLoadingData && loadMoreEnabled && shouldLoadMore) {
             LayoutManager layoutManager = getLayoutManager();
             final int lastVisibleItemPosition;
             if (layoutManager instanceof GridLayoutManager) {
@@ -103,11 +107,13 @@ public class BasisRecyclerView extends RecyclerView {
             if (layoutManager.getChildCount() > 0
                     && lastVisibleItemPosition >= layoutManager.getItemCount() - 2
                     && layoutManager.getItemCount() > layoutManager.getChildCount()
-                    && !isNoMore && mHeadView.getStatus() < BasisRvRefreshHV.STATE_REFRESHING) {
+                    && !isNoMore && mHeadView.getStatus() < BasisRvRefreshHV.STATE_REFRESHING
+                    && loadMoreEnabled) {
 
                 isLoadingData = true;
                 mFootView.setState(BasisRvRefreshFV.STATE_LOADING);
                 refreshAndLoadMoreListener.onLoadMore();
+                shouldLoadMore = false;
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -142,6 +148,8 @@ public class BasisRecyclerView extends RecyclerView {
         switch (e.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 mLastY = e.getRawY();
+                mDownY = e.getRawY();
+                shouldLoadMore = false;
                 break;
             case MotionEvent.ACTION_MOVE:
                 final float deltaY = e.getRawY() - mLastY;
@@ -153,6 +161,13 @@ public class BasisRecyclerView extends RecyclerView {
                     }
                 }
                 break;
+            case MotionEvent.ACTION_UP:
+                if ((mDownY - e.getRawY()) > loadMoreThreshold) {
+                    shouldLoadMore = true;
+                } else {
+                    shouldLoadMore = false;
+                }
+                mDownY = -1;
             default:
                 //复位
                 mLastY = -1; // reset
@@ -285,6 +300,7 @@ public class BasisRecyclerView extends RecyclerView {
      */
     public void setLoadMoreEnabled(boolean isEnabled) {
         loadMoreEnabled = isEnabled;
+        loadMoreEnabledState = isEnabled;
     }
 
     /**
@@ -333,7 +349,7 @@ public class BasisRecyclerView extends RecyclerView {
                 if (mWrapAdapter.getRealItemCount() == 0) {
                     setLoadMoreEnabled(false);
                 } else {
-                    setLoadMoreEnabled(true);
+                    setLoadMoreEnabled(loadMoreEnabledState);
                 }
             }
         }, 252);

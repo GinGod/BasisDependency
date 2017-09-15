@@ -200,10 +200,13 @@ public class RvRefreshActivity extends BaseActivity {
         rv_refresh.addHeadView(mViews.get(8));
 
         mViews.get(9).setText("刷新脚布局");
+        mViews.get(9).setTextSize(52);
         rv_refresh.addFootView(mViews.get(9));
 
         mViews.get(10).setText("数据为空");
         rv_refresh.setEmptyView(mViews.get(10));
+
+        rv_refresh.setLoadMoreEnabled(true);
 
 //        rv_refresh.setAdapter(mMultiRvAdapter);//设置适配器
 //        rv_refresh.setAdapter(mHeaderAndFooterWrapper);//设置适配器

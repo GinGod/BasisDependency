@@ -25,6 +25,8 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 
+import java.util.List;
+
 
 /**
  * BasisBaseActivity
@@ -54,6 +56,7 @@ public abstract class BasisBaseActivity extends Activity implements OnClickListe
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);// 去掉标题栏
         initData();// 初始化数据
         setupViewLayout();// 初始化布局
+        additionalInitData();// 附加初始化数据
         initView();// 初始化UI
         listener();// 事件监听
         logicDispose();// 逻辑
@@ -63,7 +66,7 @@ public abstract class BasisBaseActivity extends Activity implements OnClickListe
     /**
      * 初始化数据
      */
-    private void initData() {
+    public void initData() {
         app = getApplication();
         mActivity = BasisBaseActivity.this;
         context = BasisBaseActivity.this;
@@ -75,6 +78,13 @@ public abstract class BasisBaseActivity extends Activity implements OnClickListe
      * 初始化布局
      */
     public abstract void setupViewLayout();
+
+    /**
+     * 附加初始化数据
+     */
+    public void additionalInitData() {
+
+    }
 
     /**
      * 初始化UI
@@ -233,6 +243,20 @@ public abstract class BasisBaseActivity extends Activity implements OnClickListe
 //        }
 //        return true;
         return BasisBaseUtils.areNotEmpty(strs);
+    }
+
+    /**
+     * 判断List不为空&&size>0
+     *
+     * @return true 不为空&&size>0
+     */
+    public static boolean areNotEmpty(List list) {
+//        if (list != null && list.size() > 0) {
+//            return true;
+//        }
+//
+//        return false;
+        return BasisBaseUtils.areNotEmpty(list);
     }
 
     /**

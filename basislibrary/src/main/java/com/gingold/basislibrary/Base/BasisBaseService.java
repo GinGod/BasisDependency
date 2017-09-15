@@ -12,6 +12,8 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 
+import java.util.List;
+
 /**
  * BasisBaseService
  */
@@ -114,6 +116,20 @@ public abstract class BasisBaseService extends Service {
             }
         }
         return true;
+    }
+
+    /**
+     * 判断List不为空&&size>0
+     *
+     * @return true 不为空&&size>0
+     */
+    public static boolean areNotEmpty(List list) {
+//        if (list != null && list.size() > 0) {
+//            return true;
+//        }
+//
+//        return false;
+        return BasisBaseUtils.areNotEmpty(list);
     }
 
     /**
