@@ -22,7 +22,7 @@ import com.gingold.basislibrary.okhttp.BasisBitmapCallback;
 import com.gingold.basislibrary.okhttp.BasisCallback;
 import com.gingold.basislibrary.okhttp.BasisOkHttpUtils;
 import com.gingold.basislibrary.utils.BasisLogUtils;
-import com.gingold.basislibrary.utils.BasisProgressDialog;
+import com.gingold.basislibrary.utils.BasisProgressDialogUtils;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -111,14 +111,14 @@ public class OkHttpPicActivity extends BaseActivity {
     }
 
     private void download1() {
-        BasisProgressDialog.build(mActivity).show();
+        BasisProgressDialogUtils.build(mActivity).show();
         String url = "http://img.juimg.com/tuku/yulantu/120926/219049-12092612154377.jpg";
         url = Urls.picUrl2;
 
         BasisOkHttpUtils.download().url(url).fileName(null).build().execute(new BasisBitmapCallback() {
             @Override
             public void onSuccess(Call call, Response response, Bitmap bitmap, String filePath) {
-                BasisProgressDialog.dismiss();
+                BasisProgressDialogUtils.dismiss();
                 iv_uploadpic.setImageBitmap(bitmap);
                 toast(filePath);
             }
@@ -130,7 +130,7 @@ public class OkHttpPicActivity extends BaseActivity {
 
             @Override
             public void onFailure(Call call, Exception e, String message) {
-                BasisProgressDialog.dismiss();
+                BasisProgressDialogUtils.dismiss();
                 toast(message);
             }
         });

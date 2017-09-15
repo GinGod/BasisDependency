@@ -24,4 +24,6 @@
     <color name="tertiary_text_dark">@android:color/tertiary_text_dark</color>
     <color name="tertiary_text_light">@android:color/tertiary_text_light</color>
     <color name="widget_edittext_dark">@android:color/widget_edittext_dark</color>
+
+    <color name="blue_confirm">#007aff</color>
 </resources>
