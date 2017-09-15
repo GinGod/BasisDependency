@@ -15,6 +15,7 @@ import android.widget.ListView;
 import android.widget.Scroller;
 import android.widget.TextView;
 
+import com.gingold.basislibrary.Base.BasisBaseUtils;
 import com.gingold.basislibrary.R;
 
 /**
@@ -238,7 +239,13 @@ public class BasisListView extends ListView implements OnScrollListener {
         mPullRefreshing = true;
         mHeaderView.setState(BasisLvRefreshHV.STATE_REFRESHING);
         if (mListViewListener != null) {
-            mListViewListener.onRefresh();
+            //延迟加载更多
+            BasisBaseUtils.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mListViewListener.onRefresh();
+                }
+            }, 252);
         }
     }
 
@@ -249,7 +256,13 @@ public class BasisListView extends ListView implements OnScrollListener {
         mPullLoading = true;
         mFooterView.setState(BasisLvRefreshFV.STATE_LOADING);
         if (mListViewListener != null) {
-            mListViewListener.onLoadMore();
+            //延迟加载更多
+            BasisBaseUtils.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mListViewListener.onLoadMore();
+                }
+            }, 252);
         }
         setSelection(mTotalItemCount + 1);
     }

@@ -11,6 +11,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.gingold.basislibrary.Base.BasisBaseUtils;
 import com.gingold.basislibrary.adapter.rv.BasisRvEmptyWrapper;
 import com.gingold.basislibrary.adapter.rv.BasisRvHeaderAndFooterWrapper;
 
@@ -112,14 +113,20 @@ public class BasisRecyclerView extends RecyclerView {
 
                 isLoadingData = true;
                 mFootView.setState(BasisRvRefreshFV.STATE_LOADING);
-                refreshAndLoadMoreListener.onLoadMore();
-                shouldLoadMore = false;
+                //延迟加载更多
+                BasisBaseUtils.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        refreshAndLoadMoreListener.onLoadMore();
+                    }
+                }, 252);
+                shouldLoadMore = false;//根据滑动操作判断是否应该加载更多
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         smoothScrollToPosition(lastVisibleItemPosition + 1);
                     }
-                }, 252);
+                }, 52);//完整展示加载更多view
             }
         }
     }
@@ -174,7 +181,12 @@ public class BasisRecyclerView extends RecyclerView {
                 if (isOnTop() && pullRefreshEnabled) {
                     if (mHeadView.releaseAction()) {
                         if (refreshAndLoadMoreListener != null) {
-                            refreshAndLoadMoreListener.onRefresh();
+                            BasisBaseUtils.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    refreshAndLoadMoreListener.onRefresh();
+                                }
+                            }, 252);
                         }
                     }
                 }
