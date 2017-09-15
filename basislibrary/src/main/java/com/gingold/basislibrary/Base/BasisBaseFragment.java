@@ -29,6 +29,8 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 
+import java.util.List;
+
 /**
  * BasisBaseFragment
  */
@@ -52,6 +54,7 @@ public abstract class BasisBaseFragment extends Fragment implements OnClickListe
         initData();// 初始化数据
         mBaseView = setupViewLayout(inflater);// 初始化布局
         initView(mBaseView);// 初始化UI
+        additionalInitData();// 附加初始化数据
         listener();// 事件监听
         logicDispose();// 逻辑
         additionalLogic();//附加逻辑
@@ -61,7 +64,7 @@ public abstract class BasisBaseFragment extends Fragment implements OnClickListe
     /**
      * 初始化数据
      */
-    private void initData() {
+    public void initData() {
         mActivity = getActivity();
         app = mActivity.getApplication();
         context = mActivity;
@@ -71,9 +74,17 @@ public abstract class BasisBaseFragment extends Fragment implements OnClickListe
 
     /**
      * 初始化根部局
+     *
      * @return mBaseView(根部局View)
      */
     public abstract View setupViewLayout(LayoutInflater inflater);
+
+    /**
+     * 附加初始化数据
+     */
+    public void additionalInitData() {
+
+    }
 
     /**
      * 初始化UI
@@ -153,6 +164,20 @@ public abstract class BasisBaseFragment extends Fragment implements OnClickListe
             }
         }
         return true;
+    }
+
+    /**
+     * 判断List不为空&&size>0
+     *
+     * @return true 不为空&&size>0
+     */
+    public static boolean areNotEmpty(List list) {
+//        if (list != null && list.size() > 0) {
+//            return true;
+//        }
+//
+//        return false;
+        return BasisBaseUtils.areNotEmpty(list);
     }
 
     /**

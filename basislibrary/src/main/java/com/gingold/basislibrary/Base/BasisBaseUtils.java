@@ -10,6 +10,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.List;
+
 /**
  *
  */
@@ -67,6 +69,19 @@ public class BasisBaseUtils {
             }
         }
         return true;
+    }
+
+    /**
+     * 判断List不为空&&size>0
+     *
+     * @return true 不为空&&size>0
+     */
+    public static boolean areNotEmpty(List list) {
+        if (list != null && list.size() > 0) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
