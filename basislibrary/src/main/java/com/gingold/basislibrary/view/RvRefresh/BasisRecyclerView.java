@@ -8,10 +8,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 
 import com.gingold.basislibrary.Base.BasisBaseUtils;
+import com.gingold.basislibrary.R;
 import com.gingold.basislibrary.adapter.rv.BasisRvEmptyWrapper;
 import com.gingold.basislibrary.adapter.rv.BasisRvHeaderAndFooterWrapper;
 
@@ -152,11 +154,15 @@ public class BasisRecyclerView extends RecyclerView {
         if (mLastY == -1) {
             mLastY = e.getRawY();
         }
+
+        if (mDownY == -1) {
+            mDownY = e.getRawY();
+            shouldLoadMore = false;
+        }
+
         switch (e.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 mLastY = e.getRawY();
-                mDownY = e.getRawY();
-                shouldLoadMore = false;
                 break;
             case MotionEvent.ACTION_MOVE:
                 final float deltaY = e.getRawY() - mLastY;
@@ -213,6 +219,11 @@ public class BasisRecyclerView extends RecyclerView {
         }
         mWrapAdapter = new BasisRvHeaderAndFooterWrapper(mEmptyWrapper);
         mWrapAdapter.addHeaderView(mHeadView);
+
+        //添加透明布局, 作为最后一个布局来判断是否符合加载更多条件
+        View transparentFooter = LayoutInflater.from(getContext()).inflate(R.layout.rv_footer_transparent, null);
+        mWrapAdapter.addFootView(transparentFooter);
+
         mWrapAdapter.addFootView(mFootView);
         super.setAdapter(mWrapAdapter);
     }
