@@ -10,7 +10,7 @@
         android:id="@+id/iv_lv_header_arrow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/arrow_down"/>
+        android:src="@drawable/lvgvrv_arrow_down"/>
 
     <com.gingold.basislibrary.view.CircleProgress.CircleProgressView
         android:id="@+id/cpv_lv_header"

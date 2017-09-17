@@ -104,7 +104,7 @@ public class BasisLvRefreshFV extends LinearLayout {
     }
 
     /**
-     * show footer
+     * showDialogSimple footer
      */
     public void show() {
 //        LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) mFooterView.getLayoutParams();

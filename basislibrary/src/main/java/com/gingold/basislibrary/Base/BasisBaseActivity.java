@@ -369,7 +369,7 @@ public abstract class BasisBaseActivity extends Activity implements OnClickListe
      */
     public void toast(String message) {
 //        if (message != null) {
-//            Toast.makeText(mActivity, message, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(mActivity, message, Toast.LENGTH_SHORT).showDialogSimple();
 //        }
         BasisBaseUtils.toast(mActivity, message);
     }

@@ -67,15 +67,15 @@ public class GlideActivity extends BaseActivity {
                 toast("清除缓存中...");
                 break;
             case R.id.tv_glide_load:
-//                Glide.with(mActivity).load(R.drawable.arrow_down).into(iv_glide_pic);
-//                GlideApp.with(mActivity).load(R.drawable.arrow_down).into(iv_glide_pic);
+//                Glide.with(mActivity).load(R.drawable.lvgvrv_arrow_down).into(iv_glide_pic);
+//                GlideApp.with(mActivity).load(R.drawable.lvgvrv_arrow_down).into(iv_glide_pic);
                 RequestOptions options = new RequestOptions().bitmapTransform(new CircleCrop());
                 GlideApp.with(mActivity).load(Urls.picUrl1)
                         .apply(options)
                         .into(iv_glide_pic);
 //                Glide.with(mActivity).load(Urls.picUrl1).transition(new DrawableTransitionOptions().crossFade(2000)).thumbnail(0.5f).into(iv_glide_pic);
-//                BasisGlideUtils.load(iv_glide_pic, R.drawable.arrow_down, iv_glide_pic);
-//                BasisGlideUtils.load(iv_glide_pic, Urls.picUrl1, iv_glide_pic, 2000, R.drawable.arrow_down, true);
+//                BasisGlideUtils.load(iv_glide_pic, R.drawable.lvgvrv_arrow_down, iv_glide_pic);
+//                BasisGlideUtils.load(iv_glide_pic, Urls.picUrl1, iv_glide_pic, 2000, R.drawable.lvgvrv_arrow_down, true);
 //                BasisGlideUtils.loadSpecial(iv_glide_pic, Urls.picUrl1, iv_glide_pic, mActivity, BasisGlideUtils.CROPCIRCLE);
 //                select();
 
@@ -101,7 +101,7 @@ public class GlideActivity extends BaseActivity {
 
     private void select() {
         HashMap<String, Integer> map = new HashMap<>();
-        map.put("1", R.drawable.arrow_down);
+        map.put("1", R.drawable.lvgvrv_arrow_down);
         map.put("2", R.drawable.ic_launcher);
         BasisGlideUtils.loadWithError(mActivity, Urls.picUrl1, iv_glide_pic, "1", map);
     }
