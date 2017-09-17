@@ -22,7 +22,7 @@ import com.gingold.basislibrary.okhttp.BasisBitmapCallback;
 import com.gingold.basislibrary.okhttp.BasisCallback;
 import com.gingold.basislibrary.okhttp.BasisOkHttpUtils;
 import com.gingold.basislibrary.utils.BasisLogUtils;
-import com.gingold.basislibrary.utils.BasisProgressDialogUtils;
+import com.gingold.basislibrary.utils.dialog.BasisProgressDialogUtils;
 
 import java.io.File;
 import java.io.FileOutputStream;

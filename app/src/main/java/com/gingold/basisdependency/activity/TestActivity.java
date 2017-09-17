@@ -1,6 +1,9 @@
 package com.gingold.basisdependency.activity;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
@@ -12,11 +15,17 @@ import android.widget.Toast;
 import com.gingold.basisdependency.Base.BaseActivity;
 import com.gingold.basisdependency.MyApplication;
 import com.gingold.basisdependency.R;
-import com.gingold.basislibrary.utils.BasisClickListener;
-import com.gingold.basislibrary.utils.BasisDialogUtils;
+import com.gingold.basislibrary.utils.BasisFileUtils;
+import com.gingold.basislibrary.utils.dialog.BasisDSClickListener;
+import com.gingold.basislibrary.utils.dialog.BasisDialogListenrer;
+import com.gingold.basislibrary.utils.dialog.BasisDialogUtils;
 import com.gingold.basislibrary.utils.BasisLogUtils;
+import com.gingold.basislibrary.utils.dialog.BasisPBLoadingUtils;
+import com.gingold.basislibrary.utils.dialog.BasisProgressDialogUtils;
 import com.gingold.basislibrary.utils.BasisTimesUtils;
 import com.gingold.basislibrary.utils.BasisVersionUtils;
+
+import java.io.File;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -87,6 +96,14 @@ public class TestActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_test_down:
+                BasisProgressDialogUtils.build(mActivity).setTitle(R.drawable.ic_launcher, "测试标题").setMessage("测试message")
+                        .setListener(new BasisDialogListenrer() {
+                            @Override
+                            public void onDismiss() {
+                                toast("dismiss");
+                            }
+                        }).show();
+//                test();
                 mIvArrow.startAnimation(mRotateDownAnim);
 //                toast("down");
                 Context context = MyApplication.getContext();
@@ -97,23 +114,39 @@ public class TestActivity extends BaseActivity {
                 }
                 break;
             case R.id.tv_test_up:
+                BasisPBLoadingUtils.build(mActivity)/*.setCancelable(true, true)*/
+                        .setListener(new BasisDialogListenrer() {
+                            @Override
+                            public void onDismiss() {
+                                toast("diss");
+                            }
+
+                            @Override
+                            public void onCancle() {
+                                super.onCancle();
+                                toast("cancle");
+                            }
+                        }).show();
                 mIvArrow.startAnimation(mRotateUpAnim);
                 toast("up");
                 break;
             case R.id.tv_test_clear:
-//                BasisProgressDialogUtils.build(mActivity).show();
-                BasisDialogUtils.show(mActivity, "标题", "message", new BasisClickListener() {
+                BasisDialogUtils.build(mActivity, "标题", "message", new BasisDSClickListener() {
                     @Override
                     public void onConfirm() {
                         toast("hkdhkj");
                     }
-                });
+                }).setCancelable(false, false).show();
                 mIvArrow.clearAnimation();
                 toast("clear");
                 BasisLogUtils.e(BasisVersionUtils.getVersionName(mActivity) + " - " + BasisVersionUtils.getVersionCode(mActivity)
                         + " - " + BasisVersionUtils.getDeviceInfo());
                 break;
             case R.id.tv_test_time:
+                File file = new File(BasisFileUtils.mkdir("testRecord"), BasisTimesUtils.getDeviceTimeOfYM() + ".txt");
+                for (int i = 0; i < 10; i++) {
+                    BasisFileUtils.writeRecord(file, "~!@#$%^&*()_+-" + i, true);
+                }
                 BasisLogUtils.e(BasisTimesUtils.getDeviceTimeOfSSS());
                 BasisLogUtils.e(BasisTimesUtils.getDeviceTime());
                 BasisLogUtils.e(BasisTimesUtils.getDeviceTimeOfYMD());
@@ -141,11 +174,24 @@ public class TestActivity extends BaseActivity {
                 postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        toast("隐藏");
-                        hideInputMethod();
+//                        toast("隐藏");
+//                        hideInputMethod();
                     }
                 }, 3000);
                 break;
         }
+    }
+
+    private void test() {
+        View view = LayoutInflater.from(mActivity).inflate(R.layout.dialog_simple, null);
+        AlertDialog dialog = new AlertDialog.Builder(mActivity).setView(view).create();
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.show();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        toast("keyCode: " + keyCode);
+        return super.onKeyDown(keyCode, event);
     }
 }

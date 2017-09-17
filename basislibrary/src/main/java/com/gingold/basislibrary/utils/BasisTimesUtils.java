@@ -136,4 +136,20 @@ public class BasisTimesUtils {
         }
         return date;
     }
+
+    /**
+     * 当前的时间(年月)
+     *
+     * @return yyyy-MM
+     */
+    public static String getDeviceTimeOfYM() {
+        String date = "";
+        try {
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM");
+            date = df.format(new Date());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return date;
+    }
 }

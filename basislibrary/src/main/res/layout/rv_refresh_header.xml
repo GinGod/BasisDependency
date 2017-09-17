@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginRight="15dp"
-        android:src="@drawable/arrow_down"/>
+        android:src="@drawable/lvgvrv_arrow_down"/>
 
     <com.gingold.basislibrary.view.CircleProgress.CircleProgressView
         android:id="@+id/pb_y_recycleview_head_refresh_progressbar"

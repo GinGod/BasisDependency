@@ -201,7 +201,7 @@ public class BasisRvRefreshHV extends LinearLayout {
             //return;
         }
         int destHeight = 0; // default: scroll back to dismiss header.
-        // is refreshing, just scroll back to show all the header.
+        // is refreshing, just scroll back to showDialogSimple all the header.
         if (mStatus == STATE_REFRESHING) {
             destHeight = mMeasuredHeight;
         }

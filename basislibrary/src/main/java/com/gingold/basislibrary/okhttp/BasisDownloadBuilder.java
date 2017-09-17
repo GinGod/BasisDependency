@@ -4,10 +4,10 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.media.ExifInterface;
-import android.os.Environment;
 import android.text.TextUtils;
 
 import com.gingold.basislibrary.Base.BasisBaseUtils;
+import com.gingold.basislibrary.utils.BasisFileUtils;
 import com.gingold.basislibrary.utils.BasisLogUtils;
 import com.gingold.basislibrary.utils.BasisTimesUtils;
 
@@ -105,11 +105,8 @@ public class BasisDownloadBuilder extends BasisBaseUtils {
 
                 try {
                     //下载储存文件夹
-                    String dirPath = Environment.getExternalStorageDirectory() + "/Download";
+                    String dirPath = BasisFileUtils.mkdir("Download");
                     File fileDir = new File(dirPath);
-                    if (!fileDir.exists()) {// 判断文件目录是否存在,不存在则创建该目录
-                        fileDir.mkdir();
-                    }
 
                     //下载文件名
                     if (TextUtils.isEmpty(fileName)) {

@@ -25,19 +25,14 @@ public class BasisDownLoadPicUtil {
             return;
         }
 
-        //保存的文件夹位置(注意小米手机必须这样获得public绝对路径)
-        File file = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsoluteFile();
-        String dirName = "GlideDownload";
-        File appDir = new File(file, dirName);
-        if (!appDir.exists()) {
-            appDir.mkdirs();
-        }
+        String dirName = BasisFileUtils.mkPicDir("GlideDownload");
+        File picDir = new File(dirName);
 
         //保存的文件位置
         if (TextUtils.isEmpty(fileName)) {
             fileName = System.currentTimeMillis() + "";
         }
-        final File picFile = checkFile(appDir, fileName, fileName, ".jpg");
+        final File picFile = checkFile(picDir, fileName, fileName, ".jpg");
 
         FileOutputStream fos = null;
         try {

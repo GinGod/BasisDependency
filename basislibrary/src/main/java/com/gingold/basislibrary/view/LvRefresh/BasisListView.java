@@ -209,7 +209,7 @@ public class BasisListView extends ListView implements OnScrollListener {
         if (!mEnablePullLoad) {
             mFooterView.hide();
             mFooterView.setOnClickListener(null);
-            //make sure "pull up" don't show a line in bottom when listview with one page
+            //make sure "pull up" don't showDialogSimple a line in bottom when listview with one page
             setFooterDividersEnabled(false);
         } else {
             mPullLoading = false;
@@ -227,7 +227,7 @@ public class BasisListView extends ListView implements OnScrollListener {
                 mFooterView.setOnClickListener(null);
             }
             mFooterView.setState(BasisLvRefreshFV.STATE_NORMAL);
-            //make sure "pull up" don't show a line in bottom when listview with one page
+            //make sure "pull up" don't showDialogSimple a line in bottom when listview with one page
             setFooterDividersEnabled(true);
         }
     }
@@ -327,7 +327,7 @@ public class BasisListView extends ListView implements OnScrollListener {
             return;
         }
         int finalHeight = 0; // default: scroll back to dismiss header.
-        // is refreshing, just scroll back to show all the header.
+        // is refreshing, just scroll back to showDialogSimple all the header.
         if (mPullRefreshing && height > mHeaderViewHeight) {
             finalHeight = mHeaderViewHeight;
         }
