@@ -124,10 +124,19 @@ public abstract class BasisBaseActivity extends Activity implements OnClickListe
 
     @Override
     protected void onDestroy() {
+        destory();
+        super.onDestroy();
+    }
+
+    /**
+     * activity destory前的操作
+     */
+    public void destory() {
         if (mReceiver != null) {
             unregisterReceiver(mReceiver);//取消注册广播
         }
-        super.onDestroy();
+
+        mHandler.removeCallbacksAndMessages(null);//清空所有消息
     }
 
     /**
@@ -495,6 +504,23 @@ public abstract class BasisBaseActivity extends Activity implements OnClickListe
     }
 
     /**
+     * 获取控件, 并设置可点击
+     */
+    public <T extends View> T getView(int id) {
+        View view = findViewById(id);
+        view.setClickable(true);
+        return (T) view;
+    }
+
+    /**
+     * 获取控件, 不设置可点击
+     */
+    public <T extends View> T getViewNoClickable(int id) {
+        View view = findViewById(id);
+        return (T) view;
+    }
+
+    /**
      * TextView查找并设置监听
      */
     public TextView findTextView(int id) {
@@ -580,6 +606,24 @@ public abstract class BasisBaseActivity extends Activity implements OnClickListe
      */
     public RecyclerView findRecyclerView(int id) {
         return (RecyclerView) findViewById(id);
+    }
+
+    /**
+     * 设置text
+     */
+    public TextView setTvText(int id, String text) {
+        TextView view = findTextView(id);
+        view.setText(showStr(text));
+        return view;
+    }
+
+    /**
+     * 设置text
+     */
+    public EditText setEtText(int id, String text) {
+        EditText view = findEditText(id);
+        view.setText(showStr(text));
+        return view;
     }
 
     /**

@@ -24,5 +24,10 @@ public interface BasisBitmapCallback {
     /**
      * 请求网络失败
      */
-    void onFailure(Call call, Exception e, String message);
+    void onFailure(String url, String content, Call call, Exception e, String message);
+
+    /**
+     * 处理成功结果异常
+     */
+    void onException(String url, String content, String result, Exception e, String errorMessage);
 }

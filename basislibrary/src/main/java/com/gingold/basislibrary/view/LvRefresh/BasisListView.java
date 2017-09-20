@@ -268,6 +268,14 @@ public class BasisListView extends ListView implements OnScrollListener {
     }
 
     /**
+     * 还原所有的状态
+     */
+    public void resetStatus() {
+        stopRefresh();
+        stopLoadMore();
+    }
+
+    /**
      * stop refresh, reset header view.
      */
     public void stopRefresh() {

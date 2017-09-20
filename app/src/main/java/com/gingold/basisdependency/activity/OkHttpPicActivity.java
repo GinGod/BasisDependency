@@ -129,10 +129,16 @@ public class OkHttpPicActivity extends BaseActivity {
             }
 
             @Override
-            public void onFailure(Call call, Exception e, String message) {
+            public void onFailure(String url, String content, Call call, Exception e, String message) {
                 BasisProgressDialogUtils.dismiss();
                 toast(message);
             }
+
+            @Override
+            public void onException(String url, String content, String result, Exception e, String errorMessage) {
+
+            }
+
         });
 
 //        BasisOkHttpUtils.download().url(url).fileName(null).build().execute(new BasisDownloadCallback() {
@@ -310,9 +316,16 @@ public class OkHttpPicActivity extends BaseActivity {
                     }
 
                     @Override
-                    public void onFailure(Call call, IOException e, String message) {
+                    public void onFailure(String url, String content, Call call, IOException e, String message) {
 
                     }
+
+                    @Override
+                    public void onException(String url, String content, String result, Exception e, String errorMessage) {
+
+                    }
+
+
                 });
 
     }

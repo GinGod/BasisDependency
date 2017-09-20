@@ -98,7 +98,12 @@ public class OkHttpActivity extends BaseActivity {
                     }
 
                     @Override
-                    public void onFailure(Call call, IOException e, String message) {
+                    public void onFailure(String url, String content, Call call, IOException e, String message) {
+
+                    }
+
+                    @Override
+                    public void onException(String url, String content, String result, Exception e, String errorMessage) {
 
                     }
                 });
@@ -132,9 +137,16 @@ public class OkHttpActivity extends BaseActivity {
                     }
 
                     @Override
-                    public void onFailure(Call call, IOException e, String message) {
+                    public void onFailure(String url, String content, Call call, IOException e, String message) {
 
                     }
+
+                    @Override
+                    public void onException(String url, String content, String result, Exception e, String errorMessage) {
+
+                    }
+
+
                 });
     }
 

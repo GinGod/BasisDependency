@@ -7,6 +7,7 @@ import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.text.TextUtils;
 import android.text.util.Linkify;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -99,7 +100,9 @@ public class BasisLvGvViewHolder {
 
     public BasisLvGvViewHolder setTvTextListener(int viewId, String text, View.OnClickListener listener) {
         TextView tv = getView(viewId);
-        tv.setText(text == null ? "" : text);
+        if (!TextUtils.isEmpty(text)) {
+            tv.setText(text == null ? "" : text);
+        }
         tv.setOnClickListener(listener);
         return this;
     }

@@ -144,7 +144,7 @@ public class BasisPostFilesBuilder extends BasisBaseUtils {
                     mHandler.post(new Runnable() {
                         @Override
                         public void run() {
-                            basisCallback.onFailure(call, e, message);
+                            basisCallback.onFailure(url, content, call, e, message);
                         }
                     });
                 }
@@ -156,14 +156,19 @@ public class BasisPostFilesBuilder extends BasisBaseUtils {
                 if (response != null && response.body() != null) {
                     message = response.body().string();
                 } else {
-                    message = ""; 
+                    message = "";
                 }
                 BasisLogUtils.e("onSuccess: " + message);
                 if (basisCallback != null) {
                     mHandler.post(new Runnable() {
                         @Override
                         public void run() {
-                            basisCallback.onSuccess(call, response, message);
+                            try {
+                                basisCallback.onSuccess(call, response, message);
+                            } catch (Exception e) {
+                                basisCallback.onException(url, content, message, e, e.getMessage());
+                                e.printStackTrace();
+                            }
                         }
                     });
                 }
