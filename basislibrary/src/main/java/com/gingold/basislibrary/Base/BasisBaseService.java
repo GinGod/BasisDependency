@@ -61,10 +61,19 @@ public abstract class BasisBaseService extends Service {
 
     @Override
     public void onDestroy() {
+        destory();
+        super.onDestroy();
+    }
+
+    /**
+     * service destory前的操作
+     */
+    public void destory() {
         if (mReceiver != null) {
             unregisterReceiver(mReceiver);//取消注册广播
         }
-        super.onDestroy();
+
+        mHandler.removeCallbacksAndMessages(null);//清空所有消息
     }
 
     /**

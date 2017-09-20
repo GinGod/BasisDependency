@@ -54,8 +54,7 @@ public class LvRefreshActivity extends BaseActivity implements BasisListView.Bas
     }
 
     private void onLoad() {
-        mListView.stopRefresh();
-        mListView.stopLoadMore();
+        mListView.resetStatus();
         mListView.setRefreshTime("刚刚");
         BasisLogUtils.e("refresh");
     }

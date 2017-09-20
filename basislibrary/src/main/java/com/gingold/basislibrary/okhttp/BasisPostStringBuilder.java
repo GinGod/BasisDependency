@@ -136,7 +136,11 @@ public class BasisPostStringBuilder extends BasisBaseUtils {
                     mHandler.post(new Runnable() {
                         @Override
                         public void run() {
-                            basisCallback.onFailure(call, e, message);
+                            try {
+                                basisCallback.onFailure(url, content, call, e, message);
+                            } catch (Exception e1) {
+                                e1.printStackTrace();
+                            }
                         }
                     });
                 }
@@ -155,7 +159,12 @@ public class BasisPostStringBuilder extends BasisBaseUtils {
                     mHandler.post(new Runnable() {
                         @Override
                         public void run() {
-                            basisCallback.onSuccess(call, response, message);
+                            try {
+                                basisCallback.onSuccess(call, response, message);
+                            } catch (Exception e) {
+                                basisCallback.onException(url, content, message, e, e.getMessage());
+                                e.printStackTrace();
+                            }
                         }
                     });
                 }

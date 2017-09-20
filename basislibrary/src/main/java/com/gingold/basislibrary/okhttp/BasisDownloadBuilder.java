@@ -176,9 +176,19 @@ public class BasisDownloadBuilder extends BasisBaseUtils {
             public void run() {
                 if (basisCallback != null) {
                     if (basisCallback instanceof BasisDownloadCallback) {
-                        ((BasisDownloadCallback) basisCallback).onSuccess(call, response, filePath);
+                        try {
+                            ((BasisDownloadCallback) basisCallback).onSuccess(call, response, filePath);
+                        } catch (Exception e) {
+                            ((BasisDownloadCallback) basisCallback).onException(url, "", filePath, e, e.getMessage());
+                            e.printStackTrace();
+                        }
                     } else if (basisCallback instanceof BasisBitmapCallback) {
-                        ((BasisBitmapCallback) basisCallback).onSuccess(call, response, getBitmap(filePath), filePath);
+                        try {
+                            ((BasisBitmapCallback) basisCallback).onSuccess(call, response, getBitmap(filePath), filePath);
+                        } catch (Exception e) {
+                            ((BasisBitmapCallback) basisCallback).onException(url, "", filePath, e, e.getMessage());
+                            e.printStackTrace();
+                        }
                     }
                 }
             }
@@ -213,9 +223,9 @@ public class BasisDownloadBuilder extends BasisBaseUtils {
             public void run() {
                 if (basisCallback != null) {
                     if (basisCallback instanceof BasisDownloadCallback) {
-                        ((BasisDownloadCallback) basisCallback).onFailure(call, e, message);
+                        ((BasisDownloadCallback) basisCallback).onFailure(url, "", call, e, message);
                     } else if (basisCallback instanceof BasisBitmapCallback) {
-                        ((BasisBitmapCallback) basisCallback).onFailure(call, e, message);
+                        ((BasisBitmapCallback) basisCallback).onFailure(url, "", call, e, message);
                     }
                 }
             }
