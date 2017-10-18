@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.novoda.bintray-release'
 
 android {
     compileSdkVersion 26
@@ -30,4 +31,13 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:4.0.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.0.0'
     compile 'jp.wasabeef:glide-transformations:2.0.2'//Glide特殊效果
+}
+
+publish {
+    userOrg = 'gingod'//bintray.com用户名
+    groupId = 'com.gingod'//jcenter上的路径
+    artifactId = 'BasisDependency'//项目名称
+    publishVersion = '1.0.0'//版本号
+    desc = 'BasisDependency 1.0.0'//描述，不重要
+    website = 'https://github.com/GinGod/BasisDependency'//网站，不重要；尽量模拟github上的地址，例如我这样的；当然你有地址最好了
 }

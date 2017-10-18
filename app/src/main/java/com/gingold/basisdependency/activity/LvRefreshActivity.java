@@ -42,13 +42,14 @@ public class LvRefreshActivity extends BaseActivity implements BasisListView.Bas
         geneItems();
         mAdapter = new ArrayAdapter<String>(this, R.layout.list_item, items);
         mListView.setAdapter(mAdapter);
+        mListView.setSelection(mAdapter.getCount());
 //		mListView.setPullLoadEnable(false);
         mListView.setPullLoadEnable(true, false);
 //		mListView.setPullRefreshEnable(false);
     }
 
     private void geneItems() {
-        for (int i = 0; i != 20; ++i) {
+        for (int i = 0; i != 252; ++i) {
             items.add("refresh cnt " + (++start));
         }
     }
