@@ -21,7 +21,7 @@ public class LVRVData {
     public static ArrayList<LVBean> getData() {
         ArrayList<LVBean> lvrvList = new ArrayList<>();
         lvrvList.add(new LVBean("start", 1));
-        for (int i = 0; i < 52; i++) {
+        for (int i = 0; i < 252; i++) {
             lvrvList.add(new LVBean(strs[new Random().nextInt(5)], new Random().nextInt(3) + 1));
         }
         lvrvList.add(new LVBean("end", 1));
