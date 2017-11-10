@@ -25,6 +25,7 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -32,12 +33,19 @@ import java.util.List;
  * BasisBaseActivity
  */
 public abstract class BasisBaseActivity extends Activity implements OnClickListener {
+    //自定义的标题栏布局
     /**
-     * 自定义的标题栏布局
+     * 标题左返回
      */
-    public ImageView iv_base_back;// 标题左返回
-    public TextView tv_base_title;// 标题中
-    public TextView tv_base_right;// 标题右
+    public ImageView iv_base_back;
+    /**
+     * 标题中
+     */
+    public TextView tv_base_title;
+    /**
+     * 标题右
+     */
+    public TextView tv_base_right;
 
     public Application app;//application
     public BasisBaseActivity mActivity;// 上下文
@@ -47,8 +55,12 @@ public abstract class BasisBaseActivity extends Activity implements OnClickListe
 
     private BroadcastReceiver mReceiver;//广播
     private IntentFilter mFilter;//广播接受过滤器
+    private ArrayList<BroadcastReceiver> mReceiverList = new ArrayList<>();//广播集合
 
-    public final String TAG = this.getClass().getSimpleName() + "TAG";//类名日志tag
+    /**
+     * 类名日志TAG
+     */
+    public final String TAG = this.getClass().getSimpleName() + "-TAG";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +95,6 @@ public abstract class BasisBaseActivity extends Activity implements OnClickListe
      * 附加初始化数据
      */
     public void additionalInitData() {
-
     }
 
     /**
@@ -124,19 +135,25 @@ public abstract class BasisBaseActivity extends Activity implements OnClickListe
 
     @Override
     protected void onDestroy() {
-        destory();
+        destory();//activity destory前的操作
         super.onDestroy();
     }
 
     /**
-     * activity destory前的操作
+     * activity destory前的操作(默认取消注册广播并清空所有mHander消息)
      */
     public void destory() {
-        if (mReceiver != null) {
-            unregisterReceiver(mReceiver);//取消注册广播
-        }
+        try {
+            if (mReceiver != null) {
+                unregisterReceiver(mReceiver);//取消注册广播
+            }
 
-        mHandler.removeCallbacksAndMessages(null);//清空所有消息
+            removeAllReceiver();//取消所有已经添加注册的广播
+
+            mHandler.removeCallbacksAndMessages(null);//清空所有消息
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -197,7 +214,6 @@ public abstract class BasisBaseActivity extends Activity implements OnClickListe
      * title右边监听
      */
     public void doTitleRightListener() {
-
     }
 
     /**
@@ -206,16 +222,6 @@ public abstract class BasisBaseActivity extends Activity implements OnClickListe
      * @return true 至少有一个为空; false 全部不为空
      */
     public boolean areEmpty(CharSequence... strs) {
-//        if (strs == null) {
-//            return true;
-//        }
-//
-//        for (int i = 0; i < strs.length; i++) {
-//            if (TextUtils.isEmpty(strs[i])) {
-//                return true;
-//            }
-//        }
-//        return false;
         return BasisBaseUtils.areEmpty(strs);
     }
 
@@ -227,11 +233,6 @@ public abstract class BasisBaseActivity extends Activity implements OnClickListe
      * @return true 为空; false 不为空
      */
     public boolean isEmpty(CharSequence str, String message) {
-//        if (TextUtils.isEmpty(str)) {
-//            toast(message);
-//            return true;
-//        }
-//        return false;
         return BasisBaseUtils.isEmpty(mActivity, str, message);
     }
 
@@ -241,16 +242,6 @@ public abstract class BasisBaseActivity extends Activity implements OnClickListe
      * @return true 全不为空; false 至少有一个为空
      */
     public boolean areNotEmpty(CharSequence... strs) {
-//        if (strs == null) {
-//            return false;
-//        }
-//
-//        for (int i = 0; i < strs.length; i++) {
-//            if (TextUtils.isEmpty(strs[i])) {
-//                return false;
-//            }
-//        }
-//        return true;
         return BasisBaseUtils.areNotEmpty(strs);
     }
 
@@ -260,11 +251,6 @@ public abstract class BasisBaseActivity extends Activity implements OnClickListe
      * @return true 不为空&&size>0
      */
     public static boolean areNotEmpty(List list) {
-//        if (list != null && list.size() > 0) {
-//            return true;
-//        }
-//
-//        return false;
         return BasisBaseUtils.areNotEmpty(list);
     }
 
@@ -276,11 +262,6 @@ public abstract class BasisBaseActivity extends Activity implements OnClickListe
      * @return true 不为空; false 为空
      */
     public boolean isNotEmpty(CharSequence str, String message) {
-//        if (TextUtils.isEmpty(str)) {
-//            toast(message);
-//            return false;
-//        }
-//        return true;
         return BasisBaseUtils.isNotEmpty(mActivity, str, message);
     }
 
@@ -290,16 +271,6 @@ public abstract class BasisBaseActivity extends Activity implements OnClickListe
      * @return true 不为空; false 为空
      */
     public boolean areNotNull(Object... objs) {
-//        if (objs == null) {
-//            return false;
-//        }
-//
-//        for (int i = 0; i < objs.length; i++) {
-//            if (objs[i] == null) {
-//                return false;
-//            }
-//        }
-//        return true;
         return BasisBaseUtils.areNotNull(objs);
     }
 
@@ -307,92 +278,134 @@ public abstract class BasisBaseActivity extends Activity implements OnClickListe
      * 设置控件可以触摸编辑
      */
     public void setEnabledTrue(View... views) {
-//        for (int i = 0; i < views.length; i++) {
-//            views[i].setEnabled(true);
-//        }
         BasisBaseUtils.setEnabledTrue(views);
+    }
+
+    /**
+     * 设置控件可以触摸编辑
+     */
+    public void setEnabledTrue(int... ids) {
+        for (int i = 0; i < ids.length; i++) {
+            getView(ids[i]).setEnabled(true);
+        }
     }
 
     /**
      * 设置控件不可以触摸编辑
      */
     public void setEnabledFalse(View... views) {
-//        for (int i = 0; i < views.length; i++) {
-//            views[i].setEnabled(false);
-//        }
         BasisBaseUtils.setEnabledFalse(views);
+    }
+
+    /**
+     * 设置控件不可以触摸编辑
+     */
+    public void setEnabledFalse(int... ids) {
+        for (int i = 0; i < ids.length; i++) {
+            getView(ids[i]).setEnabled(false);
+        }
     }
 
     /**
      * 设置控件可以点击
      */
     public void setClickableTrue(View... views) {
-//        for (int i = 0; i < views.length; i++) {
-//            views[i].setClickable(true);
-//        }
         BasisBaseUtils.setClickableTrue(views);
+    }
+
+    /**
+     * 设置控件可以点击
+     */
+    public void setClickableTrue(int... ids) {
+        for (int i = 0; i < ids.length; i++) {
+            getView(ids[i]).setClickable(true);
+        }
     }
 
     /**
      * 设置控件不可以点击
      */
     public void setClickableFalse(View... views) {
-//        for (int i = 0; i < views.length; i++) {
-//            views[i].setClickable(false);
-//        }
         setClickableFalse(views);
+    }
+
+    /**
+     * 设置控件不可以点击
+     */
+    public void setClickableFalse(int... ids) {
+        for (int i = 0; i < ids.length; i++) {
+            getView(ids[i]).setClickable(false);
+        }
     }
 
     /**
      * 设置控件可见
      */
     public void setVisible(View... views) {
-//        for (int i = 0; i < views.length; i++) {
-//            views[i].setVisibility(View.VISIBLE);
-//        }
         BasisBaseUtils.setVisible(views);
+    }
+
+    /**
+     * 设置控件可见
+     */
+    public void setVisible(int... ids) {
+        for (int i = 0; i < ids.length; i++) {
+            getView(ids[i]).setVisibility(View.VISIBLE);
+        }
     }
 
     /**
      * 设置控件不可见(隐藏)
      */
     public void setGone(View... views) {
-//        for (int i = 0; i < views.length; i++) {
-//            views[i].setVisibility(View.GONE);
-//        }
         BasisBaseUtils.setGone(views);
+    }
+
+    /**
+     * 设置控件不可见(隐藏)
+     */
+    public void setGone(int... ids) {
+        for (int i = 0; i < ids.length; i++) {
+            getView(ids[i]).setVisibility(View.GONE);
+        }
     }
 
     /**
      * 设置控件不可见(不隐藏)
      */
     public void setInVisible(View... views) {
-//        for (int i = 0; i < views.length; i++) {
-//            views[i].setVisibility(View.INVISIBLE);
-//        }
         BasisBaseUtils.setInVisible(views);
+    }
+
+    /**
+     * 设置控件不可见(不隐藏)
+     */
+    public void setInVisible(int... ids) {
+        for (int i = 0; i < ids.length; i++) {
+            getView(ids[i]).setVisibility(View.INVISIBLE);
+        }
+    }
+
+    /**
+     * 设置默认监听
+     */
+    public void setOnClickListener(int... ids) {
+        for (int i = 0; i < ids.length; i++) {
+            getView(ids[i]);
+        }
     }
 
     /**
      * Toast
      */
     public void toast(String message) {
-//        if (message != null) {
-//            Toast.makeText(mActivity, message, Toast.LENGTH_SHORT).showDialogSimple();
-//        }
         BasisBaseUtils.toast(mActivity, message);
     }
 
     /**
-     * 将字符串转为int
+     * 将字符串转为int(异常时返回-1)
      */
     public int parseInt(String str) {
-//        try {
-//            return Integer.parseInt(str);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return -1;
-//        }
         return BasisBaseUtils.parseInt(str);
     }
 
@@ -400,24 +413,13 @@ public abstract class BasisBaseActivity extends Activity implements OnClickListe
      * 将字符串转为int(抛出转换异常)
      */
     public int parseIntWithE(String str) throws Exception {
-//        try {
-//            return Integer.parseInt(str);
-//        } catch (Exception e) {
-//            throw e;
-//        }
         return BasisBaseUtils.parseIntWithE(str);
     }
 
     /**
-     * 将字符串转为long
+     * 将字符串转为long(异常时返回-1)
      */
     public long parseLong(String str) {
-//        try {
-//            return Long.parseLong(str);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return -1L;
-//        }
         return BasisBaseUtils.parseLong(str);
     }
 
@@ -425,24 +427,13 @@ public abstract class BasisBaseActivity extends Activity implements OnClickListe
      * 将字符串转为long(抛出转换异常)
      */
     public long parseLongWithE(String str) throws Exception {
-//        try {
-//            return Long.parseLong(str);
-//        } catch (Exception e) {
-//            throw e;
-//        }
         return BasisBaseUtils.parseLongWithE(str);
     }
 
     /**
-     * 将字符串转为Double
+     * 将字符串转为Double(异常时返回-1)
      */
     public Double parseDouble(String str) {
-//        try {
-//            return Double.parseDouble(str);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return -1d;
-//        }
         return BasisBaseUtils.parseDouble(str);
     }
 
@@ -450,11 +441,6 @@ public abstract class BasisBaseActivity extends Activity implements OnClickListe
      * 将字符串转为Double(抛出转换异常)
      */
     public Double parseDoubleWithE(String str) throws Exception {
-//        try {
-//            return Double.parseDouble(str);
-//        } catch (Exception e) {
-//            throw e;
-//        }
         return BasisBaseUtils.parseDoubleWithE(str);
     }
 
@@ -462,23 +448,28 @@ public abstract class BasisBaseActivity extends Activity implements OnClickListe
      * 判断对象是否相等(对象需重写equals方法)
      */
     public boolean isequals(Object obj1, Object obj2) {
-//        if (obj1 == null) {
-//            return obj1 == obj2;
-//        } else {
-//            if (obj1.equals(obj2)) {
-//                return true;
-//            } else {
-//                return false;
-//            }
-//        }
         return BasisBaseUtils.isequals(obj1, obj2);
     }
 
     /**
-     * 获取输入框的字符串
+     * 获取文本框的字符串(与{@link #getText(TextView)}方法完全一样)
      */
     public String getText(TextView view) {
         return view.getText().toString().trim();
+    }
+
+    /**
+     * 获取文本框的字符串(与{@link #getText(TextView)}方法完全一样)
+     */
+    public String getTvText(TextView view) {
+        return getText(view);
+    }
+
+    /**
+     * 获取文本框的字符串
+     */
+    public String getTvText(int id) {
+        return ((TextView) getView(id)).getText().toString().trim();
     }
 
     /**
@@ -509,6 +500,7 @@ public abstract class BasisBaseActivity extends Activity implements OnClickListe
     public <T extends View> T getView(int id) {
         View view = findViewById(id);
         view.setClickable(true);
+        view.setOnClickListener(this);
         return (T) view;
     }
 
@@ -522,7 +514,9 @@ public abstract class BasisBaseActivity extends Activity implements OnClickListe
 
     /**
      * TextView查找并设置监听
+     * <p>(使用{@link #getView(int)}或者{@link #getViewNoClickable(int)} (int)}方法替代)
      */
+    @Deprecated
     public TextView findTextView(int id) {
         TextView view = (TextView) findViewById(id);
         setClickableTrue(view);
@@ -532,7 +526,9 @@ public abstract class BasisBaseActivity extends Activity implements OnClickListe
 
     /**
      * EditText查找并设置监听
+     * <p>(使用{@link #getView(int)}或者{@link #getViewNoClickable(int)} (int)}方法替代)
      */
+    @Deprecated
     public EditText findEditText(int id) {
         EditText view = (EditText) findViewById(id);
         setClickableTrue(view);
@@ -542,7 +538,9 @@ public abstract class BasisBaseActivity extends Activity implements OnClickListe
 
     /**
      * ImageView查找并设置监听
+     * <p>(使用{@link #getView(int)}或者{@link #getViewNoClickable(int)} (int)}方法替代)
      */
+    @Deprecated
     public ImageView findImageView(int id) {
         ImageView view = (ImageView) findViewById(id);
         setClickableTrue(view);
@@ -552,7 +550,9 @@ public abstract class BasisBaseActivity extends Activity implements OnClickListe
 
     /**
      * RelativeLayout查找并设置监听
+     * <p>(使用{@link #getView(int)}或者{@link #getViewNoClickable(int)} (int)}方法替代)
      */
+    @Deprecated
     public RelativeLayout findRelativeLayout(int id) {
         RelativeLayout view = (RelativeLayout) findViewById(id);
         setClickableTrue(view);
@@ -562,7 +562,9 @@ public abstract class BasisBaseActivity extends Activity implements OnClickListe
 
     /**
      * LinearLayout查找并设置监听
+     * <p>(使用{@link #getView(int)}或者{@link #getViewNoClickable(int)} (int)}方法替代)
      */
+    @Deprecated
     public LinearLayout findLinearLayout(int id) {
         LinearLayout view = (LinearLayout) findViewById(id);
         setClickableTrue(view);
@@ -572,7 +574,9 @@ public abstract class BasisBaseActivity extends Activity implements OnClickListe
 
     /**
      * Button查找并设置监听
+     * <p>(使用{@link #getView(int)}或者{@link #getViewNoClickable(int)} (int)}方法替代)
      */
+    @Deprecated
     public Button findButton(int id) {
         Button view = (Button) findViewById(id);
         setClickableTrue(view);
@@ -582,28 +586,36 @@ public abstract class BasisBaseActivity extends Activity implements OnClickListe
 
     /**
      * Spinner查找
+     * <p>(使用{@link #getView(int)}或者{@link #getViewNoClickable(int)} (int)}方法替代)
      */
+    @Deprecated
     public Spinner findSpinner(int id) {
         return (Spinner) findViewById(id);
     }
 
     /**
      * ListView查找
+     * <p>(使用{@link #getView(int)}或者{@link #getViewNoClickable(int)} (int)}方法替代)
      */
+    @Deprecated
     public ListView findListView(int id) {
         return (ListView) findViewById(id);
     }
 
     /**
      * GridView查找
+     * <p>(使用{@link #getView(int)}或者{@link #getViewNoClickable(int)} (int)}方法替代)
      */
+    @Deprecated
     public GridView findGridView(int id) {
         return (GridView) findViewById(id);
     }
 
     /**
      * RecyclerView查找
+     * <p>(使用{@link #getView(int)}或者{@link #getViewNoClickable(int)} (int)}方法替代)
      */
+    @Deprecated
     public RecyclerView findRecyclerView(int id) {
         return (RecyclerView) findViewById(id);
     }
@@ -612,7 +624,7 @@ public abstract class BasisBaseActivity extends Activity implements OnClickListe
      * 设置text
      */
     public TextView setTvText(int id, String text) {
-        TextView view = findTextView(id);
+        TextView view = getView(id);
         view.setText(showStr(text));
         return view;
     }
@@ -621,7 +633,7 @@ public abstract class BasisBaseActivity extends Activity implements OnClickListe
      * 设置text
      */
     public EditText setEtText(int id, String text) {
-        EditText view = findEditText(id);
+        EditText view = getView(id);
         view.setText(showStr(text));
         return view;
     }
@@ -687,9 +699,13 @@ public abstract class BasisBaseActivity extends Activity implements OnClickListe
     }
 
     /**
-     * 注册广播
+     * 注册广播(只能注册一次)
+     *
+     * @deprecated 使用 {@link #addReceiver(OnReceiverListener, String...)} 可重复注册添加多条广播
      */
+    @Deprecated
     public void registerReceiver(String... action) {
+//        if (action != null) {//不做非空判断, 异常时需暴露异常, 便于查错
         mFilter = new IntentFilter();
         for (int i = 0; i < action.length; i++) {
             mFilter.addAction(action[i]);
@@ -702,14 +718,65 @@ public abstract class BasisBaseActivity extends Activity implements OnClickListe
             }
         };
         registerReceiver(mReceiver, mFilter);
+//        }
     }
 
     /**
-     * 根据接受到的action处理不同消息
-     *
-     * @param action
+     * 根据接受到的action处理不同消息, 与注册广播方法关联使用
+     * <p>{@link #registerReceiver(String...)}
      */
+    @Deprecated
     public void handlerReceiver(Context context, String action, Intent intent) {
+    }
+
+    /**
+     * 注册添加广播, 可添加多条广播, 用于替代 {@link #registerReceiver(String...)} 方法
+     */
+    public BroadcastReceiver addReceiver(final OnReceiverListener receiverListener, String... action) {
+        IntentFilter filter = new IntentFilter();
+        for (int i = 0; i < action.length; i++) {
+            filter.addAction(action[i]);
+        }
+        BroadcastReceiver receiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                String action = intent.getAction();
+                if (receiverListener != null) {
+                    receiverListener.onReceiver(context, action, intent);
+                }
+            }
+        };
+        registerReceiver(receiver, filter);
+        mReceiverList.add(receiver);
+        return receiver;
+    }
+
+    /**
+     * 取消注册广播
+     */
+    public void removeReceiver(BroadcastReceiver receiver) {
+        if (receiver != null) {
+            unregisterReceiver(receiver);
+            mReceiverList.remove(receiver);
+        }
+    }
+
+    /**
+     * 取消所有已经添加注册的广播
+     */
+    public void removeAllReceiver() {
+        for (int i = 0; i < mReceiverList.size(); i++) {
+            BroadcastReceiver receiver = mReceiverList.get(i);
+            unregisterReceiver(receiver);
+        }
+        mReceiverList.clear();
+    }
+
+    /**
+     * 广播接受自定义监听处理
+     */
+    interface OnReceiverListener {
+        void onReceiver(Context context, String action, Intent intent);
     }
 
 }

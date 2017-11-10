@@ -25,6 +25,7 @@
         <activity android:name=".activity.OkHttpPicActivity"/>
         <activity android:name=".activity.GlideActivity"/>
         <activity android:name=".activity.PhotoActivity"/>
+        <activity android:name=".activity.DBActivity"/>
     </application>
 
 </manifest>
