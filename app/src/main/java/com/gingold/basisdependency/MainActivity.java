@@ -3,6 +3,7 @@ package com.gingold.basisdependency;
 import android.view.View;
 
 import com.gingold.basisdependency.Base.BaseActivity;
+import com.gingold.basisdependency.activity.DBActivity;
 import com.gingold.basisdependency.activity.GlideActivity;
 import com.gingold.basisdependency.activity.LvRefreshActivity;
 import com.gingold.basisdependency.activity.MultiLvActivity;
@@ -79,6 +80,9 @@ public class MainActivity extends BaseActivity {
                                 break;
                             case MainData.PHOTO:
                                 startActivity(PhotoActivity.class);
+                                break;
+                            case MainData.DB:
+                                startActivity(DBActivity.class);
                                 break;
                         }
                     }

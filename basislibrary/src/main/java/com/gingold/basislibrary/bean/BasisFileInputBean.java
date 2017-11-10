@@ -3,7 +3,7 @@ package com.gingold.basislibrary.bean;
 import java.io.File;
 
 /**
- *
+ * 文件上传信息bean
  */
 
 public class BasisFileInputBean {

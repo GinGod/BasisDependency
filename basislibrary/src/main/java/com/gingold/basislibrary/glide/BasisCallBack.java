@@ -5,7 +5,7 @@ import android.graphics.Bitmap;
 import java.io.File;
 
 /**
- *
+ * Glide图片下载监听
  */
 
 public interface BasisCallBack {
