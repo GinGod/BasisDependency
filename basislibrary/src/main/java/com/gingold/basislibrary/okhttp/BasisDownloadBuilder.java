@@ -1,25 +1,27 @@
 package com.gingold.basislibrary.okhttp;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
-import android.media.ExifInterface;
 import android.text.TextUtils;
 
 import com.gingold.basislibrary.Base.BasisBaseUtils;
 import com.gingold.basislibrary.utils.BasisFileUtils;
 import com.gingold.basislibrary.utils.BasisLogUtils;
 import com.gingold.basislibrary.utils.BasisTimesUtils;
+import com.google.gson.Gson;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 
 /**
@@ -28,7 +30,15 @@ import okhttp3.Response;
 
 public class BasisDownloadBuilder extends BasisBaseUtils {
     private String url;//网址
+    private boolean isGet = false;//使用get请求
+    private String fileDirName = "Download";//文件夹名(默认Download)
     private String fileName;//文件名
+
+    private String content = "";//jsonStr
+    //    private MediaType mediaType = MediaType.parse("text/plain;charset=utf-8");//默认MediaType
+    private MediaType mediaType = MediaType.parse("application/json; charset=utf-8");//默认MediaType
+
+    private Map<String, String> params = new HashMap<>();//参数集合
 
     private OkHttpClient mOkHttpClient;
     private Call mCall;
@@ -42,6 +52,22 @@ public class BasisDownloadBuilder extends BasisBaseUtils {
     }
 
     /**
+     * 请求网址
+     */
+    public BasisDownloadBuilder get() {
+        this.isGet = true;
+        return this;
+    }
+
+    /**
+     * 储存的文件夹
+     */
+    public BasisDownloadBuilder fileDirName(String fileDirName) {
+        this.fileDirName = fileDirName;
+        return this;
+    }
+
+    /**
      * 储存的文件名
      */
     public BasisDownloadBuilder fileName(String fileName) {
@@ -50,15 +76,78 @@ public class BasisDownloadBuilder extends BasisBaseUtils {
     }
 
     /**
+     * 请求String的MediaType
+     */
+    public BasisDownloadBuilder mediaType(MediaType mediaType) {
+        if (mediaType != null) {
+            this.mediaType = mediaType;
+        }
+        return this;
+    }
+
+    /**
+     * 请求参数
+     */
+    public BasisDownloadBuilder content(Object object) {
+        if (object != null && object instanceof String) {
+            this.content = (String) object;
+        } else {
+            this.content = new Gson().toJson(object);
+        }
+        return this;
+    }
+
+    /**
+     * 添加参数
+     */
+    public BasisDownloadBuilder addParams(String key, String value) {
+        this.params.put(key, value);
+        return this;
+    }
+
+    /**
+     * 添加参数集合
+     */
+    public BasisDownloadBuilder addParams(Map<String, String> map) {
+        for (Map.Entry<String, String> entry : map.entrySet()) {
+            this.params.put(entry.getKey(), entry.getValue());
+        }
+        return this;
+    }
+
+    /**
      * 建立请求
      */
     public BasisDownloadBuilder build() {
         mOkHttpClient = new OkHttpClient();
-        Request request = new Request.Builder()
-                .url(url)
-                .build();
+
+        Request request = null;
+        if (isGet) {
+            request = new Request.Builder()
+                    .url(url)
+                    .get()
+                    .build();
+        } else {
+            RequestBody requestBody = null;
+            if (!TextUtils.isEmpty(content)) {//提交的是json串
+                requestBody = RequestBody.create(mediaType, content);
+            } else {//提交键值对
+                FormBody.Builder builder = new FormBody.Builder();
+                for (Map.Entry<String, String> entry : this.params.entrySet()) {
+                    builder.add(entry.getKey(), entry.getValue());
+                    content = content + entry.getKey() + " : " + entry.getValue() + " , ";//记录参数
+                }
+                requestBody = builder.build();
+            }
+
+            request = new Request.Builder()
+                    .url(url)
+                    .post(requestBody)
+                    .build();
+        }
+        
         mCall = mOkHttpClient.newCall(request);
-        BasisLogUtils.e("url: " + url);
+        BasisLogUtils.e("url: " + url + " , jsonStr: " + content);
         return this;
     }
 
@@ -76,14 +165,7 @@ public class BasisDownloadBuilder extends BasisBaseUtils {
         enqueue(basisCallback);
     }
 
-    /**
-     * 执行请求(默认下载的是图片)
-     */
-    public void execute(final BasisBitmapCallback basisCallback) {
-        enqueue(basisCallback);
-    }
-
-    private void enqueue(final Object basisCallback) {
+    private void enqueue(final BasisDownloadCallback basisCallback) {
         mCall.enqueue(new Callback() {
             @Override
             public void onFailure(final Call call, final IOException e) {
@@ -105,7 +187,7 @@ public class BasisDownloadBuilder extends BasisBaseUtils {
 
                 try {
                     //下载储存文件夹
-                    String dirPath = BasisFileUtils.mkdir("Download");
+                    String dirPath = BasisFileUtils.mkdir(fileDirName);
                     File fileDir = new File(dirPath);
 
                     //下载文件名
@@ -115,7 +197,7 @@ public class BasisDownloadBuilder extends BasisBaseUtils {
                             return;
                         } else {
                             //截取网址最后15位作为下载的文件名
-                            String replace = url.replace("\\", "").replace("/", "");
+                            String replace = url.replace("\\", "").replace("/", "").replace(":", "");
                             if (replace.length() > 15) {
                                 fileName = replace.substring(replace.length() - 15);
                             } else {
@@ -125,7 +207,7 @@ public class BasisDownloadBuilder extends BasisBaseUtils {
                     }
 
                     //下载的文件
-                    File file = checkFile(fileDir, fileName, fileName, "");
+                    File file = checkFile(fileDir, fileName, fileName);
                     OutputStream = new FileOutputStream(file);
                     final String filePath = file.getAbsolutePath();
 
@@ -170,25 +252,16 @@ public class BasisDownloadBuilder extends BasisBaseUtils {
     /**
      * 下载成功
      */
-    private void success(final Call call, final Response response, final String filePath, final Object basisCallback) {
+    private void success(final Call call, final Response response, final String filePath, final BasisDownloadCallback basisCallback) {
         mHandler.post(new Runnable() {
             @Override
             public void run() {
                 if (basisCallback != null) {
-                    if (basisCallback instanceof BasisDownloadCallback) {
-                        try {
-                            ((BasisDownloadCallback) basisCallback).onSuccess(call, response, filePath);
-                        } catch (Exception e) {
-                            ((BasisDownloadCallback) basisCallback).onException(url, "", filePath, e, e.getMessage());
-                            e.printStackTrace();
-                        }
-                    } else if (basisCallback instanceof BasisBitmapCallback) {
-                        try {
-                            ((BasisBitmapCallback) basisCallback).onSuccess(call, response, getBitmap(filePath), filePath);
-                        } catch (Exception e) {
-                            ((BasisBitmapCallback) basisCallback).onException(url, "", filePath, e, e.getMessage());
-                            e.printStackTrace();
-                        }
+                    try {
+                        basisCallback.onSuccess(call, response, filePath);
+                    } catch (Exception e) {
+                        basisCallback.onException(url, content, filePath, e, e.getMessage());
+                        e.printStackTrace();
                     }
                 }
             }
@@ -198,17 +271,13 @@ public class BasisDownloadBuilder extends BasisBaseUtils {
     /**
      * 下载进度
      */
-    private void process(final long totalSize, final long process, final Object basisCallback) {
+    private void process(final long totalSize, final long process, final BasisDownloadCallback basisCallback) {
         mHandler.post(new Runnable() {
             @Override
             public void run() {
                 //下载进度
                 if (basisCallback != null) {
-                    if (basisCallback instanceof BasisDownloadCallback) {
-                        ((BasisDownloadCallback) basisCallback).onProgress(totalSize, process, process * 100 / totalSize);
-                    } else if (basisCallback instanceof BasisBitmapCallback) {
-                        ((BasisBitmapCallback) basisCallback).onProgress(totalSize, process, process * 100 / totalSize);
-                    }
+                    basisCallback.onProgress(totalSize, process, process * 100 / totalSize);
                 }
             }
         });
@@ -217,16 +286,12 @@ public class BasisDownloadBuilder extends BasisBaseUtils {
     /**
      * 下载失败
      */
-    private void failure(final Call call, final Exception e, final String message, final Object basisCallback) {
+    private void failure(final Call call, final Exception e, final String message, final BasisDownloadCallback basisCallback) {
         mHandler.post(new Runnable() {
             @Override
             public void run() {
                 if (basisCallback != null) {
-                    if (basisCallback instanceof BasisDownloadCallback) {
-                        ((BasisDownloadCallback) basisCallback).onFailure(url, "", call, e, message);
-                    } else if (basisCallback instanceof BasisBitmapCallback) {
-                        ((BasisBitmapCallback) basisCallback).onFailure(url, "", call, e, message);
-                    }
+                    basisCallback.onFailure(url, content, call, e, message);
                 }
             }
         });
@@ -235,65 +300,18 @@ public class BasisDownloadBuilder extends BasisBaseUtils {
     /**
      * 检测重复文件
      */
-    private static File checkFile(File appDir, String fileName, String newFileName, String type) {
-        File picFile = new File(appDir, newFileName + type);
+    private static File checkFile(File appDir, String fileName, String newFileName) {
+        File picFile = new File(appDir, newFileName);
         if (picFile.exists() && picFile.isFile() && picFile.length() > 0) {
             //已存在相同名字的文件时, 通过设备时间区分
-            newFileName = BasisTimesUtils.getDeviceTime().replace(" ", "") + "_" + fileName;
-            return checkFile(appDir, fileName, newFileName, type);
+            newFileName = BasisTimesUtils.getDeviceTime()
+                    .replace(" ", "_")
+                    .replace(":", "-")
+                    + "_" + fileName;
+            return checkFile(appDir, fileName, newFileName);
         } else {
             return picFile;
         }
     }
 
-    /**
-     * 获取图片
-     */
-    private Bitmap getBitmap(String filePath) {
-        BitmapFactory.Options newOpts = new BitmapFactory.Options();
-        newOpts.inJustDecodeBounds = false;
-        newOpts.inPurgeable = true;
-        newOpts.inInputShareable = true;
-        newOpts.inSampleSize = 5;
-        newOpts.inPreferredConfig = Bitmap.Config.RGB_565;
-        Bitmap bmp = BitmapFactory.decodeFile(filePath, newOpts);
-        int degree = readPictureDegree(filePath);
-        if (degree <= 0) {
-            return bmp;
-        } else {
-            Matrix matrix = new Matrix();
-            matrix.postRotate(degree);
-            Bitmap resizedBitmap = Bitmap.createBitmap(bmp, 0, 0,
-                    bmp.getWidth(), bmp.getHeight(), matrix, true);
-            return resizedBitmap;
-        }
-    }
-
-    /**
-     * 读取照片exif信息中的旋转角度
-     * http://www.eoeandroid.com/thread-196978-1-1.html
-     */
-    public static int readPictureDegree(String path) {
-        int degree = 0;
-        try {
-            ExifInterface exifInterface = new ExifInterface(path);
-            int orientation = exifInterface.getAttributeInt(
-                    ExifInterface.TAG_ORIENTATION,
-                    ExifInterface.ORIENTATION_NORMAL);
-            switch (orientation) {
-                case ExifInterface.ORIENTATION_ROTATE_90:
-                    degree = 90;
-                    break;
-                case ExifInterface.ORIENTATION_ROTATE_180:
-                    degree = 180;
-                    break;
-                case ExifInterface.ORIENTATION_ROTATE_270:
-                    degree = 270;
-                    break;
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return degree;
-    }
 }

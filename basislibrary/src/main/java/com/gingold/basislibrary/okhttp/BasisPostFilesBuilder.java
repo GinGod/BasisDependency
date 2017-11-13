@@ -64,7 +64,7 @@ public class BasisPostFilesBuilder extends BasisBaseUtils {
     /**
      * 添加参数
      */
-    public BasisPostFilesBuilder addParams(String key, String value) {
+    public BasisPostFilesBuilder addParam(String key, String value) {
         this.params.put(key, value);
         return this;
     }
@@ -90,7 +90,7 @@ public class BasisPostFilesBuilder extends BasisBaseUtils {
         if (params != null) {//添加上传参数
             for (Map.Entry<String, String> entry : params.entrySet()) {
                 builder.addFormDataPart(entry.getKey(), entry.getValue());
-                content = content + entry.getKey() + " = " + entry.getValue() + " , ";//记录参数
+                content = content + entry.getKey() + " : " + entry.getValue() + " , ";//记录参数
             }
         }
 
