@@ -18,11 +18,10 @@ import com.gingold.basisdependency.Base.BaseActivity;
 import com.gingold.basisdependency.R;
 import com.gingold.basisdependency.data.Urls;
 import com.gingold.basisdependency.utils.ImageUploadUtils;
-import com.gingold.basislibrary.okhttp.BasisBitmapCallback;
 import com.gingold.basislibrary.okhttp.BasisCallback;
+import com.gingold.basislibrary.okhttp.BasisDownloadCallback;
 import com.gingold.basislibrary.okhttp.BasisOkHttpUtils;
 import com.gingold.basislibrary.utils.BasisLogUtils;
-import com.gingold.basislibrary.utils.dialog.BasisProgressDialogUtils;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -111,52 +110,31 @@ public class OkHttpPicActivity extends BaseActivity {
     }
 
     private void download1() {
-        BasisProgressDialogUtils.build(mActivity).show();
+//        BasisProgressDialogUtils.build(mActivity).show();
         String url = "http://img.juimg.com/tuku/yulantu/120926/219049-12092612154377.jpg";
         url = Urls.picUrl2;
 
-        BasisOkHttpUtils.download().url(url).fileName(null).build().execute(new BasisBitmapCallback() {
+        BasisOkHttpUtils.download().get().url(url).fileName(null).build().execute(new BasisDownloadCallback() {
             @Override
-            public void onSuccess(Call call, Response response, Bitmap bitmap, String filePath) {
-                BasisProgressDialogUtils.dismiss();
-                iv_uploadpic.setImageBitmap(bitmap);
+            public void onSuccess(Call call, Response response, String filePath) {
                 toast(filePath);
             }
 
             @Override
-            public void onProgress(long totalSize, long currentSize, long progress) {
-                BasisLogUtils.e("onProgress: " + totalSize + " " + currentSize + " " + progress);
+            public void onProgress(long totalSize, long currentSize, long onProgress) {
+//                BasisLogUtils.e("onProgress: " + totalSize + " " + currentSize + " " + onProgress);
             }
 
             @Override
             public void onFailure(String url, String content, Call call, Exception e, String message) {
-                BasisProgressDialogUtils.dismiss();
-                toast(message);
+
             }
 
             @Override
             public void onException(String url, String content, String result, Exception e, String errorMessage) {
 
             }
-
         });
-
-//        BasisOkHttpUtils.download().url(url).fileName(null).build().execute(new BasisDownloadCallback() {
-//            @Override
-//            public void onSuccess(Call call, Response response, String filePath) {
-//                toast(filePath);
-//            }
-//
-//            @Override
-//            public void onProgress(long totalSize, long currentSize, long onProgress) {
-//                BasisLogUtils.e("onProgress: " + totalSize + " " + currentSize + " " + onProgress);
-//            }
-//
-//            @Override
-//            public void onFailure(Call call, Exception e, String message) {
-//                toast(message);
-//            }
-//        });
     }
 
     private void download() {

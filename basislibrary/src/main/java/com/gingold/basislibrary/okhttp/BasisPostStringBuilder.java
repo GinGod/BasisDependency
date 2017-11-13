@@ -1,5 +1,7 @@
 package com.gingold.basislibrary.okhttp;
 
+import android.text.TextUtils;
+
 import com.gingold.basislibrary.Base.BasisBaseUtils;
 import com.gingold.basislibrary.utils.BasisLogUtils;
 import com.google.gson.Gson;
@@ -23,7 +25,7 @@ import okhttp3.Response;
 
 public class BasisPostStringBuilder extends BasisBaseUtils {
     private String url;//网址
-    private String content;//jsonStr
+    private String content = "";//jsonStr
     //    private MediaType mediaType = MediaType.parse("text/plain;charset=utf-8");//默认MediaType
     private MediaType mediaType = MediaType.parse("application/json; charset=utf-8");//默认MediaType
 
@@ -87,12 +89,13 @@ public class BasisPostStringBuilder extends BasisBaseUtils {
         mOkHttpClient = new OkHttpClient();
 
         RequestBody requestBody = null;
-        if (content != null) {//提交的是json串
+        if (!TextUtils.isEmpty(content)) {//提交的是json串
             requestBody = RequestBody.create(mediaType, content);
         } else {//提交键值对
             FormBody.Builder builder = new FormBody.Builder();
             for (Map.Entry<String, String> entry : this.params.entrySet()) {
                 builder.add(entry.getKey(), entry.getValue());
+                content = content + entry.getKey() + " : " + entry.getValue() + " , ";//记录参数
             }
             requestBody = builder.build();
         }
