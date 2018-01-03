@@ -2,6 +2,7 @@ package com.gingold.basislibrary.Base;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Paint;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.TextUtils;
@@ -76,7 +77,7 @@ public class BasisBaseUtils {
      *
      * @return true 不为空&&size>0
      */
-    public static boolean areNotEmpty(List list) {
+    public static boolean areNotEmptyList(List list) {
         if (list != null && list.size() > 0) {
             return true;
         }
@@ -177,6 +178,33 @@ public class BasisBaseUtils {
     public static void setInVisible(View... views) {
         for (int i = 0; i < views.length; i++) {
             views[i].setVisibility(View.INVISIBLE);
+        }
+    }
+
+    /**
+     * 设置控件背景资源
+     */
+    public static void setBGResource(int resource, View... views) {
+        for (int i = 0; i < views.length; i++) {
+            views[i].setBackgroundResource(resource);
+        }
+    }
+
+    /**
+     * 设置下划线
+     */
+    public static void setUnderline(TextView... views) {
+        for (int i = 0; i < views.length; i++) {
+            views[i].getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
+        }
+    }
+
+    /**
+     * 设置删除线
+     */
+    public static void setStrike(TextView... views) {
+        for (int i = 0; i < views.length; i++) {
+            views[i].getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
         }
     }
 

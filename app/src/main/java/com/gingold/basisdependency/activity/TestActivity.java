@@ -131,7 +131,7 @@ public class TestActivity extends BaseActivity {
                 toast("up");
                 break;
             case R.id.tv_test_clear:
-                BasisDialogUtils.build(mActivity, "标题", "message", new BasisDSClickListener() {
+                BasisDialogUtils.build(mActivity, "标题", "你有信息未读, 请立即查看!", new BasisDSClickListener() {
                     @Override
                     public void onConfirm() {
                         toast("hkdhkj");

@@ -181,21 +181,21 @@ public class BasisDBUtils {
     /**
      * 查询所有
      */
-    public ArrayList queryAll() throws Exception {
+    public ArrayList queryAll() {
         return query(null, null, null, null, null, null, null);
     }
 
     /**
      * 选择查询
      */
-    public ArrayList querySelect(String selection, String[] selectionArgs) throws Exception {
+    public ArrayList querySelect(String selection, String[] selectionArgs) {
         return query(null, selection, selectionArgs, null, null, null, null);
     }
 
     /**
      * 选择排序查询
      */
-    public ArrayList queryOrder(String selection, String[] selectionArgs, String orderBy, String limit) throws Exception {
+    public ArrayList queryOrder(String selection, String[] selectionArgs, String orderBy, String limit) {
         return query(null, selection, selectionArgs, null, null, orderBy, limit);
     }
 
@@ -224,34 +224,42 @@ public class BasisDBUtils {
      *                      LIMIT clause. Passing null denotes no LIMIT clause.
      */
     public ArrayList query(String[] columns, String selection,
-                           String[] selectionArgs, String groupBy, String having, String orderBy, String limit) throws Exception {
+                           String[] selectionArgs, String groupBy, String having, String orderBy, String limit) {
         ArrayList list = new ArrayList<>();
-        Cursor cursor = mReadableDatabase.query(mDBTable.getTableName(), columns, selection, selectionArgs, groupBy, having, orderBy, limit);
-        if (cursor == null) {
-            return list;
-        }
-        while (cursor.moveToNext()) {
-            Class clazz = mDBTable.getClass();//获取类
-            Object item = clazz.newInstance();//创建对象
-            Field[] fields = clazz.getDeclaredFields();
-            for (int i = 0; i < fields.length; i++) {
-                Field field = fields[i];
-                String fieldName = field.getName();
-                //屏蔽额外的成员变量
-                if (!"$change".equals(fieldName) && !"serialVersionUID".equals(fieldName)) {
-                    field.setAccessible(true);
-                    int index = cursor.getColumnIndex(field.getName());//根据名字获取列索引
-                    if (index != -1) {//当前列索引存在
-                        String value = cursor.getString(index);//根据索引查值
-                        if (!TextUtils.isEmpty(value)) {//值不为空
-                            field.set(item, value);
+        Cursor cursor = null;
+        try {
+            cursor = mReadableDatabase.query(mDBTable.getTableName(), columns, selection, selectionArgs, groupBy, having, orderBy, limit);
+            if (cursor == null) {
+                return list;
+            }
+            while (cursor.moveToNext()) {
+                Class clazz = mDBTable.getClass();//获取类
+                Object item = clazz.newInstance();//创建对象
+                Field[] fields = clazz.getDeclaredFields();
+                for (int i = 0; i < fields.length; i++) {
+                    Field field = fields[i];
+                    String fieldName = field.getName();
+                    //屏蔽额外的成员变量
+                    if (!"$change".equals(fieldName) && !"serialVersionUID".equals(fieldName)) {
+                        field.setAccessible(true);
+                        int index = cursor.getColumnIndex(field.getName());//根据名字获取列索引
+                        if (index != -1) {//当前列索引存在
+                            String value = cursor.getString(index);//根据索引查值
+                            if (!TextUtils.isEmpty(value)) {//值不为空
+                                field.set(item, value);
+                            }
                         }
                     }
                 }
+                list.add(item);
             }
-            list.add(item);
+            cursor.close();//关闭流
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (cursor != null) {//关闭流
+                cursor.close();
+            }
         }
-        cursor.close();//关闭流
         return list;
     }
 

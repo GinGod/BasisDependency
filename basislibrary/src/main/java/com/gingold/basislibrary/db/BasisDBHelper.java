@@ -33,8 +33,13 @@ public class BasisDBHelper extends SQLiteOpenHelper {
             buffer.append("CREATE TABLE IF NOT EXISTS " + tableName + "(_id integer not null primary key autoincrement,");
             for (int i = 0; i < fields.length; i++) {
                 String fieldName = fields[i].getName();
+                int range = fields.length - 1 - 3;
                 if (!"$change".equals(fieldName) && !"serialVersionUID".equals(fieldName)) {
-                    buffer.append(fields[i].getName() + " varchar(252),");
+                    if (i > range) {//最后三个字段增大最大储存长度
+                        buffer.append(fields[i].getName() + " varchar(2520),");
+                    } else {
+                        buffer.append(fields[i].getName() + " varchar(252),");
+                    }
                 }
             }
             buffer.deleteCharAt(buffer.length() - 1);

@@ -90,6 +90,7 @@ public class OkHttpActivity extends BaseActivity {
                 .addParams("ExpressCompanylevel", "0")
                 .addParams("currentpage", "0")
                 .addParams("pagesize", "0")
+                .addParams("pagesize1", null)
                 .build()
                 .execute(new BasisCallback() {
                     @Override
