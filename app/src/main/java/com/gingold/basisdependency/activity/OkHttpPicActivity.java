@@ -280,8 +280,8 @@ public class OkHttpPicActivity extends BaseActivity {
         File file = new File(imagePath);
         String name = file.getAbsolutePath().replace("\\", "").replace("/", "");
 
-        BasisOkHttpUtils
-                .postFile()
+        BasisOkHttpUtils.initLogState(true)
+                .postFile().setLogState(true)
                 .url(url)
                 .mediaType(null)
 //                .addParams(maps)

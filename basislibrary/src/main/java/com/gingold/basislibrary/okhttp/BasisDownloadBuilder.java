@@ -2,6 +2,7 @@ package com.gingold.basislibrary.okhttp;
 
 import android.text.TextUtils;
 
+import com.gingold.basislibrary.Base.BasisBaseContants;
 import com.gingold.basislibrary.Base.BasisBaseUtils;
 import com.gingold.basislibrary.utils.BasisFileUtils;
 import com.gingold.basislibrary.utils.BasisLogUtils;
@@ -29,10 +30,11 @@ import okhttp3.Response;
  */
 
 public class BasisDownloadBuilder extends BasisBaseUtils {
-    private String url;//网址
+    private boolean isLogState = true;//日志打印状态, 默认true
+    private String url = "";//网址
     private boolean isGet = false;//使用get请求
     private String fileDirName = "Download";//文件夹名(默认Download)
-    private String fileName;//文件名
+    private String fileName = "";//文件名
 
     private String content = "";//jsonStr
     //    private MediaType mediaType = MediaType.parse("text/plain;charset=utf-8");//默认MediaType
@@ -42,6 +44,14 @@ public class BasisDownloadBuilder extends BasisBaseUtils {
 
     private OkHttpClient mOkHttpClient;
     private Call mCall;
+
+    /**
+     * 本次请求日志打印状态, 默认true, 打印日志
+     */
+    public BasisDownloadBuilder setLogState(boolean logState) {
+        isLogState = logState;
+        return this;
+    }
 
     /**
      * 请求网址
@@ -63,7 +73,7 @@ public class BasisDownloadBuilder extends BasisBaseUtils {
      * 储存的文件夹
      */
     public BasisDownloadBuilder fileDirName(String fileDirName) {
-        this.fileDirName = fileDirName;
+        this.fileDirName = BasisBaseUtils.showStr(fileDirName);
         return this;
     }
 
@@ -71,7 +81,7 @@ public class BasisDownloadBuilder extends BasisBaseUtils {
      * 储存的文件名
      */
     public BasisDownloadBuilder fileName(String fileName) {
-        this.fileName = fileName;
+        this.fileName = BasisBaseUtils.showStr(fileName);
         return this;
     }
 
@@ -101,7 +111,7 @@ public class BasisDownloadBuilder extends BasisBaseUtils {
      * 添加参数
      */
     public BasisDownloadBuilder addParams(String key, String value) {
-        this.params.put(key, value);
+        this.params.put(BasisBaseUtils.showStr(key), BasisBaseUtils.showStr(value));
         return this;
     }
 
@@ -110,7 +120,7 @@ public class BasisDownloadBuilder extends BasisBaseUtils {
      */
     public BasisDownloadBuilder addParams(Map<String, String> map) {
         for (Map.Entry<String, String> entry : map.entrySet()) {
-            this.params.put(entry.getKey(), entry.getValue());
+            this.params.put(BasisBaseUtils.showStr(entry.getKey()), BasisBaseUtils.showStr(entry.getValue()));
         }
         return this;
     }
@@ -134,8 +144,8 @@ public class BasisDownloadBuilder extends BasisBaseUtils {
             } else {//提交键值对
                 FormBody.Builder builder = new FormBody.Builder();
                 for (Map.Entry<String, String> entry : this.params.entrySet()) {
-                    builder.add(entry.getKey(), entry.getValue());
-                    content = content + entry.getKey() + " : " + entry.getValue() + " , ";//记录参数
+                    builder.add(BasisBaseUtils.showStr(entry.getKey()), BasisBaseUtils.showStr(entry.getValue()));
+                    content = content + BasisBaseUtils.showStr(entry.getKey()) + " : " + BasisBaseUtils.showStr(entry.getValue()) + " , ";//记录参数
                 }
                 requestBody = builder.build();
             }
@@ -145,9 +155,11 @@ public class BasisDownloadBuilder extends BasisBaseUtils {
                     .post(requestBody)
                     .build();
         }
-        
+
         mCall = mOkHttpClient.newCall(request);
-        BasisLogUtils.e("url: " + url + " , jsonStr: " + content);
+        if (BasisBaseContants.OKHTTP_LOG_STATE && isLogState) {
+            BasisLogUtils.e("url: " + url + " , jsonStr: " + content);
+        }
         return this;
     }
 
@@ -173,7 +185,11 @@ public class BasisDownloadBuilder extends BasisBaseUtils {
                 if (e != null) {
                     message = e.getMessage();
                 }
-                BasisLogUtils.e("onFailure: " + message);
+                if (BasisBaseContants.OKHTTP_LOG_STATE && isLogState) {
+                    if (BasisBaseContants.OKHTTP_LOG_STATE && isLogState) {
+                        BasisLogUtils.e("onFailure: " + message);
+                    }
+                }
                 failure(call, e, message, basisCallback);
             }
 
@@ -223,8 +239,9 @@ public class BasisDownloadBuilder extends BasisBaseUtils {
                     OutputStream.flush();
 
                     success(call, response, filePath, basisCallback);//下载完成
-
-                    BasisLogUtils.e("文件下载成功: " + filePath);
+                    if (BasisBaseContants.OKHTTP_LOG_STATE && isLogState) {
+                        BasisLogUtils.e("文件下载成功: " + filePath);
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                     failure(call, e, e.getMessage(), basisCallback);

@@ -3,7 +3,7 @@ apply plugin: 'com.novoda.bintray-release'
 
 android {
     compileSdkVersion 26
-    buildToolsVersion "26.0.0"
+    buildToolsVersion "26.0.2"
 
     defaultConfig {
         minSdkVersion 14
@@ -24,8 +24,6 @@ dependencies {
     compile 'com.squareup.okhttp3:okhttp:3.8.1'//Okhttp
 
     compile 'com.google.code.gson:gson:2.8.1'//gson
-
-    compile 'com.jakewharton:butterknife:7.0.1'//butterknife
 
     //Glide相关
     compile 'com.github.bumptech.glide:glide:4.0.0'

@@ -2,6 +2,7 @@ package com.gingold.basislibrary.okhttp;
 
 import android.text.TextUtils;
 
+import com.gingold.basislibrary.Base.BasisBaseContants;
 import com.gingold.basislibrary.Base.BasisBaseUtils;
 import com.gingold.basislibrary.utils.BasisLogUtils;
 import com.google.gson.Gson;
@@ -24,7 +25,8 @@ import okhttp3.Response;
  */
 
 public class BasisPostStringBuilder extends BasisBaseUtils {
-    private String url;//网址
+    private boolean isLogState = true;//日志打印状态, 默认true
+    private String url = "";//网址
     private String content = "";//jsonStr
     //    private MediaType mediaType = MediaType.parse("text/plain;charset=utf-8");//默认MediaType
     private MediaType mediaType = MediaType.parse("application/json; charset=utf-8");//默认MediaType
@@ -33,6 +35,14 @@ public class BasisPostStringBuilder extends BasisBaseUtils {
 
     private OkHttpClient mOkHttpClient;
     private Call mCall;
+
+    /**
+     * 本次请求日志打印状态, 默认true, 打印日志
+     */
+    public BasisPostStringBuilder setLogState(boolean logState) {
+        isLogState = logState;
+        return this;
+    }
 
     /**
      * 请求网址
@@ -68,7 +78,7 @@ public class BasisPostStringBuilder extends BasisBaseUtils {
      * 添加参数
      */
     public BasisPostStringBuilder addParams(String key, String value) {
-        this.params.put(key, value);
+        this.params.put(BasisBaseUtils.showStr(key), BasisBaseUtils.showStr(value));
         return this;
     }
 
@@ -77,7 +87,7 @@ public class BasisPostStringBuilder extends BasisBaseUtils {
      */
     public BasisPostStringBuilder addParams(Map<String, String> map) {
         for (Map.Entry<String, String> entry : map.entrySet()) {
-            this.params.put(entry.getKey(), entry.getValue());
+            this.params.put(BasisBaseUtils.showStr(entry.getKey()), BasisBaseUtils.showStr(entry.getValue()));
         }
         return this;
     }
@@ -94,8 +104,8 @@ public class BasisPostStringBuilder extends BasisBaseUtils {
         } else {//提交键值对
             FormBody.Builder builder = new FormBody.Builder();
             for (Map.Entry<String, String> entry : this.params.entrySet()) {
-                builder.add(entry.getKey(), entry.getValue());
-                content = content + entry.getKey() + " : " + entry.getValue() + " , ";//记录参数
+                builder.add(BasisBaseUtils.showStr(entry.getKey()), BasisBaseUtils.showStr(entry.getValue()));
+                content = content + BasisBaseUtils.showStr(entry.getKey()) + " : " + BasisBaseUtils.showStr(entry.getValue()) + " , ";//记录参数
             }
             requestBody = builder.build();
         }
@@ -106,7 +116,9 @@ public class BasisPostStringBuilder extends BasisBaseUtils {
                 .build();
         mCall = mOkHttpClient.newCall(request);
 
-        BasisLogUtils.e("url: " + url + " , jsonStr: " + content);
+        if (BasisBaseContants.OKHTTP_LOG_STATE && isLogState) {
+            BasisLogUtils.e("url: " + url + " , jsonStr: " + content);
+        }
         return this;
     }
 
@@ -134,7 +146,9 @@ public class BasisPostStringBuilder extends BasisBaseUtils {
                 } else {
                     message = "";
                 }
-                BasisLogUtils.e("onFailure: " + message);
+                if (BasisBaseContants.OKHTTP_LOG_STATE && isLogState) {
+                    BasisLogUtils.e("onFailure: " + message);
+                }
                 if (basisCallback != null) {
                     mHandler.post(new Runnable() {
                         @Override
@@ -157,7 +171,9 @@ public class BasisPostStringBuilder extends BasisBaseUtils {
                 } else {
                     message = "";
                 }
-                BasisLogUtils.e("onSuccess: " + message);
+                if (BasisBaseContants.OKHTTP_LOG_STATE && isLogState) {
+                    BasisLogUtils.e("onSuccess: " + message);
+                }
                 if (basisCallback != null) {
                     mHandler.post(new Runnable() {
                         @Override

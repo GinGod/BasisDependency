@@ -1,5 +1,6 @@
 package com.gingold.basislibrary.okhttp;
 
+import com.gingold.basislibrary.Base.BasisBaseContants;
 import com.gingold.basislibrary.Base.BasisBaseUtils;
 import com.gingold.basislibrary.bean.BasisFileInputBean;
 import com.gingold.basislibrary.utils.BasisLogUtils;
@@ -25,7 +26,8 @@ import okhttp3.Response;
  */
 
 public class BasisPostFilesBuilder extends BasisBaseUtils {
-    private String url;//网址
+    private boolean isLogState = true;//日志打印状态, 默认true
+    private String url = "";//网址
     private String content = "";//jsonStr
     private MediaType mediaType = MediaType.parse("image/*");//默认上传图片
     private Map<String, String> params = new HashMap<>();//上传的参数
@@ -33,6 +35,14 @@ public class BasisPostFilesBuilder extends BasisBaseUtils {
 
     private OkHttpClient mOkHttpClient;
     private Call mCall;
+
+    /**
+     * 本次请求日志打印状态, 默认true, 打印日志
+     */
+    public BasisPostFilesBuilder setLogState(boolean logState) {
+        isLogState = logState;
+        return this;
+    }
 
     /**
      * 请求网址
@@ -56,7 +66,7 @@ public class BasisPostFilesBuilder extends BasisBaseUtils {
      * 上传文件的集合
      */
     public BasisPostFilesBuilder addFile(String key, String name, File file) {
-        BasisFileInputBean fileInputBean = new BasisFileInputBean(key, name, file);
+        BasisFileInputBean fileInputBean = new BasisFileInputBean(BasisBaseUtils.showStr(key), BasisBaseUtils.showStr(name), file);
         this.fileList.add(fileInputBean);
         return this;
     }
@@ -65,7 +75,7 @@ public class BasisPostFilesBuilder extends BasisBaseUtils {
      * 添加参数
      */
     public BasisPostFilesBuilder addParam(String key, String value) {
-        this.params.put(key, value);
+        this.params.put(BasisBaseUtils.showStr(key), BasisBaseUtils.showStr(value));
         return this;
     }
 
@@ -74,7 +84,7 @@ public class BasisPostFilesBuilder extends BasisBaseUtils {
      */
     public BasisPostFilesBuilder addParams(Map<String, String> map) {
         for (Map.Entry<String, String> entry : map.entrySet()) {
-            this.params.put(entry.getKey(), entry.getValue());
+            this.params.put(BasisBaseUtils.showStr(entry.getKey()), BasisBaseUtils.showStr(entry.getValue()));
         }
         return this;
     }
@@ -89,8 +99,8 @@ public class BasisPostFilesBuilder extends BasisBaseUtils {
 
         if (params != null) {//添加上传参数
             for (Map.Entry<String, String> entry : params.entrySet()) {
-                builder.addFormDataPart(entry.getKey(), entry.getValue());
-                content = content + entry.getKey() + " : " + entry.getValue() + " , ";//记录参数
+                builder.addFormDataPart(BasisBaseUtils.showStr(entry.getKey()), BasisBaseUtils.showStr(entry.getValue()));
+                content = content + BasisBaseUtils.showStr(entry.getKey()) + " : " + BasisBaseUtils.showStr(entry.getValue()) + " , ";//记录参数
             }
         }
 
@@ -111,7 +121,10 @@ public class BasisPostFilesBuilder extends BasisBaseUtils {
                 .build();
 
         mCall = mOkHttpClient.newCall(request);
-        BasisLogUtils.e("url: " + url + " , jsonStr: " + content);
+
+        if (BasisBaseContants.OKHTTP_LOG_STATE && isLogState) {
+            BasisLogUtils.e("url: " + url + " , jsonStr: " + content);
+        }
         return this;
     }
 
@@ -139,7 +152,9 @@ public class BasisPostFilesBuilder extends BasisBaseUtils {
                 } else {
                     message = "";
                 }
-                BasisLogUtils.e("onFailure: " + message);
+                if (BasisBaseContants.OKHTTP_LOG_STATE && isLogState) {
+                    BasisLogUtils.e("onFailure: " + message);
+                }
                 if (basisCallback != null) {
                     mHandler.post(new Runnable() {
                         @Override
@@ -158,7 +173,9 @@ public class BasisPostFilesBuilder extends BasisBaseUtils {
                 } else {
                     message = "";
                 }
-                BasisLogUtils.e("onSuccess: " + message);
+                if (BasisBaseContants.OKHTTP_LOG_STATE && isLogState) {
+                    BasisLogUtils.e("onSuccess: " + message);
+                }
                 if (basisCallback != null) {
                     mHandler.post(new Runnable() {
                         @Override

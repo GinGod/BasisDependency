@@ -6,6 +6,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
@@ -23,6 +24,7 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.gingold.basislibrary.utils.BasisLogUtils;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -61,6 +63,7 @@ public abstract class BasisBaseActivity extends Activity implements OnClickListe
      * 类名日志TAG
      */
     public final String TAG = this.getClass().getSimpleName() + "-TAG";
+    public boolean isOnResumeState = true;//当前界面可见状态
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,11 +129,18 @@ public abstract class BasisBaseActivity extends Activity implements OnClickListe
     @Override
     protected void onResume() {
         super.onResume();
+        isOnResumeState = true;
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        isOnResumeState = false;
     }
 
     @Override
@@ -249,9 +259,21 @@ public abstract class BasisBaseActivity extends Activity implements OnClickListe
      * 判断List不为空&&size>0
      *
      * @return true 不为空&&size>0
+     *
+     * <p>(使用{@link #areNotEmptyList(List)}方法替代)
      */
+    @Deprecated
     public static boolean areNotEmpty(List list) {
-        return BasisBaseUtils.areNotEmpty(list);
+        return BasisBaseUtils.areNotEmptyList(list);
+    }
+
+    /**
+     * 判断List不为空&&size>0
+     *
+     * @return true 不为空&&size>0
+     */
+    public static boolean areNotEmptyList(List list) {
+        return BasisBaseUtils.areNotEmptyList(list);
     }
 
     /**
@@ -286,7 +308,7 @@ public abstract class BasisBaseActivity extends Activity implements OnClickListe
      */
     public void setEnabledTrue(int... ids) {
         for (int i = 0; i < ids.length; i++) {
-            getView(ids[i]).setEnabled(true);
+            getViewNoClickable(ids[i]).setEnabled(true);
         }
     }
 
@@ -302,7 +324,7 @@ public abstract class BasisBaseActivity extends Activity implements OnClickListe
      */
     public void setEnabledFalse(int... ids) {
         for (int i = 0; i < ids.length; i++) {
-            getView(ids[i]).setEnabled(false);
+            getViewNoClickable(ids[i]).setEnabled(false);
         }
     }
 
@@ -350,7 +372,7 @@ public abstract class BasisBaseActivity extends Activity implements OnClickListe
      */
     public void setVisible(int... ids) {
         for (int i = 0; i < ids.length; i++) {
-            getView(ids[i]).setVisibility(View.VISIBLE);
+            getViewNoClickable(ids[i]).setVisibility(View.VISIBLE);
         }
     }
 
@@ -366,7 +388,7 @@ public abstract class BasisBaseActivity extends Activity implements OnClickListe
      */
     public void setGone(int... ids) {
         for (int i = 0; i < ids.length; i++) {
-            getView(ids[i]).setVisibility(View.GONE);
+            getViewNoClickable(ids[i]).setVisibility(View.GONE);
         }
     }
 
@@ -382,7 +404,91 @@ public abstract class BasisBaseActivity extends Activity implements OnClickListe
      */
     public void setInVisible(int... ids) {
         for (int i = 0; i < ids.length; i++) {
-            getView(ids[i]).setVisibility(View.INVISIBLE);
+            getViewNoClickable(ids[i]).setVisibility(View.INVISIBLE);
+        }
+    }
+
+    /**
+     * 设置控件背景颜色
+     */
+    public void setBGColor(int color, View... views) {
+        for (int i = 0; i < views.length; i++) {
+            views[i].setBackgroundColor(getColorById(color));
+        }
+    }
+
+    /**
+     * 设置控件背景颜色
+     */
+    public void setBGColor(int color, int... ids) {
+        for (int i = 0; i < ids.length; i++) {
+            getViewNoClickable(ids[i]).setBackgroundColor(getColorById(color));
+        }
+    }
+
+    /**
+     * 设置控件背景资源
+     */
+    public void setBGResource(int resource, View... views) {
+        BasisBaseUtils.setBGResource(resource, views);
+    }
+
+    /**
+     * 设置控件背景资源
+     */
+    public void setBGResource(int resource, int... ids) {
+        for (int i = 0; i < ids.length; i++) {
+            getViewNoClickable(ids[i]).setBackgroundResource(resource);
+        }
+    }
+
+    /**
+     * 设置文本框字体颜色
+     */
+    public void setTVTextColor(int color, TextView... views) {
+        for (int i = 0; i < views.length; i++) {
+            views[i].setTextColor(getColorById(color));
+        }
+    }
+
+    /**
+     * 设置文本框字体颜色
+     */
+    public void setTVTextColor(int color, int... ids) {
+        for (int i = 0; i < ids.length; i++) {
+            ((TextView) (getViewNoClickable(ids[i]))).setTextColor(getColorById(color));
+        }
+    }
+
+    /**
+     * 设置下划线
+     */
+    public void setUnderline(TextView... views) {
+        BasisBaseUtils.setUnderline(views);
+    }
+
+    /**
+     * 设置下划线
+     */
+    public void setUnderline(int... ids) {
+        for (int i = 0; i < ids.length; i++) {
+            ((TextView) (getViewNoClickable(ids[i]))).getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
+        }
+    }
+
+    /**
+     * 设置删除线
+     */
+    public void setStrike(TextView... views) {
+        BasisBaseUtils.setStrike(views);
+    }
+
+    /**
+     * 设置删除线
+     */
+    public void setStrike(int... ids) {
+        for (int i = 0; i < ids.length; i++) {
+            ((TextView) (getViewNoClickable(ids[i]))).getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
         }
     }
 
@@ -495,7 +601,7 @@ public abstract class BasisBaseActivity extends Activity implements OnClickListe
     }
 
     /**
-     * 获取控件, 并设置可点击
+     * 获取控件, 并设置可点击(ListView, GridView等控件使用{@link #getViewNoClickable(int)})
      */
     public <T extends View> T getView(int id) {
         View view = findViewById(id);
@@ -505,7 +611,7 @@ public abstract class BasisBaseActivity extends Activity implements OnClickListe
     }
 
     /**
-     * 获取控件, 不设置可点击
+     * 获取控件, 不设置可点击(针对ListView, GridView等)
      */
     public <T extends View> T getViewNoClickable(int id) {
         View view = findViewById(id);
@@ -686,8 +792,17 @@ public abstract class BasisBaseActivity extends Activity implements OnClickListe
      *
      * @param id
      */
-    protected int getDimensionById(int id) {
+    public int getDimensionById(int id) {
         return (int) this.getResources().getDimension(id);
+    }
+
+    /**
+     * 获取Color
+     *
+     * @param id
+     */
+    public int getColorById(int id) {
+        return (int) this.getResources().getColor(id);
     }
 
     /**
@@ -767,7 +882,9 @@ public abstract class BasisBaseActivity extends Activity implements OnClickListe
     public void removeAllReceiver() {
         for (int i = 0; i < mReceiverList.size(); i++) {
             BroadcastReceiver receiver = mReceiverList.get(i);
-            unregisterReceiver(receiver);
+            if (receiver != null) {
+                unregisterReceiver(receiver);
+            }
         }
         mReceiverList.clear();
     }
@@ -775,8 +892,15 @@ public abstract class BasisBaseActivity extends Activity implements OnClickListe
     /**
      * 广播接受自定义监听处理
      */
-    interface OnReceiverListener {
+    public interface OnReceiverListener {
         void onReceiver(Context context, String action, Intent intent);
+    }
+
+    /**
+     * 日志打印
+     */
+    public void loge(String message) {
+        BasisLogUtils.e(TAG, message);
     }
 
 }

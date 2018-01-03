@@ -142,7 +142,7 @@ public class BasisLogUtils {
         int strLength = message.length();
         int start = 0;
         int end = length;
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 252 * 10; i++) {
             if (strLength > end) {
                 print(tag + "-" + i, message.substring(start, end), which);
                 start = end;

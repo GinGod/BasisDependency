@@ -9,6 +9,7 @@ import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -185,6 +186,22 @@ public class BasisListView extends ListView implements OnScrollListener {
                 break;
         }
         return super.onTouchEvent(ev);
+    }
+
+    /**
+     * 条目长按监听
+     */
+    public abstract class BasisOnLongItemClickListener implements OnItemLongClickListener {
+
+        @Override
+        public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+            if (position != 0 && position < (getAdapter().getCount() - 1)) {
+                onBasisItemLongClick(parent, view, position - 1, id);
+            }
+            return false;
+        }
+
+        public abstract void onBasisItemLongClick(AdapterView<?> parent, View view, int position, long id);
     }
 
     /**

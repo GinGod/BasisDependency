@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Handler;
 
+import com.gingold.basislibrary.utils.BasisLogUtils;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -115,9 +116,21 @@ public abstract class BasisBaseService extends Service {
      * 判断List不为空&&size>0
      *
      * @return true 不为空&&size>0
+     *
+     * <p>(使用{@link #areNotEmptyList(List)}方法替代)
      */
+    @Deprecated
     public static boolean areNotEmpty(List list) {
-        return BasisBaseUtils.areNotEmpty(list);
+        return BasisBaseUtils.areNotEmptyList(list);
+    }
+
+    /**
+     * 判断List不为空&&size>0
+     *
+     * @return true 不为空&&size>0
+     */
+    public static boolean areNotEmptyList(List list) {
+        return BasisBaseUtils.areNotEmptyList(list);
     }
 
     /**
@@ -309,8 +322,15 @@ public abstract class BasisBaseService extends Service {
     /**
      * 广播接受自定义监听处理
      */
-    interface OnReceiverListener {
+    public interface OnReceiverListener {
         void onReceiver(Context context, String action, Intent intent);
+    }
+
+    /**
+     * 日志打印
+     */
+    public void loge(String message) {
+        BasisLogUtils.e(TAG, message);
     }
 
 }

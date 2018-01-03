@@ -1,6 +1,8 @@
 package com.gingold.basisdependency;
 
+import android.graphics.Paint;
 import android.view.View;
+import android.widget.TextView;
 
 import com.gingold.basisdependency.Base.BaseActivity;
 import com.gingold.basisdependency.activity.DBActivity;
@@ -41,10 +43,11 @@ public class MainActivity extends BaseActivity {
     public void logicDispose() {
         findListView(R.id.lv_main).setAdapter(new BasisLvGvAdapter<MainData.MainBean>(mActivity, R.layout.item_textview, TestData.mainList) {
             @Override
-            protected void initView(BasisLvGvViewHolder basisViewHolder, final MainData.MainBean data, int position) {
+            protected void initView(final BasisLvGvViewHolder basisViewHolder, final MainData.MainBean data, int position) {
                 basisViewHolder.setTvTextListener(R.id.tv_item_main, data.des, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        int flag = Paint.DITHER_FLAG;
                         toast(data.des);
                         switch (data.des) {
                             case MainData.TEST:
@@ -85,8 +88,52 @@ public class MainActivity extends BaseActivity {
                                 startActivity(DBActivity.class);
                                 break;
                         }
+
+                        ((TextView) basisViewHolder.getView(R.id.tv_item_main)).getPaint().setFlags(flag);
                     }
                 });
+
+                int flag = Paint.UNDERLINE_TEXT_FLAG;
+                switch (data.des) {
+                    case MainData.TEST:
+                        flag = Paint.ANTI_ALIAS_FLAG;
+                        break;
+                    case MainData.SP:
+                        flag = Paint.FILTER_BITMAP_FLAG;
+                        break;
+                    case MainData.LOG:
+                        flag = Paint.LINEAR_TEXT_FLAG;
+                        break;
+                    case MainData.LVADAPTER:
+                        flag = Paint.SUBPIXEL_TEXT_FLAG;
+                        break;
+                    case MainData.RVADAPTER:
+                        flag = Paint.UNDERLINE_TEXT_FLAG;
+                        break;
+                    case MainData.RVREFRESH:
+                        flag = Paint.DEV_KERN_TEXT_FLAG;
+                        break;
+                    case MainData.LVREFRESH:
+                        flag = Paint.DITHER_FLAG;
+                        break;
+                    case MainData.OKHTTP:
+                        flag = Paint.EMBEDDED_BITMAP_TEXT_FLAG;
+                        break;
+                    case MainData.OKHTTPPIC:
+                        flag = Paint.FAKE_BOLD_TEXT_FLAG;
+                        break;
+                    case MainData.GLIDE:
+                        flag = Paint.STRIKE_THRU_TEXT_FLAG;
+                        break;
+                    case MainData.PHOTO:
+                        flag = Paint.HINTING_OFF;
+                        break;
+                    case MainData.DB:
+                        flag = Paint.HINTING_ON;
+                        break;
+                }
+
+                ((TextView) basisViewHolder.getView(R.id.tv_item_main)).getPaint().setFlags(flag);
             }
         });
 
