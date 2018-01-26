@@ -9,8 +9,6 @@ import com.gingold.basisdependency.bean.RequestBean;
 import com.gingold.basislibrary.okhttp.BasisCallback;
 import com.gingold.basislibrary.okhttp.BasisOkHttpUtils;
 
-import java.io.IOException;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -84,6 +82,7 @@ public class OkHttpActivity extends BaseActivity {
 
         BasisOkHttpUtils.
                 postString()
+                .dialog(mActivity)
                 .url(url)
                 .addParams("DistributionCode", "qlkd")
                 .addParams("DeptId", "1925802")
@@ -99,7 +98,7 @@ public class OkHttpActivity extends BaseActivity {
                     }
 
                     @Override
-                    public void onFailure(String url, String content, Call call, IOException e, String message) {
+                    public void onFailure(String url, String content, Call call, Exception e, String message) {
 
                     }
 
@@ -122,6 +121,7 @@ public class OkHttpActivity extends BaseActivity {
 
         BasisOkHttpUtils
                 .postString()
+                .dialog(mActivity)
                 .url(url)
 //                .addParams("DistributionCode", "qlkd")
 //                .addParams("DeptId", "1925802")
@@ -138,7 +138,7 @@ public class OkHttpActivity extends BaseActivity {
                     }
 
                     @Override
-                    public void onFailure(String url, String content, Call call, IOException e, String message) {
+                    public void onFailure(String url, String content, Call call, Exception e, String message) {
 
                     }
 

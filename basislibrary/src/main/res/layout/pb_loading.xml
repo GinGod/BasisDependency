@@ -18,6 +18,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:layout_marginTop="8.0dip"
+        android:gravity="center"
         android:text="加载中..."
         android:textColor="#fff"
         android:textSize="16.0dip"/>

@@ -114,7 +114,7 @@ public class OkHttpPicActivity extends BaseActivity {
         String url = "http://img.juimg.com/tuku/yulantu/120926/219049-12092612154377.jpg";
         url = Urls.picUrl2;
 
-        BasisOkHttpUtils.download().get().url(url).fileName(null).build().execute(new BasisDownloadCallback() {
+        BasisOkHttpUtils.download().get().dialog(mActivity).url(url).fileName(null).build().execute(new BasisDownloadCallback() {
             @Override
             public void onSuccess(Call call, Response response, String filePath) {
                 toast(filePath);
@@ -294,7 +294,7 @@ public class OkHttpPicActivity extends BaseActivity {
                     }
 
                     @Override
-                    public void onFailure(String url, String content, Call call, IOException e, String message) {
+                    public void onFailure(String url, String content, Call call, Exception e, String message) {
 
                     }
 
