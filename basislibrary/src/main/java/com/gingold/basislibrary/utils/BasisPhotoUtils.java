@@ -32,7 +32,8 @@ public class BasisPhotoUtils {
             if (!outDir.exists()) {
                 outDir.mkdir();
             }
-            File outFile = new File(outDir, BasisTimesUtils.getDeviceTime().replace(" ", "_") + ".jpg");
+            File outFile = new File(outDir, BasisTimesUtils.getDeviceTime()
+                    .replace(" ", "_").replace("-", "_").replace(":", "_") + ".jpg");
             intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(outFile));
             intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
             activity.startActivityForResult(intent, requestCode);

@@ -474,7 +474,7 @@ public abstract class BasisBaseFragment extends Fragment implements OnClickListe
      * 获取文本框的字符串
      */
     public String getTvText(int id) {
-        return ((TextView) getView(id)).getText().toString().trim();
+        return ((TextView) getViewNoClickable(id)).getText().toString().trim();
     }
 
     /**
@@ -520,17 +520,39 @@ public abstract class BasisBaseFragment extends Fragment implements OnClickListe
     /**
      * 设置text
      */
+    public void setTVText(String text, TextView... views) {
+        for (int i = 0; i < views.length; i++) {
+            views[i].setText(text);
+        }
+    }
+
+    /**
+     * 设置text
+     */
+    public void setTVText(String text, int... ids) {
+        for (int i = 0; i < ids.length; i++) {
+            ((TextView) (getViewNoClickable(ids[i]))).setText(text);
+        }
+    }
+
+    /**
+     * 设置text
+     * <p>(使用{@link #setTVText(String, int...)} (int)}方法替代)
+     */
+    @Deprecated
     public TextView setTvText(int id, String text) {
-        TextView view = getView(id);
+        TextView view = getViewNoClickable(id);
         view.setText(showStr(text));
         return view;
     }
 
     /**
      * 设置text
+     * <p>(使用{@link #setTVText(String, int...)} (int)}方法替代)
      */
+    @Deprecated
     public EditText setEtText(int id, String text) {
-        EditText view = getView(id);
+        EditText view = getViewNoClickable(id);
         view.setText(showStr(text));
         return view;
     }

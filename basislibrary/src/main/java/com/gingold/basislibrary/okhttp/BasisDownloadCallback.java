@@ -1,31 +1,13 @@
 package com.gingold.basislibrary.okhttp;
 
-import okhttp3.Call;
-import okhttp3.Response;
-
 /**
- *
+ * OKHttp 下载文件请求回调
  */
 
-public interface BasisDownloadCallback {
+public interface BasisDownloadCallback extends BasisCallback {
 
     /**
-     * 请求网络成功
-     */
-    void onSuccess(Call call, Response response, String filePath);
-
-    /**
-     * 下载Progress
+     * 下载Progress(下载文件时专用)
      */
     void onProgress(long totalSize, long currentSize, long progress);
-
-    /**
-     * 请求网络失败
-     */
-    void onFailure(String url, String content, Call call, Exception e, String message);
-
-    /**
-     * 处理成功结果异常
-     */
-    void onException(String url, String content, String result, Exception e, String errorMessage);
 }

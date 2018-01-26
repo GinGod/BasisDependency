@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.gingold.basisdependency.Base.BaseActivity;
 import com.gingold.basisdependency.MyApplication;
 import com.gingold.basisdependency.R;
+import com.gingold.basislibrary.utils.BasisDeviceUtils;
 import com.gingold.basislibrary.utils.BasisFileUtils;
 import com.gingold.basislibrary.utils.dialog.BasisDSClickListener;
 import com.gingold.basislibrary.utils.dialog.BasisDialogListenrer;
@@ -170,6 +171,9 @@ public class TestActivity extends BaseActivity {
                 }
                 break;
             case R.id.et_test_hide:
+                BasisLogUtils.e(BasisDeviceUtils.getBrand() + " - " + BasisDeviceUtils.getMac() + " - " +
+                        BasisDeviceUtils.getModel() + " - " + BasisDeviceUtils.getSerialNumber() + " - " +
+                        BasisDeviceUtils.getIPAddress(mActivity));
                 toast("点击");
                 postDelayed(new Runnable() {
                     @Override

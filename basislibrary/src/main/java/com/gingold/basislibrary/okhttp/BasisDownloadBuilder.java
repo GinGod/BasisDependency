@@ -7,20 +7,17 @@ import com.gingold.basislibrary.Base.BasisBaseUtils;
 import com.gingold.basislibrary.utils.BasisFileUtils;
 import com.gingold.basislibrary.utils.BasisLogUtils;
 import com.gingold.basislibrary.utils.BasisTimesUtils;
-import com.google.gson.Gson;
+import com.gingold.basislibrary.utils.dialog.BasisPBLoadingUtils;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
 import java.util.Map;
 
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
@@ -29,45 +26,9 @@ import okhttp3.Response;
  * 请求参数为jsonStr数据
  */
 
-public class BasisDownloadBuilder extends BasisBaseUtils {
-    private boolean isLogState = true;//日志打印状态, 默认true
-    private String url = "";//网址
-    private boolean isGet = false;//使用get请求
+public class BasisDownloadBuilder extends BasisOkHttpBuilder {
     private String fileDirName = "Download";//文件夹名(默认Download)
     private String fileName = "";//文件名
-
-    private String content = "";//jsonStr
-    //    private MediaType mediaType = MediaType.parse("text/plain;charset=utf-8");//默认MediaType
-    private MediaType mediaType = MediaType.parse("application/json; charset=utf-8");//默认MediaType
-
-    private Map<String, String> params = new HashMap<>();//参数集合
-
-    private OkHttpClient mOkHttpClient;
-    private Call mCall;
-
-    /**
-     * 本次请求日志打印状态, 默认true, 打印日志
-     */
-    public BasisDownloadBuilder setLogState(boolean logState) {
-        isLogState = logState;
-        return this;
-    }
-
-    /**
-     * 请求网址
-     */
-    public BasisDownloadBuilder url(String url) {
-        this.url = url;
-        return this;
-    }
-
-    /**
-     * 请求网址
-     */
-    public BasisDownloadBuilder get() {
-        this.isGet = true;
-        return this;
-    }
 
     /**
      * 储存的文件夹
@@ -86,50 +47,11 @@ public class BasisDownloadBuilder extends BasisBaseUtils {
     }
 
     /**
-     * 请求String的MediaType
-     */
-    public BasisDownloadBuilder mediaType(MediaType mediaType) {
-        if (mediaType != null) {
-            this.mediaType = mediaType;
-        }
-        return this;
-    }
-
-    /**
-     * 请求参数
-     */
-    public BasisDownloadBuilder content(Object object) {
-        if (object != null && object instanceof String) {
-            this.content = (String) object;
-        } else {
-            this.content = new Gson().toJson(object);
-        }
-        return this;
-    }
-
-    /**
-     * 添加参数
-     */
-    public BasisDownloadBuilder addParams(String key, String value) {
-        this.params.put(BasisBaseUtils.showStr(key), BasisBaseUtils.showStr(value));
-        return this;
-    }
-
-    /**
-     * 添加参数集合
-     */
-    public BasisDownloadBuilder addParams(Map<String, String> map) {
-        for (Map.Entry<String, String> entry : map.entrySet()) {
-            this.params.put(BasisBaseUtils.showStr(entry.getKey()), BasisBaseUtils.showStr(entry.getValue()));
-        }
-        return this;
-    }
-
-    /**
      * 建立请求
      */
+    @Override
     public BasisDownloadBuilder build() {
-        mOkHttpClient = new OkHttpClient();
+        super.build();
 
         Request request = null;
         if (isGet) {
@@ -163,24 +85,12 @@ public class BasisDownloadBuilder extends BasisBaseUtils {
         return this;
     }
 
-    /**
-     * 执行请求(只下载, 不对结果进行回调)
-     */
-    public void execute() {
-        enqueue(null);
-    }
-
-    /**
-     * 执行请求(默认下载的是文件)
-     */
-    public void execute(final BasisDownloadCallback basisCallback) {
-        enqueue(basisCallback);
-    }
-
-    private void enqueue(final BasisDownloadCallback basisCallback) {
+    @Override
+    public void enqueue(final BasisCallback basisCallback) {
         mCall.enqueue(new Callback() {
             @Override
             public void onFailure(final Call call, final IOException e) {
+                BasisPBLoadingUtils.dismiss();
                 String message = "";
                 if (e != null) {
                     message = e.getMessage();
@@ -195,6 +105,7 @@ public class BasisDownloadBuilder extends BasisBaseUtils {
 
             @Override
             public void onResponse(final Call call, final Response response) throws IOException {
+                BasisPBLoadingUtils.dismiss();
                 //获取返回的输入流
                 InputStream inputStream = response.body().byteStream();
                 final long totalSize = response.body().contentLength();//文件总大小
@@ -234,7 +145,9 @@ public class BasisDownloadBuilder extends BasisBaseUtils {
                     while ((len = inputStream.read(buffer)) != -1) {
                         OutputStream.write(buffer, 0, len);
                         currentSize = currentSize + len;
-                        process(totalSize, currentSize, basisCallback);//进度
+                        if (basisCallback instanceof BasisDownloadCallback) {
+                            process(totalSize, currentSize, (BasisDownloadCallback) basisCallback);//进度
+                        }
                     }
                     OutputStream.flush();
 
@@ -269,7 +182,7 @@ public class BasisDownloadBuilder extends BasisBaseUtils {
     /**
      * 下载成功
      */
-    private void success(final Call call, final Response response, final String filePath, final BasisDownloadCallback basisCallback) {
+    private void success(final Call call, final Response response, final String filePath, final BasisCallback basisCallback) {
         mHandler.post(new Runnable() {
             @Override
             public void run() {
@@ -303,7 +216,7 @@ public class BasisDownloadBuilder extends BasisBaseUtils {
     /**
      * 下载失败
      */
-    private void failure(final Call call, final Exception e, final String message, final BasisDownloadCallback basisCallback) {
+    private void failure(final Call call, final Exception e, final String message, final BasisCallback basisCallback) {
         mHandler.post(new Runnable() {
             @Override
             public void run() {

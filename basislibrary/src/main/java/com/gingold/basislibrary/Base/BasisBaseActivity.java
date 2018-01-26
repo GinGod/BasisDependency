@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Paint;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
@@ -259,7 +260,7 @@ public abstract class BasisBaseActivity extends Activity implements OnClickListe
      * 判断List不为空&&size>0
      *
      * @return true 不为空&&size>0
-     *
+     * <p>
      * <p>(使用{@link #areNotEmptyList(List)}方法替代)
      */
     @Deprecated
@@ -443,6 +444,24 @@ public abstract class BasisBaseActivity extends Activity implements OnClickListe
     }
 
     /**
+     * 设置控件背景Drawable资源
+     */
+    public void setBGDrawable(int resource, View... views) {
+        for (int i = 0; i < views.length; i++) {
+            views[i].setBackgroundDrawable(getDrawableById(resource));
+        }
+    }
+
+    /**
+     * 设置控件背景Drawable资源
+     */
+    public void setBGDrawable(int resource, int... ids) {
+        for (int i = 0; i < ids.length; i++) {
+            getViewNoClickable(ids[i]).setBackgroundDrawable(getDrawableById(resource));
+        }
+    }
+
+    /**
      * 设置文本框字体颜色
      */
     public void setTVTextColor(int color, TextView... views) {
@@ -575,7 +594,7 @@ public abstract class BasisBaseActivity extends Activity implements OnClickListe
      * 获取文本框的字符串
      */
     public String getTvText(int id) {
-        return ((TextView) getView(id)).getText().toString().trim();
+        return ((TextView) getViewNoClickable(id)).getText().toString().trim();
     }
 
     /**
@@ -729,17 +748,39 @@ public abstract class BasisBaseActivity extends Activity implements OnClickListe
     /**
      * 设置text
      */
+    public void setTVText(String text, TextView... views) {
+        for (int i = 0; i < views.length; i++) {
+            views[i].setText(text);
+        }
+    }
+
+    /**
+     * 设置text
+     */
+    public void setTVText(String text, int... ids) {
+        for (int i = 0; i < ids.length; i++) {
+            ((TextView) (getViewNoClickable(ids[i]))).setText(text);
+        }
+    }
+
+    /**
+     * 设置text
+     * <p>(使用{@link #setTVText(String, int...)} (int)}方法替代)
+     */
+    @Deprecated
     public TextView setTvText(int id, String text) {
-        TextView view = getView(id);
+        TextView view = getViewNoClickable(id);
         view.setText(showStr(text));
         return view;
     }
 
     /**
      * 设置text
+     * <p>(使用{@link #setTVText(String, int...)} (int)}方法替代)
      */
+    @Deprecated
     public EditText setEtText(int id, String text) {
-        EditText view = getView(id);
+        EditText view = getViewNoClickable(id);
         view.setText(showStr(text));
         return view;
     }
@@ -803,6 +844,15 @@ public abstract class BasisBaseActivity extends Activity implements OnClickListe
      */
     public int getColorById(int id) {
         return (int) this.getResources().getColor(id);
+    }
+
+    /**
+     * 获取Drawable
+     *
+     * @param id
+     */
+    public Drawable getDrawableById(int id) {
+        return this.getResources().getDrawable(id);
     }
 
     /**

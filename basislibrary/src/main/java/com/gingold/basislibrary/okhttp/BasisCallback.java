@@ -1,12 +1,10 @@
 package com.gingold.basislibrary.okhttp;
 
-import java.io.IOException;
-
 import okhttp3.Call;
 import okhttp3.Response;
 
 /**
- *
+ * OKHttp 请求回调
  */
 
 public interface BasisCallback {
@@ -19,7 +17,7 @@ public interface BasisCallback {
     /**
      * 请求网络失败
      */
-    void onFailure(String url, String content, Call call, IOException e, String message);
+    void onFailure(String url, String content, Call call, Exception e, String message);
 
     /**
      * 处理成功结果异常
