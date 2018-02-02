@@ -26,6 +26,7 @@
         <activity android:name=".activity.GlideActivity"/>
         <activity android:name=".activity.PhotoActivity"/>
         <activity android:name=".activity.DBActivity"/>
+        <activity android:name=".activity.DialogActivity"/>
     </application>
 
 </manifest>

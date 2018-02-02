@@ -20,6 +20,7 @@ public class MainData {
     public final static String GLIDE = "Glide";
     public final static String PHOTO = "Photo";
     public final static String DB = "DB";
+    public final static String DIALOG = "DIALOG";
 
     public static ArrayList<MainBean> mainList = new ArrayList<>();
 
@@ -36,6 +37,7 @@ public class MainData {
         mainList.add(new MainBean(GLIDE, null));
         mainList.add(new MainBean(PHOTO, null));
         mainList.add(new MainBean(DB, null));
+        mainList.add(new MainBean(DIALOG, null));
     }
 
     public static class MainBean {

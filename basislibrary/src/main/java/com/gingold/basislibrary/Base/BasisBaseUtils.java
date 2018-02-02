@@ -14,7 +14,7 @@ import android.widget.Toast;
 import java.util.List;
 
 /**
- *
+ * 常用方法工具类
  */
 
 public class BasisBaseUtils {

@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import com.gingold.basisdependency.Base.BaseActivity;
 import com.gingold.basisdependency.activity.DBActivity;
+import com.gingold.basisdependency.activity.DialogActivity;
 import com.gingold.basisdependency.activity.GlideActivity;
 import com.gingold.basisdependency.activity.LvRefreshActivity;
 import com.gingold.basisdependency.activity.MultiLvActivity;
@@ -86,6 +87,9 @@ public class MainActivity extends BaseActivity {
                                 break;
                             case MainData.DB:
                                 startActivity(DBActivity.class);
+                                break;
+                            case MainData.DIALOG:
+                                startActivity(DialogActivity.class);
                                 break;
                         }
 

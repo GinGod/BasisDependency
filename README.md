@@ -23,12 +23,15 @@ Basis Dependency By Gingod
 - BasisBaseFragment
 - BasisBaseUtils
 
+
 ### b. Utils
 - Log
 - SP
 - Time
 - file
 - version
+- dialog
+- popupwindow
 
 ### c. Adapter
 - ListView和GridView 的适配器
@@ -104,7 +107,7 @@ SharedPreferences常用方法封装
 
 ### d. BasisFileUtils
 
-### e.BasisVersionUtils
+### e. BasisVersionUtils
 版本工具类
 
 - getVersionName  
@@ -113,6 +116,16 @@ SharedPreferences常用方法封装
 版本号 252
 - getDeviceInfo  
 设备信息, 包含设备型号, Android版本和API
+
+### f. BasisDialogUtils || BasisPBLoadingUtils || BasisProgressDialogUtils || BasisSelfDialogUtils
+使用参见 DialogActivity
+
+- BasisSelfDialogUtils --可自定义显示布局, 处理逻辑
+
+### e. BasisSelfPopWinUtils
+使用参见 DialogActivity
+
+- BasisSelfPopWinUtils --可自定义显示布局, 处理逻辑
 
 ## 3. Adapter
 

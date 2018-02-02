@@ -8,6 +8,8 @@ import android.view.KeyEvent;
 
 /**
  * ProgressDialog 显示工具类
+ * dissmiss监听 {@link #setListener(BasisDialogListenrer)}
+ * @see BasisDialogUtils dismiss注意事项
  */
 
 public class BasisProgressDialogUtils {
@@ -37,14 +39,15 @@ public class BasisProgressDialogUtils {
     public static BasisProgressDialogUtils build(final Context context) {
         if (mProgressDialog != null) {//取消上一个dialog
             mProgressDialog.dismiss();
-            mProgressDialog = null;
         }
+        mProgressDialog = null;
+        basisProgressDialog = null;
+        dialogListenrer = null;
 
         mProgressDialog = new ProgressDialog(context);
 
         mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);// 设置进度条的形式为圆形转动的进度条
 
-        dialogListenrer = null;//初始化监听
         // dismiss监听
         mProgressDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
 
@@ -53,6 +56,9 @@ public class BasisProgressDialogUtils {
                 if (dialogListenrer != null) {
                     dialogListenrer.onDismiss();
                 }
+                mProgressDialog = null;
+                basisProgressDialog = null;
+                dialogListenrer = null;
             }
         });
 
@@ -144,7 +150,7 @@ public class BasisProgressDialogUtils {
         return getInstance();
     }
 
-    public static AlertDialog show() {
+    public AlertDialog show() {
         mProgressDialog.show();
         return mProgressDialog;
     }

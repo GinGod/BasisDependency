@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <include layout="@layout/activity_title"/>
+
+    <TextView
+        android:id="@+id/tv_dialog_1"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:gravity="center"
+        android:text="BasisDialogUtils"/>
+
+    <TextView
+        android:id="@+id/tv_dialog_2"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:gravity="center"
+        android:text="BasisPBLoadingUtils"/>
+
+    <TextView
+        android:id="@+id/tv_dialog_3"
+        android:layout_width="wrap_content"
+        android:layout_height="52dp"
+        android:layout_marginLeft="252dp"
+        android:background="@color/holo_blue_light"
+        android:gravity="center"
+        android:text="BasisProgressDialogUtils"/>
+
+    <TextView
+        android:id="@+id/tv_dialog_4"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:gravity="center"
+        android:text="BasisSelfDialogUtils"/>
+
+    <TextView
+        android:id="@+id/tv_dialog_5"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:gravity="center"
+        android:text="BasisSelfDialogUtils"/>
+
+    <TextView
+        android:id="@+id/tv_dialog_6"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:gravity="center"
+        android:text="BasisSelfPopWinUtils"/>
+
+    <TextView
+        android:id="@+id/tv_dialog_7"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:gravity="center"
+        android:text="BasisSelfPopWinUtils"/>
+
+    <TextView
+        android:id="@+id/tv_dialog_8"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:gravity="center"
+        android:text="BasisSelfPopWinUtils"/>
+
+</LinearLayout>

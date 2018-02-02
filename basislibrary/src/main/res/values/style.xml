@@ -3,12 +3,11 @@
 
     <!--自定义Dialog样式-->
     <style name="dialog" parent="@android:style/Theme.Dialog">
-        <item name="android:windowFrame">@null</item>
-        <item name="android:windowIsFloating">true</item>
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:background">@null</item>
         <item name="android:windowBackground">@null</item>
+        <!--是否允许对话框的背景变暗 true 变暗; false 不变暗-->
         <item name="android:backgroundDimEnabled">true</item>
     </style>
 </resources>

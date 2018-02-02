@@ -10,6 +10,8 @@ import com.gingold.basislibrary.R;
 
 /**
  * ProgressBarLoading 显示工具类
+ * dissmiss监听 {@link #setListener(BasisDialogListenrer)}
+ * @see BasisDialogUtils dismiss注意事项
  */
 
 public class BasisPBLoadingUtils {
@@ -39,14 +41,15 @@ public class BasisPBLoadingUtils {
     public static BasisPBLoadingUtils build(final Context context) {
         if (pbLoadingDialog != null) {//取消上一个dialog
             pbLoadingDialog.dismiss();
-            pbLoadingDialog = null;
         }
+        basisDialog = null;
+        pbLoadingDialog = null;
+        dialogListenrer = null;
 
         pbLoadingDialog = new Dialog(context, R.style.dialog);
         pbLoadingDialog.setContentView(R.layout.pb_loading);
         pbLoadingDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
 
-        dialogListenrer = null;//初始化监听
         // dismiss监听
         pbLoadingDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
 
@@ -55,6 +58,9 @@ public class BasisPBLoadingUtils {
                 if (dialogListenrer != null) {
                     dialogListenrer.onDismiss();
                 }
+                basisDialog = null;
+                pbLoadingDialog = null;
+                dialogListenrer = null;
             }
         });
 
