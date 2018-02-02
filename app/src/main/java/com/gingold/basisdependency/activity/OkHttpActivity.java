@@ -121,7 +121,7 @@ public class OkHttpActivity extends BaseActivity {
 
         BasisOkHttpUtils
                 .postString()
-                .dialog(mActivity)
+//                .dialog(mActivity)
                 .url(url)
 //                .addParams("DistributionCode", "qlkd")
 //                .addParams("DeptId", "1925802")
