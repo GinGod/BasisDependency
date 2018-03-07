@@ -208,9 +208,9 @@ public class RvRefreshActivity extends BaseActivity {
 
         rv_refresh.setLoadMoreEnabled(true);
 
-//        rv_refresh.setAdapter(mMultiRvAdapter);//设置适配器
+        rv_refresh.setAdapter(mMultiRvAdapter);//设置适配器
 //        rv_refresh.setAdapter(mHeaderAndFooterWrapper);//设置适配器
-        rv_refresh.setAdapter(mHeaderAndFooterWrapperRepeat);//设置适配器
+//        rv_refresh.setAdapter(mHeaderAndFooterWrapperRepeat);//设置适配器
 //        rv_refresh.setAdapter(mEmptyWrapper);//设置适配器
 
         rv_refresh.setRefreshAndLoadMoreListener(new BasisRecyclerView.OnRefreshAndLoadMoreListener() {
@@ -222,6 +222,7 @@ public class RvRefreshActivity extends BaseActivity {
                     public void run() {
                         mData.add(0, new LVRVData.LVBean("刷新数据", 1));
                         rv_refresh.resetStatus();
+                        rv_refresh.notifyDataSetChanged();
                     }
                 }, 1000);
             }
@@ -237,8 +238,9 @@ public class RvRefreshActivity extends BaseActivity {
 //                            mData.add(new LVRVData.LVBean("加载数据", 2));
 //                            mData.add(new LVRVData.LVBean("加载数据", 3));
 //                        }
-                        rv_refresh.resetStatus();
 //                        rv_refresh.setNoMoreData(true);
+                        rv_refresh.resetStatus();
+                        rv_refresh.notifyDataSetChanged();
                     }
                 }, 2000);
             }

@@ -21,6 +21,7 @@ public class MainData {
     public final static String PHOTO = "Photo";
     public final static String DB = "DB";
     public final static String DIALOG = "DIALOG";
+    public final static String BUGRECYCLER2TO1 = "BUGRECYCLER2TO1";
 
     public static ArrayList<MainBean> mainList = new ArrayList<>();
 
@@ -38,6 +39,7 @@ public class MainData {
         mainList.add(new MainBean(PHOTO, null));
         mainList.add(new MainBean(DB, null));
         mainList.add(new MainBean(DIALOG, null));
+        mainList.add(new MainBean(BUGRECYCLER2TO1, null));
     }
 
     public static class MainBean {

@@ -156,8 +156,20 @@ public abstract class BasisRvMultiAdapter<T> extends BasisRvSpecificAdapter {
     }
 
     /**
-     * 设置条目点击事件
+     * 设置条目点击事件, 监听不为空时, 方法{@link #onItemClickListener(View, BasisRvViewHolder, Object, int)}
+     * 和{@link #onItemLongClickListener(View, BasisRvViewHolder, Object, int)}将失效
+     *
+     * 详情查看
+     * @see #setListener(BasisRvViewHolder, Object, int)
      */
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.mOnItemClickListener = onItemClickListener;
+    }
+
+    /**
+     * 设置条目点击事件, 使用{@link #setOnItemClickListener(OnItemClickListener)}方法替代
+     */
+    @Deprecated
     public void onItemClickListener(OnItemClickListener onItemClickListener) {
         this.mOnItemClickListener = onItemClickListener;
     }

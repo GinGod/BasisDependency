@@ -20,7 +20,11 @@ import com.gingold.basislibrary.adapter.rv.BasisRvHeaderAndFooterWrapper;
 import java.util.ArrayList;
 
 /**
- * 这是一个带下拉刷新和上拉加载的revycleview
+ * 这是一个带有下拉刷新和上拉加载的recycleview
+ * <p>
+ * note: 原适配器的notifyDataSetChanged不可用, 需调用本类封装的{@link #notifyDataSetChanged()}方法
+ *
+ * @see #notifyDataSetChanged()
  */
 public class BasisRecyclerView extends RecyclerView {
     /**
@@ -86,6 +90,14 @@ public class BasisRecyclerView extends RecyclerView {
         mHeadView = new BasisRvRefreshHV(getContext());
         //脚布局
         mFootView = new BasisRvRefreshFV(getContext());
+        mFootView.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isNoMore && loadMoreEnabled && mHeadView.getStatus() < BasisRvRefreshHV.STATE_REFRESHING && refreshAndLoadMoreListener != null) {
+                    doLoadMore();
+                }
+            }
+        });
     }
 
     /**
@@ -113,16 +125,7 @@ public class BasisRecyclerView extends RecyclerView {
                     && !isNoMore && mHeadView.getStatus() < BasisRvRefreshHV.STATE_REFRESHING
                     && loadMoreEnabled) {
 
-                isLoadingData = true;
-                mFootView.setState(BasisRvRefreshFV.STATE_LOADING);
-                //延迟加载更多
-                BasisBaseUtils.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        refreshAndLoadMoreListener.onLoadMore();
-                    }
-                }, 252);
-                shouldLoadMore = false;//根据滑动操作判断是否应该加载更多
+                doLoadMore();//加载更多操作
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -131,6 +134,22 @@ public class BasisRecyclerView extends RecyclerView {
                 }, 52);//完整展示加载更多view
             }
         }
+    }
+
+    /**
+     * 加载更多操作
+     */
+    private void doLoadMore() {
+        isLoadingData = true;
+        mFootView.setState(BasisRvRefreshFV.STATE_LOADING);
+        //延迟加载更多
+        BasisBaseUtils.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                refreshAndLoadMoreListener.onLoadMore();
+            }
+        }, 252 * 3);
+        shouldLoadMore = false;//根据滑动操作判断是否应该加载更多
     }
 
     /**
@@ -190,9 +209,10 @@ public class BasisRecyclerView extends RecyclerView {
                             BasisBaseUtils.postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
+                                    setloadMoreComplete();//还原加载更多配置
                                     refreshAndLoadMoreListener.onRefresh();
                                 }
-                            }, 252);
+                            }, 252 * 3);
                         }
                     }
                 }
@@ -244,12 +264,16 @@ public class BasisRecyclerView extends RecyclerView {
     /**
      * 设置没有更多数据了
      *
-     * @param noMore
+     * @param noMore true 显示没有更多数据作为最后一个item;  false 加载完成状态
      */
-    public void setNoMoreData(boolean noMore) {
+    public void setNoMoreData(final boolean noMore) {
         this.isNoMore = noMore;
-        mFootView.setState(isNoMore ? BasisRvRefreshFV.STATE_NOMORE : BasisRvRefreshFV.STATE_COMPLETE);
-        notifyDataSetChanged();
+        BasisBaseUtils.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mFootView.setState(isNoMore ? BasisRvRefreshFV.STATE_NOMORE : BasisRvRefreshFV.STATE_COMPLETE);
+            }
+        }, 252);
     }
 
     /**
@@ -265,17 +289,21 @@ public class BasisRecyclerView extends RecyclerView {
      * 还原所有的状态
      */
     public void resetStatus() {
+        setReFreshComplete();
         setloadMoreComplete();
-        refreshComplete();
-        notifyDataSetChanged();
     }
 
     /**
      * 设置刷新完成
      */
-    private void refreshComplete() {
-        mHeadView.refreshComplete();
-        notifyDataSetChanged();
+    public void setReFreshComplete() {
+        //设置加载数据为false
+        BasisBaseUtils.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mHeadView.refreshComplete();
+            }
+        }, 252);
     }
 
     /**
@@ -283,9 +311,15 @@ public class BasisRecyclerView extends RecyclerView {
      */
     public void setloadMoreComplete() {
         //设置加载数据为false
-        isLoadingData = false;
-        mFootView.setState(BasisRvRefreshFV.STATE_COMPLETE);
-        notifyDataSetChanged();
+        BasisBaseUtils.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                isLoadingData = false;
+                isNoMore = false;
+                loadMoreEnabled = loadMoreEnabledState;
+                mFootView.setState(BasisRvRefreshFV.STATE_COMPLETE);
+            }
+        }, 252);
     }
 
     /**
@@ -312,29 +346,11 @@ public class BasisRecyclerView extends RecyclerView {
     }
 
     /**
-     * 设置刷新完成
-     */
-    public void setReFreshComplete() {
-        mHeadView.refreshComplete();
-    }
-
-    /**
      * 设置是否启用上拉加载功能
      */
     public void setLoadMoreEnabled(boolean isEnabled) {
         loadMoreEnabled = isEnabled;
         loadMoreEnabledState = isEnabled;
-    }
-
-    /**
-     * 设置是否刷新ing状态
-     */
-    public void setRefreshing(boolean refreshing) {
-        if (refreshing && pullRefreshEnabled && refreshAndLoadMoreListener != null) {
-            mHeadView.setState(BasisRvRefreshHV.STATE_REFRESHING);
-            mHeadView.onMove(mHeadView.getMeasuredHeight());
-            refreshAndLoadMoreListener.onRefresh();
-        }
     }
 
     /**
@@ -359,10 +375,10 @@ public class BasisRecyclerView extends RecyclerView {
     }
 
     /**
-     * 刷新适配器
+     * 适配器刷新
      */
     public void notifyDataSetChanged() {
-        new Handler().postDelayed(new Runnable() {
+        BasisBaseUtils.postDelayed(new Runnable() {
             @Override
             public void run() {
                 if (mWrapAdapter != null) {
@@ -375,6 +391,6 @@ public class BasisRecyclerView extends RecyclerView {
                     setLoadMoreEnabled(loadMoreEnabledState);
                 }
             }
-        }, 252);
+        }, 52);
     }
 }

@@ -257,9 +257,9 @@ public class BasisRvRefreshHV extends LinearLayout {
      * 刷新完成
      */
     public void refreshComplete() {
-        setState(STATE_DONE);
         new Handler().postDelayed(new Runnable() {
             public void run() {
+                setState(STATE_DONE);
                 reset();
             }
         }, 200);

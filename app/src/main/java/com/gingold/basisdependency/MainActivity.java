@@ -1,10 +1,12 @@
 package com.gingold.basisdependency;
 
+import android.content.Intent;
 import android.graphics.Paint;
 import android.view.View;
 import android.widget.TextView;
 
 import com.gingold.basisdependency.Base.BaseActivity;
+import com.gingold.basisdependency.activity.BugRecycler2To1Activity;
 import com.gingold.basisdependency.activity.DBActivity;
 import com.gingold.basisdependency.activity.DialogActivity;
 import com.gingold.basisdependency.activity.GlideActivity;
@@ -29,6 +31,7 @@ public class MainActivity extends BaseActivity {
     public void setupViewLayout() {
         setContentView(R.layout.activity_main);
         initTitle("Basis测试", "");
+        startService(new Intent(mActivity, TestService.class));
     }
 
     @Override
@@ -90,6 +93,9 @@ public class MainActivity extends BaseActivity {
                                 break;
                             case MainData.DIALOG:
                                 startActivity(DialogActivity.class);
+                                break;
+                            case MainData.BUGRECYCLER2TO1:
+                                startActivity(BugRecycler2To1Activity.class);
                                 break;
                         }
 
