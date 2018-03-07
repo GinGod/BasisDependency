@@ -27,6 +27,9 @@
         <activity android:name=".activity.PhotoActivity"/>
         <activity android:name=".activity.DBActivity"/>
         <activity android:name=".activity.DialogActivity"/>
+        <activity android:name=".activity.BugRecycler2To1Activity"/>
+
+        <service android:name=".TestService"/>
     </application>
 
 </manifest>
