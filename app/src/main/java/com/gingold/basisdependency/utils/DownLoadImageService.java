@@ -6,9 +6,6 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Environment;
 
-import com.bumptech.glide.request.target.Target;
-import com.gingold.basislibrary.glide.GlideApp;
-
 import java.io.File;
 import java.io.FileOutputStream;
 
@@ -36,15 +33,15 @@ public class DownLoadImageService implements Runnable {
 //                    .load(url)
 //                    .downloadOnly(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
 //                    .get();
-            bitmap = GlideApp.with(context)
-                    .asBitmap()
-                    .load(url)
-                    .submit(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
-                    .get();
-            if (bitmap != null){
-                // 在这里执行图片保存方法
-                saveImageToGallery(context,bitmap);
-            }
+//            bitmap = GlideApp.with(context)
+//                    .asBitmap()
+//                    .load(url)
+//                    .submit(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
+//                    .get();
+//            if (bitmap != null){
+//                // 在这里执行图片保存方法
+//                saveImageToGallery(context,bitmap);
+//            }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

@@ -26,9 +26,11 @@ dependencies {
     compile 'com.google.code.gson:gson:2.8.1'//gson
 
     //Glide相关
-    compile 'com.github.bumptech.glide:glide:4.0.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.0.0'
-    compile 'jp.wasabeef:glide-transformations:2.0.2'//Glide特殊效果
+    compile 'com.github.GinGod:BasisGlide:V1.0.1'
+    //依赖项目中已经包含的依赖
+//    compile 'com.github.bumptech.glide:glide:3.8.0'
+//    compile 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.4.1'
+//    compile 'jp.wasabeef:glide-transformations:2.0.2'
 }
 
 publish {

@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.gingold.basisdependency">
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+
     <application
         android:name="com.gingold.basisdependency.MyApplication"
         android:allowBackup="true"
@@ -28,6 +31,10 @@
         <activity android:name=".activity.DBActivity"/>
         <activity android:name=".activity.DialogActivity"/>
         <activity android:name=".activity.BugRecycler2To1Activity"/>
+        <activity android:name=".activity.ExceptionInfoActivity"/>
+        <activity android:name=".activity.Html5Activity"/>
+        <activity android:name=".activity.ImmerseActivity"/>
+        <activity android:name=".activity.ImmerseFragmentActivity"/>
 
         <service android:name=".TestService"/>
     </application>

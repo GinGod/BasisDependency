@@ -4,6 +4,7 @@ import android.text.TextUtils;
 
 import com.gingold.basislibrary.Base.BasisBaseContants;
 import com.gingold.basislibrary.Base.BasisBaseUtils;
+import com.gingold.basislibrary.utils.BasisCommonUtils;
 import com.gingold.basislibrary.utils.BasisLogUtils;
 import com.gingold.basislibrary.utils.dialog.BasisPBLoadingUtils;
 
@@ -71,7 +72,7 @@ public class BasisPostStringBuilder extends BasisOkHttpBuilder {
                 BasisPBLoadingUtils.dismiss();
                 final String message;
                 if (e != null) {
-                    message = e.getMessage();
+                    message = BasisCommonUtils.getExceptionInfo(e);
                 } else {
                     message = "";
                 }
@@ -111,7 +112,7 @@ public class BasisPostStringBuilder extends BasisOkHttpBuilder {
                             try {
                                 basisCallback.onSuccess(call, response, message);
                             } catch (Exception e) {
-                                basisCallback.onException(url, content, message, e, e.getMessage());
+                                basisCallback.onException(url, content, message, e, BasisCommonUtils.getExceptionInfo(e));
                                 e.printStackTrace();
                             }
                         }

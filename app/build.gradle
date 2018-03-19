@@ -12,29 +12,28 @@ android {
     }
 //    buildTypes {
 //        release {
-//            minifyEnabled false
+//            minifyEnabled false  //true 是运行混淆文件 ，false 是不运行混淆文件
 //            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 //        }
 //    }
 //
-//    signingConfigs {
-//        release {
-//            storeFile file("D:/workspace/keystore/NeZaApp/nezepublish.keystore")
-//            storePassword "fhlwlsys"
-//            keyAlias "fhlwlsys.neza"
-//            keyPassword "fhlwlsys"
-//        }
-//    }
+    signingConfigs {
+        release {
+            storeFile file('defaultkey.keystore')
+            storePassword 'defaultkey'
+            keyAlias 'defaultkey'
+            keyPassword 'defaultkey'
+        }
+    }
 
-
-//    buildTypes {
-//        debug {
-//            signingConfig signingConfigs.release
-//        }
-//        release {
-//            signingConfig signingConfigs.release
-//        }
-//    }
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.release
+        }
+        release {
+            signingConfig signingConfigs.release
+        }
+    }
 }
 
 dependencies {

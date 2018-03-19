@@ -35,6 +35,13 @@
         android:text="加载图片"/>
 
     <TextView
+        android:id="@+id/tv_glide_load2"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:gravity="center"
+        android:text="加载图片"/>
+
+    <TextView
         android:id="@+id/tv_glide_download"
         android:layout_width="match_parent"
         android:layout_height="52dp"
@@ -44,6 +51,12 @@
     <ImageView
         android:id="@+id/iv_glide_pic"
         android:layout_width="200dp"
+        android:layout_height="200dp"/>
+
+    <ImageView
+        android:id="@+id/iv_glide_pic1"
+        android:layout_width="200dp"
+        android:visibility="gone"
         android:layout_height="200dp"/>
 
 </LinearLayout>

@@ -22,10 +22,15 @@ public class MainData {
     public final static String DB = "DB";
     public final static String DIALOG = "DIALOG";
     public final static String BUGRECYCLER2TO1 = "BUGRECYCLER2TO1";
+    public final static String EXCEPTIONINFO = "EXCEPTIONINFO";
+    public final static String HTML5 = "HTML5";
+    public final static String IMMERSE = "IMMERSE";
 
     public static ArrayList<MainBean> mainList = new ArrayList<>();
 
     static {
+        mainList.add(new MainBean(IMMERSE, null));
+        mainList.add(new MainBean(HTML5, null));
         mainList.add(new MainBean(TEST, null));
         mainList.add(new MainBean(SP, null));
         mainList.add(new MainBean(LOG, null));
@@ -40,6 +45,7 @@ public class MainData {
         mainList.add(new MainBean(DB, null));
         mainList.add(new MainBean(DIALOG, null));
         mainList.add(new MainBean(BUGRECYCLER2TO1, null));
+        mainList.add(new MainBean(EXCEPTIONINFO, null));
     }
 
     public static class MainBean {

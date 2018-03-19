@@ -5,14 +5,11 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.load.resource.bitmap.CircleCrop;
-import com.bumptech.glide.request.RequestOptions;
 import com.gingold.basisdependency.Base.BaseActivity;
 import com.gingold.basisdependency.R;
 import com.gingold.basisdependency.data.Urls;
-import com.gingold.basislibrary.glide.BasisCallBack;
-import com.gingold.basislibrary.glide.BasisGlideUtils;
-import com.gingold.basislibrary.glide.GlideApp;
+import com.gingold.basisglidelibrary.BasisCallBack;
+import com.gingold.basisglidelibrary.BasisGlideUtils;
 
 import java.io.File;
 import java.util.HashMap;
@@ -27,6 +24,7 @@ public class GlideActivity extends BaseActivity {
     private TextView tv_glide_load;
     private TextView tv_glide_download;
     private ImageView iv_glide_pic;
+    private ImageView iv_glide_pic1;
 
     @Override
     public void setupViewLayout() {
@@ -41,11 +39,12 @@ public class GlideActivity extends BaseActivity {
         tv_glide_load = findTextView(R.id.tv_glide_load);
         tv_glide_download = findTextView(R.id.tv_glide_download);
         iv_glide_pic = findImageView(R.id.iv_glide_pic);
+        iv_glide_pic1 = findImageView(R.id.iv_glide_pic1);
     }
 
     @Override
     public void listener() {
-
+        setOnClickListener(R.id.tv_glide_load2);
     }
 
     @Override
@@ -69,17 +68,21 @@ public class GlideActivity extends BaseActivity {
             case R.id.tv_glide_load:
 //                Glide.with(mActivity).load(R.drawable.lvgvrv_arrow_down).into(iv_glide_pic);
 //                GlideApp.with(mActivity).load(R.drawable.lvgvrv_arrow_down).into(iv_glide_pic);
-                RequestOptions options = new RequestOptions().bitmapTransform(new CircleCrop());
-                GlideApp.with(mActivity).load(Urls.picUrl1)
-                        .apply(options)
-                        .into(iv_glide_pic);
+//                RequestOptions options = new RequestOptions().bitmapTransform(new CircleCrop());
+//                GlideApp.with(mActivity).load(Urls.picUrl1)
+//                        .apply(options)
+//                        .into(iv_glide_pic);
 //                Glide.with(mActivity).load(Urls.picUrl1).transition(new DrawableTransitionOptions().crossFade(2000)).thumbnail(0.5f).into(iv_glide_pic);
 //                BasisGlideUtils.load(iv_glide_pic, R.drawable.lvgvrv_arrow_down, iv_glide_pic);
+                BasisGlideUtils.load(mActivity, Urls.picUrl1, iv_glide_pic);
 //                BasisGlideUtils.load(iv_glide_pic, Urls.picUrl1, iv_glide_pic, 2000, R.drawable.lvgvrv_arrow_down, true);
 //                BasisGlideUtils.loadSpecial(iv_glide_pic, Urls.picUrl1, iv_glide_pic, mActivity, BasisGlideUtils.CROPCIRCLE);
 //                select();
 
                 toast("加载图片中...");
+                break;
+            case R.id.tv_glide_load2:
+                BasisGlideUtils.load(mActivity, Urls.picUrl1, iv_glide_pic);
                 break;
             case R.id.tv_glide_download:
                 BasisGlideUtils.downloadPic(mActivity, Urls.picUrl1, "测试", new BasisCallBack() {
@@ -95,6 +98,23 @@ public class GlideActivity extends BaseActivity {
                         toast("下载失败");
                     }
                 });
+
+//                BasisOkHttpUtils.postString().url("http://hrtest.zqlwl.com/maintain/getPath.do").build().execute(new BasisCallback() {
+//                    @Override
+//                    public void onSuccess(Call call, Response response, String result) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onFailure(String url, String content, Call call, Exception e, String message) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onException(String url, String content, String result, Exception e, String errorMessage) {
+//
+//                    }
+//                });
                 break;
         }
     }
@@ -103,6 +123,6 @@ public class GlideActivity extends BaseActivity {
         HashMap<String, Integer> map = new HashMap<>();
         map.put("1", R.drawable.lvgvrv_arrow_down);
         map.put("2", R.drawable.ic_launcher);
-        BasisGlideUtils.loadWithError(mActivity, Urls.picUrl1, iv_glide_pic, "1", map);
+//        BasisGlideUtils.loadWithError(mActivity, Urls.picUrl1, iv_glide_pic, "1", map);
     }
 }
