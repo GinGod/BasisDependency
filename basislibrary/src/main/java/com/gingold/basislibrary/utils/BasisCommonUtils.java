@@ -4,6 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.io.Writer;
+
 /**
  * 通用方法工具类
  */
@@ -30,5 +34,19 @@ public class BasisCommonUtils {
         Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.parse("smsto:" + phone));
         intent.putExtra("sms_body", message);
         context.startActivity(intent);
+    }
+
+    /**
+     * 获取异常信息
+     *
+     * @param e 异常
+     */
+    public static String getExceptionInfo(Exception e) {
+        Writer writer = new StringWriter();
+        PrintWriter pw = new PrintWriter(writer);
+        e.printStackTrace(pw);
+        pw.close();
+        String info = writer.toString();
+        return info;
     }
 }

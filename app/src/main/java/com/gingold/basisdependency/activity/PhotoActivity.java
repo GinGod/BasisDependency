@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 import com.gingold.basisdependency.Base.BaseActivity;
 import com.gingold.basisdependency.R;
-import com.gingold.basislibrary.glide.BasisGlideUtils;
+import com.gingold.basisglidelibrary.BasisGlideUtils;
 import com.gingold.basislibrary.utils.BasisPhotoUtils;
 
 /**

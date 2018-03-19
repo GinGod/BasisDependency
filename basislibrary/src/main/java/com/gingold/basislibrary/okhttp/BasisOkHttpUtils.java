@@ -3,7 +3,7 @@ package com.gingold.basislibrary.okhttp;
 import com.gingold.basislibrary.Base.BasisBaseContants;
 
 /**
- * OKHttp上传下载工具类
+ * OKHttp请求工具类
  */
 
 public class BasisOkHttpUtils {
@@ -11,28 +11,30 @@ public class BasisOkHttpUtils {
     /**
      * 请求参数为jsonStr数据
      */
-    public static BasisPostStringBuilder postString() {
+    public static BasisOkHttpBuilder postString() {
         return new BasisPostStringBuilder();
     }
 
     /**
-     * 上传文件
+     * 上传文件(与上传多个文件相同)
+     *
+     * @see #postFiles()
      */
-    public static BasisPostFilesBuilder postFile() {
+    public static BasisOkHttpBuilder postFile() {
         return new BasisPostFilesBuilder();
     }
 
     /**
      * 上传多个文件
      */
-    public static BasisPostFilesBuilder postFiles() {
+    public static BasisOkHttpBuilder postFiles() {
         return new BasisPostFilesBuilder();
     }
 
     /**
      * 下载文件
      */
-    public static BasisDownloadBuilder download() {
+    public static BasisOkHttpBuilder download() {
         return new BasisDownloadBuilder();
     }
 

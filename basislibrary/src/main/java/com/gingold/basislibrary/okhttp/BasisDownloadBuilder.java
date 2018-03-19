@@ -4,6 +4,7 @@ import android.text.TextUtils;
 
 import com.gingold.basislibrary.Base.BasisBaseContants;
 import com.gingold.basislibrary.Base.BasisBaseUtils;
+import com.gingold.basislibrary.utils.BasisCommonUtils;
 import com.gingold.basislibrary.utils.BasisFileUtils;
 import com.gingold.basislibrary.utils.BasisLogUtils;
 import com.gingold.basislibrary.utils.BasisTimesUtils;
@@ -93,7 +94,7 @@ public class BasisDownloadBuilder extends BasisOkHttpBuilder {
                 BasisPBLoadingUtils.dismiss();
                 String message = "";
                 if (e != null) {
-                    message = e.getMessage();
+                    message = BasisCommonUtils.getExceptionInfo(e);
                 }
                 if (BasisBaseContants.OKHTTP_LOG_STATE && isLogState) {
                     if (BasisBaseContants.OKHTTP_LOG_STATE && isLogState) {
@@ -120,7 +121,8 @@ public class BasisDownloadBuilder extends BasisOkHttpBuilder {
                     //下载文件名
                     if (TextUtils.isEmpty(fileName)) {
                         if (TextUtils.isEmpty(url)) {//网址为空
-                            failure(call, new IllegalArgumentException("网址为空"), "网址为空", basisCallback);
+                            IllegalArgumentException e = new IllegalArgumentException("网址为空");
+                            failure(call, e, BasisCommonUtils.getExceptionInfo(e), basisCallback);
                             return;
                         } else {
                             //截取网址最后15位作为下载的文件名
@@ -157,7 +159,7 @@ public class BasisDownloadBuilder extends BasisOkHttpBuilder {
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
-                    failure(call, e, e.getMessage(), basisCallback);
+                    failure(call, e, BasisCommonUtils.getExceptionInfo(e), basisCallback);
                 } finally {
                     if (inputStream != null) {//关流释放资源
                         try {
@@ -190,7 +192,7 @@ public class BasisDownloadBuilder extends BasisOkHttpBuilder {
                     try {
                         basisCallback.onSuccess(call, response, filePath);
                     } catch (Exception e) {
-                        basisCallback.onException(url, content, filePath, e, e.getMessage());
+                        basisCallback.onException(url, content, filePath, e, BasisCommonUtils.getExceptionInfo(e));
                         e.printStackTrace();
                     }
                 }

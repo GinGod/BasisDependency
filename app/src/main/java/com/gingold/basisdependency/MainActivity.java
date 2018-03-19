@@ -9,7 +9,10 @@ import com.gingold.basisdependency.Base.BaseActivity;
 import com.gingold.basisdependency.activity.BugRecycler2To1Activity;
 import com.gingold.basisdependency.activity.DBActivity;
 import com.gingold.basisdependency.activity.DialogActivity;
+import com.gingold.basisdependency.activity.ExceptionInfoActivity;
 import com.gingold.basisdependency.activity.GlideActivity;
+import com.gingold.basisdependency.activity.Html5Activity;
+import com.gingold.basisdependency.activity.ImmerseActivity;
 import com.gingold.basisdependency.activity.LvRefreshActivity;
 import com.gingold.basisdependency.activity.MultiLvActivity;
 import com.gingold.basisdependency.activity.MultiRvActivity;
@@ -54,6 +57,12 @@ public class MainActivity extends BaseActivity {
                         int flag = Paint.DITHER_FLAG;
                         toast(data.des);
                         switch (data.des) {
+                            case MainData.IMMERSE:
+                                startActivity(ImmerseActivity.class);
+                                break;
+                            case MainData.HTML5:
+                                startActivity(Html5Activity.class);
+                                break;
                             case MainData.TEST:
                                 startActivity(TestActivity.class);
                                 break;
@@ -96,6 +105,9 @@ public class MainActivity extends BaseActivity {
                                 break;
                             case MainData.BUGRECYCLER2TO1:
                                 startActivity(BugRecycler2To1Activity.class);
+                                break;
+                            case MainData.EXCEPTIONINFO:
+                                startActivity(ExceptionInfoActivity.class);
                                 break;
                         }
 
