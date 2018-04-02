@@ -5,14 +5,16 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.os.Build;
+import android.text.TextUtils;
 
+import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.LineNumberReader;
 import java.lang.reflect.Method;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
-import java.net.SocketException;
 import java.util.Enumeration;
 
 /**
@@ -111,10 +113,60 @@ public class BasisDeviceUtils {
     /**
      * 将得到的int类型的IP转换为String类型
      */
-    public static String intIP2StringIP(int ip) {
+    private static String intIP2StringIP(int ip) {
         return (ip & 0xFF) + "." +
                 ((ip >> 8) & 0xFF) + "." +
                 ((ip >> 16) & 0xFF) + "." +
                 (ip >> 24 & 0xFF);
+    }
+
+    /**
+     * 判断手机操作系统是否为小米系统Miui
+     */
+    private static String getSystemProperty(String propName) {
+        String line;
+        BufferedReader input = null;
+        try {
+            Process p = Runtime.getRuntime().exec("getprop " + propName);
+            input = new BufferedReader(new InputStreamReader(p.getInputStream()), 1024);
+            line = input.readLine();
+            input.close();
+        } catch (Exception ex) {
+            BasisLogUtils.e("Unable to read sysprop " + propName + ": " + BasisCommonUtils.getExceptionInfo(ex));
+            return null;
+        } finally {
+            if (input != null) {
+                try {
+                    input.close();
+                } catch (Exception e) {
+                    BasisLogUtils.e("Exception while closing InputStream" + ": " + BasisCommonUtils.getExceptionInfo(e));
+                }
+            }
+        }
+        return line;
+    }
+
+
+    /**
+     * 判断手机操作系统是否为华为系统
+     */
+    public static boolean isHuaweiRom() {
+        String manufacturer = Build.MANUFACTURER;
+        return !TextUtils.isEmpty(manufacturer) && manufacturer.contains("HUAWEI");
+    }
+
+    /**
+     * 判断手机操作系统是否为小米系统Miui
+     */
+    public static boolean isMiuiRom() {
+        return !TextUtils.isEmpty(getSystemProperty("ro.miui.ui.version.name"));
+    }
+
+
+    /**
+     * 判断手机操作系统是否为魅族系统Flyme
+     */
+    public static boolean isFlymeRom() {
+        return "flyme".equalsIgnoreCase(getSystemProperty("ro.build.user"));
     }
 }

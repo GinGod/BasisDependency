@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 
+import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.Writer;
@@ -48,5 +49,18 @@ public class BasisCommonUtils {
         pw.close();
         String info = writer.toString();
         return info;
+    }
+
+    /**
+     * 安装本地.apk文件
+     */
+    public static void installApk(Context context, File apk) {
+        if (!apk.exists()) {
+            return;
+        }
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setDataAndType(Uri.fromFile(apk), "application/vnd.android.package-archive");
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK); //安装完后打开开始页面
+        context.startActivity(intent);
     }
 }

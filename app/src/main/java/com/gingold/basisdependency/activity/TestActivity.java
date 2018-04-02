@@ -15,16 +15,17 @@ import android.widget.Toast;
 import com.gingold.basisdependency.Base.BaseActivity;
 import com.gingold.basisdependency.MyApplication;
 import com.gingold.basisdependency.R;
+import com.gingold.basislibrary.utils.BasisCommonUtils;
 import com.gingold.basislibrary.utils.BasisDeviceUtils;
 import com.gingold.basislibrary.utils.BasisFileUtils;
+import com.gingold.basislibrary.utils.BasisLogUtils;
+import com.gingold.basislibrary.utils.BasisTimesUtils;
+import com.gingold.basislibrary.utils.BasisVersionUtils;
 import com.gingold.basislibrary.utils.dialog.BasisDSClickListener;
 import com.gingold.basislibrary.utils.dialog.BasisDialogListenrer;
 import com.gingold.basislibrary.utils.dialog.BasisDialogUtils;
-import com.gingold.basislibrary.utils.BasisLogUtils;
 import com.gingold.basislibrary.utils.dialog.BasisPBLoadingUtils;
 import com.gingold.basislibrary.utils.dialog.BasisProgressDialogUtils;
-import com.gingold.basislibrary.utils.BasisTimesUtils;
-import com.gingold.basislibrary.utils.BasisVersionUtils;
 
 import java.io.File;
 
@@ -68,7 +69,7 @@ public class TestActivity extends BaseActivity {
 
     @Override
     public void listener() {
-
+        setOnClickListener(R.id.tv_test_installapk);
     }
 
     @Override
@@ -89,8 +90,33 @@ public class TestActivity extends BaseActivity {
     }
 
     @Override
-    public void onClick(View view) {
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.tv_test_installapk:
+                final BasisPBLoadingUtils basisPBLoadingUtils = BasisPBLoadingUtils.build(mActivity).setMessage("正在复制 0%");
+                basisPBLoadingUtils.show();
+                final File apkFile = new File(BasisFileUtils.mkdir("download"), "test.apk");
+                BasisFileUtils.copyAssetsFile(mActivity, "test.apk", apkFile, new BasisFileUtils.onCopyFileCallBack() {
+                    @Override
+                    public void onSuccess() {
+                        BasisPBLoadingUtils.dismiss();
+                        BasisCommonUtils.installApk(mActivity, apkFile);
+                    }
 
+                    @Override
+                    public void onFailure(String errorMessage) {
+
+                    }
+
+                    @Override
+                    public void onProgress(long totalSize, long currentSize, long progress) {
+                        BasisLogUtils.e(totalSize + " " + currentSize + " " + progress);
+                        basisPBLoadingUtils.setMessage("正在复制 " + progress + "%");
+                    }
+                });
+
+                break;
+        }
     }
 
     @OnClick({R.id.iv_arrow, R.id.tv_test_down, R.id.tv_test_up, R.id.tv_test_clear, R.id.tv_test_time, R.id.et_test_hide})

@@ -10,6 +10,7 @@ import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -35,7 +36,7 @@ import java.util.List;
 /**
  * BasisBaseActivity
  */
-public abstract class BasisBaseActivity extends Activity implements OnClickListener {
+public abstract class BasisBaseActivity extends AppCompatActivity implements OnClickListener {
     //自定义的标题栏布局
     /**
      * 标题左返回

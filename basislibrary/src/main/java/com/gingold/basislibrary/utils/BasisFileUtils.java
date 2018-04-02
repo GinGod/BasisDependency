@@ -1,8 +1,11 @@
 package com.gingold.basislibrary.utils;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Looper;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -17,6 +20,7 @@ import java.io.OutputStream;
  */
 
 public class BasisFileUtils {
+    public static final Handler mHandler = new Handler(Looper.getMainLooper());
 
     /**
      * 在SD卡创建文件夹, 并返回其绝对路径
@@ -72,42 +76,114 @@ public class BasisFileUtils {
     /**
      * 文件拷贝
      *
-     * @return 1 成功; -1 失败
+     * @param copyFileCallBack 监听中的方法已处理, 默认在主线程中执行
      */
-    public static int copyFile(File fromFile, File toFile) {
-        InputStream fosfrom = null;
-        OutputStream fosto = null;
+    public static void copyFile(File fromFile, File toFile, onCopyFileCallBack copyFileCallBack) {
         try {
-            fosfrom = new FileInputStream(fromFile);
-            fosto = new FileOutputStream(toFile);
-            byte bt[] = new byte[1024 * 2];
-            int length;
-            while ((length = fosfrom.read(bt)) > 0) {
-                fosto.write(bt, 0, length);
-            }
-            fosfrom.close();
-            fosto.close();
-            return 0;
+            InputStream fosfrom = new FileInputStream(fromFile);
+            OutputStream fosto = new FileOutputStream(toFile);
+            copy(fosfrom, fosto, copyFileCallBack);
         } catch (Exception e) {
             e.printStackTrace();
-            return -1;
-        } finally {
-            if (fosfrom != null) {
-                try {
-                    fosfrom.close();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-
-            if (fosto != null) {
-                try {
-                    fosto.close();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
+            failure(e, copyFileCallBack);
         }
+    }
+
+    /**
+     * 拷贝assets文件到本地
+     *
+     * @param copyFileCallBack 监听中的方法已处理, 默认在主线程中执行
+     */
+    public static void copyAssetsFile(Context context, String assetsFileName, File toFile, final onCopyFileCallBack copyFileCallBack) {
+        try {
+            InputStream fosfrom = context.getAssets().open(assetsFileName);
+            OutputStream fosto = new FileOutputStream(toFile);
+            copy(fosfrom, fosto, copyFileCallBack);
+        } catch (Exception e) {
+            e.printStackTrace();
+            failure(e, copyFileCallBack);
+        }
+    }
+
+    /**
+     * 复制拷贝
+     *
+     * @param copyFileCallBack 监听中的方法已处理, 默认在主线程中执行
+     */
+    public static void copy(final InputStream fosfrom, final OutputStream fosto, final onCopyFileCallBack copyFileCallBack) {
+        new Thread() {
+            @Override
+            public void run() {
+                try {
+                    int totalSize = fosfrom.available();
+                    int currentSize = 0;
+                    int len = 1024 * 8;
+                    byte bt[] = new byte[len];
+                    int length;
+                    while ((length = fosfrom.read(bt)) > 0) {
+                        fosto.write(bt, 0, length);
+//                        SystemClock.sleep(10);//测试使用
+                        currentSize = currentSize + len;
+                        process(totalSize, currentSize, copyFileCallBack);
+                    }
+                    fosfrom.close();
+                    fosto.close();
+                    success(copyFileCallBack);
+                } catch (final Exception e) {
+                    e.printStackTrace();
+                    failure(e, copyFileCallBack);
+                } finally {
+                    if (fosfrom != null) {
+                        try {
+                            fosfrom.close();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    if (fosto != null) {
+                        try {
+                            fosto.close();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        }.start();
+    }
+
+    private static void failure(final Exception e, final onCopyFileCallBack copyFileCallBack) {
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                if (copyFileCallBack != null) {
+                    copyFileCallBack.onFailure(BasisCommonUtils.getExceptionInfo(e));
+                }
+            }
+        });
+    }
+
+    private static void success(final onCopyFileCallBack copyFileCallBack) {
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                if (copyFileCallBack != null) {
+                    copyFileCallBack.onSuccess();
+                }
+            }
+        });
+    }
+
+    private static void process(final int totalSize, final int currentSize, final onCopyFileCallBack copyFileCallBack) {
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                if (copyFileCallBack != null && totalSize > 0) {
+                    copyFileCallBack.onProgress(totalSize, currentSize, currentSize * 100 / totalSize);
+                }
+            }
+        });
     }
 
     /**
@@ -125,5 +201,16 @@ public class BasisFileUtils {
         } catch (Exception e) {
         }
         return bitmap;
+    }
+
+    /**
+     * 文件复制监听器
+     */
+    public interface onCopyFileCallBack {
+        void onSuccess();
+
+        void onFailure(String errorMessage);
+
+        void onProgress(long totalSize, long currentSize, long progress);
     }
 }

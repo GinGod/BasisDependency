@@ -10,6 +10,8 @@ import android.view.WindowManager;
 
 /**
  * 沉浸式状态栏工具类
+ *
+ * @note viewPager中的Fragment自己使用沉浸式效果时, 占据状态栏的布局和标题布局需分开, 否则会引起标题显示错乱
  */
 
 public class BasisImmerseUtils {
@@ -25,7 +27,46 @@ public class BasisImmerseUtils {
             Window window = activity.getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);//设置透明状态栏属性
             int statusBarHeight = getStatusBarHeight(activity);//获取系统状态栏高度
-            view.setPadding(0, statusBarHeight, 0, 0);//设置view的paddingTop高度, 防止显示错乱
+            BasisLogUtils.e("statusBarHeight: " + statusBarHeight);
+            view.setPadding(view.getPaddingLeft(), view.getPaddingTop() + statusBarHeight, view.getPaddingRight(), view.getPaddingBottom());//设置view的paddingTop高度, 防止显示错乱
+        }
+    }
+
+    /**
+     * 设置沉浸式属性
+     */
+    public static void setImmerseLayout(Activity activity) {
+        //沉浸式状态栏为Android4.4后特性
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            Window window = activity.getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);//设置透明状态栏属性
+        }
+    }
+
+    /**
+     * 取消沉浸式属性
+     *
+     * @param view 为实现沉浸式的布局, 需添加属性: android:fitsSystemWindows="true"
+     */
+    public static void clearImmerseLayout(Activity activity, View view) {
+        //沉浸式状态栏为Android4.4后特性
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            Window window = activity.getWindow();
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            int statusBarHeight = getStatusBarHeight(activity);//获取系统状态栏高度
+            BasisLogUtils.e("statusBarHeight: " + statusBarHeight);
+            view.setPadding(view.getPaddingLeft(), view.getPaddingTop() - statusBarHeight, view.getPaddingRight(), view.getPaddingBottom());//设置view的paddingTop高度, 防止显示错乱
+        }
+    }
+
+    /**
+     * 取消沉浸式属性
+     */
+    public static void clearImmerseLayout(Activity activity) {
+        //沉浸式状态栏为Android4.4后特性
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            Window window = activity.getWindow();
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
     }
 
@@ -35,13 +76,11 @@ public class BasisImmerseUtils {
      * @return pixel
      */
     public static int getStatusBarHeight(Context context) {
-        int result = 0;
-        int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen",
-                "android");
+        int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
         if (resourceId > 0) {
-            result = context.getResources().getDimensionPixelSize(resourceId);
+            return context.getResources().getDimensionPixelSize(resourceId);
         }
-        return result;
+        return 0;
     }
 
     /**
@@ -84,7 +123,7 @@ public class BasisImmerseUtils {
     }
 
     /**
-     * 设置沉浸式效果(游戏和视频播放需求)
+     * 设置完全沉浸式效果(游戏和视频播放需求)
      * <p>
      * 需要在onWindowFocusChanged方法中调用
      */

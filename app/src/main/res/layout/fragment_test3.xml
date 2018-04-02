@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/ll_fragment_test3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/holo_red_light"
+        android:fitsSystemWindows="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:gravity="center"
+            android:text="Test3Fragment"
+            android:textColor="@color/black"/>
+    </LinearLayout>
+
+</LinearLayout>
