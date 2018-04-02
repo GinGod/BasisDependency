@@ -208,7 +208,7 @@ public class BasisDownloadBuilder extends BasisOkHttpBuilder {
             @Override
             public void run() {
                 //下载进度
-                if (basisCallback != null) {
+                if (basisCallback != null && totalSize > 0) {
                     basisCallback.onProgress(totalSize, process, process * 100 / totalSize);
                 }
             }

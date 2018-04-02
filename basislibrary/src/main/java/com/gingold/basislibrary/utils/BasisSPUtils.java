@@ -25,6 +25,13 @@ public class BasisSPUtils {
     }
 
     /**
+     * 获取字符(采用默认sp名)
+     */
+    public static String getStringPreferences(Context context, String key, String defaultValue) {
+        return getStringPreference(context, preference, key, defaultValue);
+    }
+
+    /**
      * 设置长整型(采用默认sp名)
      */
     public static void setLongPreferences(Context context, String key, long value) {
@@ -99,6 +106,14 @@ public class BasisSPUtils {
     }
 
     /**
+     * 获取字符(自定义sp名)
+     */
+    public static String getStringPreferences(Context context, String preference, String key, String defaultValue) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(preference, Context.MODE_PRIVATE);
+        return sharedPreferences.getString(key, defaultValue);
+    }
+
+    /**
      * 设置长整型(自定义sp名)
      */
     public static void setLongPreferences(Context context, String preference, String key, long value) {
@@ -148,6 +163,14 @@ public class BasisSPUtils {
      * 获取int(自定义sp名)
      */
     public static int getIntPreference(Context context, String preference, String key, int defaultValue) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(preference, Context.MODE_PRIVATE);
+        return sharedPreferences.getInt(key, defaultValue);
+    }
+
+    /**
+     * 获取int(自定义sp名)
+     */
+    public static int getIntPreferences(Context context, String preference, String key, int defaultValue) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(preference, Context.MODE_PRIVATE);
         return sharedPreferences.getInt(key, defaultValue);
     }

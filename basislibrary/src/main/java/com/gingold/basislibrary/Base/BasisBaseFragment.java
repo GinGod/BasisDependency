@@ -42,7 +42,7 @@ public abstract class BasisBaseFragment extends Fragment implements OnClickListe
 
     private ArrayList<BroadcastReceiver> mReceiverList = new ArrayList<>();//广播集合
 
-    private final String TAG = this.getClass().getSimpleName() + "TAG";//类名日志tag
+    public final String TAG = this.getClass().getSimpleName() + "TAG";//类名日志tag
 
     @Nullable
     @Override
