@@ -26,10 +26,16 @@ public class BasisImmerseUtils {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             Window window = activity.getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);//设置透明状态栏属性
-            int statusBarHeight = getStatusBarHeight(activity);//获取系统状态栏高度
-            BasisLogUtils.e("statusBarHeight: " + statusBarHeight);
-            view.setPadding(view.getPaddingLeft(), view.getPaddingTop() + statusBarHeight, view.getPaddingRight(), view.getPaddingBottom());//设置view的paddingTop高度, 防止显示错乱
+            setPaddingTop(activity, view);
         }
+    }
+
+    /**
+     * 将布局的PaddingTop增加系统栏的高度
+     */
+    public static void setPaddingTop(Activity activity, View view) {
+        int statusBarHeight = getStatusBarHeight(activity);//获取系统状态栏高度
+        view.setPadding(view.getPaddingLeft(), view.getPaddingTop() + statusBarHeight, view.getPaddingRight(), view.getPaddingBottom());//设置view的paddingTop高度, 防止显示错乱
     }
 
     /**
@@ -54,7 +60,6 @@ public class BasisImmerseUtils {
             Window window = activity.getWindow();
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             int statusBarHeight = getStatusBarHeight(activity);//获取系统状态栏高度
-            BasisLogUtils.e("statusBarHeight: " + statusBarHeight);
             view.setPadding(view.getPaddingLeft(), view.getPaddingTop() - statusBarHeight, view.getPaddingRight(), view.getPaddingBottom());//设置view的paddingTop高度, 防止显示错乱
         }
     }
@@ -120,6 +125,13 @@ public class BasisImmerseUtils {
      */
     public static void hideStatusBarAndNavigationBar(Activity activity) {
         activity.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+    }
+
+    /**
+     * 设置全屏显示, 但需要在setContentView(layoutid)之前调用
+     */
+    public static void setFullScreen(Activity activity) {
+        activity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
 
     /**

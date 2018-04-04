@@ -5,6 +5,7 @@
               android:background="@color/white"
               android:orientation="vertical">
 
+    <!--viewpager需要是activity的第一个布局, 且需要设置activity的theme隐藏标题栏-->
     <android.support.v4.view.ViewPager
         android:id="@+id/vp_immersefragment"
         android:layout_width="match_parent"

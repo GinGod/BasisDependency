@@ -4,26 +4,18 @@
               android:layout_height="match_parent"
               android:orientation="vertical">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:background="@color/holo_red_light"
-        android:fitsSystemWindows="true"
-        android:gravity="center"
-        android:text="Test1Fragment"
-        android:textColor="@color/black"/>
-
+    <!--在需要实现沉浸式的布局中加入 android:fitsSystemWindows="true"-->
     <LinearLayout
         android:id="@+id/ll_fragment_test1"
         android:layout_width="match_parent"
-        android:layout_height="82dp"
+        android:layout_height="wrap_content"
         android:background="@color/holo_blue_light"
+        android:fitsSystemWindows="true"
         android:orientation="vertical">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="52dp"
-            android:layout_marginTop="30dp"
             android:gravity="center"
             android:text="Test1Fragment"
             android:textColor="@color/black"/>

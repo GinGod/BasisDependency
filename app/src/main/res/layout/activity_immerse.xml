@@ -4,14 +4,17 @@
               android:layout_height="match_parent"
               android:orientation="vertical">
 
+    <!--隐藏系统自带的标题栏, 在在需要实现沉浸式的布局中加入 android:fitsSystemWindows="true"-->
     <LinearLayout
         android:id="@+id/ll_immerse_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/holo_orange_dark"
+        android:background="@color/holo_blue_dark"
         android:fitsSystemWindows="true"
         android:orientation="vertical">
 
+        <!--标题栏, 测试时换成自己的标题栏-->
+        <!--自定义标题栏需要较高的自由度, 建议将其放在LinearLayout中, 并通过LinearLayout实现沉浸式-->
         <include layout="@layout/activity_title"/>
 
     </LinearLayout>
@@ -21,7 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="52dp"
         android:gravity="center"
-        android:textColor="@color/black"
-        android:text="沉浸式Fragment"/>
+        android:text="沉浸式Fragment"
+        android:textColor="@color/black"/>
 
 </LinearLayout>

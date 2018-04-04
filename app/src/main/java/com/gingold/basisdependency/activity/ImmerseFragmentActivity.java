@@ -14,6 +14,7 @@ import com.gingold.basisdependency.fragment.Test2Fragment;
 import com.gingold.basisdependency.fragment.Test3Fragment;
 import com.gingold.basisdependency.fragment.Test4Fragment;
 import com.gingold.basisdependency.fragment.Test5Fragment;
+import com.gingold.basislibrary.utils.BasisImmerseUtils;
 
 import java.util.ArrayList;
 
@@ -31,9 +32,11 @@ public class ImmerseFragmentActivity extends BaseActivity {
     @Override
     public void setupViewLayout() {
         setContentView(R.layout.activity_immersefragment);
-//        BasisImmerseUtils.hideStatusBar(mActivity);
-//        BasisImmerseUtils.hideNavigationBar(mActivity);
-//        BasisImmerseUtils.setTransparentWindowBar(mActivity);
+        BasisImmerseUtils.setImmerseLayout(mActivity);//设置沉浸式状态
+
+//        BasisImmerseUtils.hideStatusBar(mActivity);//隐藏顶部状态栏
+//        BasisImmerseUtils.hideNavigationBar(mActivity);//隐藏底部导航栏
+//        BasisImmerseUtils.setTransparentWindowBar(mActivity);//设置顶部状态栏和底部导航栏透明, 并使主题布局占据顶部和底部位置
     }
 
     @Override
@@ -51,6 +54,9 @@ public class ImmerseFragmentActivity extends BaseActivity {
         setVPAdapter();
     }
 
+    /**
+     * 初始化Fragment
+     */
     private void initFragmentData() {
         mFragments.add(new Test1Fragment());
         mFragments.add(new Test2Fragment());
@@ -59,6 +65,9 @@ public class ImmerseFragmentActivity extends BaseActivity {
         mFragments.add(new Test5Fragment());
     }
 
+    /**
+     * 设置适配器
+     */
     private void setVPAdapter() {
         mFragmentPagerAdapter = new FragmentPagerAdapter(mFragmentManager) {
             @Override
@@ -73,8 +82,8 @@ public class ImmerseFragmentActivity extends BaseActivity {
         };
 
         /**
-         * onattach  oncreate  oncreateview  onactivitycreated  onstart  onresume
-         * onpause  onstop  ondestoryview  ondestory  ondetach
+         * 创建生命周期: onattach  oncreate  oncreateview  onactivitycreated  onstart  onresume
+         * 销毁生命周期: onpause  onstop  ondestoryview  ondestory  ondetach
          * 创建时会多执行 onattach oncreate
          * 销毁时会多执行 ondestory ondetach
          */

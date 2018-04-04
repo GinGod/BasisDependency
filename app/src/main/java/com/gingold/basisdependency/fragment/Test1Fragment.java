@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.gingold.basisdependency.R;
 import com.gingold.basislibrary.Base.BasisBaseFragment;
@@ -18,6 +19,8 @@ import com.gingold.basislibrary.utils.BasisLogUtils;
  */
 
 public class Test1Fragment extends BasisBaseFragment {
+    private LinearLayout ll_fragment_test1;
+
     @Override
     public View setupViewLayout(LayoutInflater inflater) {
         return inflater.inflate(R.layout.fragment_test1, null);
@@ -25,7 +28,7 @@ public class Test1Fragment extends BasisBaseFragment {
 
     @Override
     public void initView(View mBaseView) {
-        BasisImmerseUtils.setImmerseLayout(mActivity);
+        ll_fragment_test1 = getViewNoClickable(R.id.ll_fragment_test1);
     }
 
     @Override
@@ -35,7 +38,8 @@ public class Test1Fragment extends BasisBaseFragment {
 
     @Override
     public void logicDispose() {
-
+        //设置沉浸式布局ll_fragment_test1的paddingtop, 防止显示异常
+        BasisImmerseUtils.setPaddingTop(mActivity, ll_fragment_test1);
     }
 
     @Override
