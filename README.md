@@ -12,7 +12,7 @@ Basis Dependency By Gingod
       
       dependencies {
           ...
-          compile 'com.github.GinGod:BasisDependency:v1.0.3'
+          compile 'com.github.GinGod:BasisDependency:v1.1.2'
       }
 
 ## Contents
@@ -32,6 +32,7 @@ Basis Dependency By Gingod
 - version
 - dialog
 - popupwindow
+- immerse
 
 ### c. Adapter
 - ListView和GridView 的适配器
