@@ -1,22 +1,25 @@
 package com.gingold.basislibrary.utils.dialog;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.view.KeyEvent;
+
+import java.util.ArrayList;
 
 /**
  * ProgressDialog 显示工具类
  * dissmiss监听 {@link #setListener(BasisDialogListenrer)}
+ *
  * @see BasisDialogUtils dismiss注意事项
  */
 
 public class BasisProgressDialogUtils {
 
-    private static ProgressDialog mProgressDialog;
     private static BasisProgressDialogUtils basisProgressDialog;
-    private static BasisDialogListenrer dialogListenrer;
+    private static ArrayList<ProgressDialog> dialogLists = new ArrayList<>();//dialog集合
+    private static BasisDialogListenrer dialogListenrer;//最后一个显示的dialog的监听器才起作用
 
     private BasisProgressDialogUtils() {
     }
@@ -37,15 +40,9 @@ public class BasisProgressDialogUtils {
      * 创建ProgressDialog
      */
     public static BasisProgressDialogUtils build(final Context context) {
-        if (mProgressDialog != null) {//取消上一个dialog
-            mProgressDialog.dismiss();
-        }
-        mProgressDialog = null;
-        basisProgressDialog = null;
         dialogListenrer = null;
 
-        mProgressDialog = new ProgressDialog(context);
-
+        ProgressDialog mProgressDialog = new ProgressDialog(context);
         mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);// 设置进度条的形式为圆形转动的进度条
 
         // dismiss监听
@@ -55,21 +52,8 @@ public class BasisProgressDialogUtils {
             public void onDismiss(DialogInterface dialog) {
                 if (dialogListenrer != null) {
                     dialogListenrer.onDismiss();
+                    dialogListenrer = null;
                 }
-                mProgressDialog = null;
-                basisProgressDialog = null;
-                dialogListenrer = null;
-            }
-        });
-
-        // 监听Key事件被传递给dialog
-        mProgressDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
-
-            @Override
-            public boolean onKey(DialogInterface dialog, int keyCode,
-                                 KeyEvent event) {
-//                BasisBaseUtils.toast(context, "Key" + keyCode);
-                return false;
             }
         });
 
@@ -84,33 +68,8 @@ public class BasisProgressDialogUtils {
             }
         });
 
-//        //设置可点击的按钮，最多有三个(默认情况下)
-//        mProgressDialog.setButton(DialogInterface.BUTTON_POSITIVE, "确定",
-//                new DialogInterface.OnClickListener() {
-//
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        BasisBaseUtils.toast(context, "确定");
-//                    }
-//                });
-//
-//        mProgressDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "取消",
-//                new DialogInterface.OnClickListener() {
-//
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        BasisBaseUtils.toast(context, "取消");
-//                    }
-//                });
-//        mProgressDialog.setButton(DialogInterface.BUTTON_NEUTRAL, "中立",
-//                new DialogInterface.OnClickListener() {
-//
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        BasisBaseUtils.toast(context, "中立");
-//                    }
-//                });
         mProgressDialog.setMessage("加载中...");
+        dialogLists.add(mProgressDialog);
         return getInstance();
     }
 
@@ -119,8 +78,10 @@ public class BasisProgressDialogUtils {
      * @param touchOutSide 设置在点击Dialog外是否取消Dialog进度条
      */
     public BasisProgressDialogUtils setCancelable(boolean cancelable, boolean touchOutSide) {
-        mProgressDialog.setCancelable(cancelable);// 设置是否可以通过点击Back键取消
-        mProgressDialog.setCanceledOnTouchOutside(touchOutSide);// 设置在点击Dialog外是否取消Dialog进度条
+        if (dialogLists.size() > 0) {
+            dialogLists.get(dialogLists.size() - 1).setCancelable(cancelable);// 设置是否可以通过点击Back键取消
+            dialogLists.get(dialogLists.size() - 1).setCanceledOnTouchOutside(touchOutSide);// 设置在点击Dialog外是否取消Dialog进度条
+        }
         return getInstance();
     }
 
@@ -128,9 +89,11 @@ public class BasisProgressDialogUtils {
      * 设置进度条标题和图标
      */
     public BasisProgressDialogUtils setTitle(int drawableId, String title) {
-        mProgressDialog.setIcon(drawableId);
-        // 设置提示的title的图标，默认是没有的，如果没有设置title的话只设置Icon是不会显示图标的
-        mProgressDialog.setTitle(title);
+        if (dialogLists.size() > 0) {
+            // 设置提示的title的图标，默认是没有的，如果没有设置title的话只设置Icon是不会显示图标的
+            dialogLists.get(dialogLists.size() - 1).setIcon(drawableId);
+            dialogLists.get(dialogLists.size() - 1).setTitle(title);
+        }
         return getInstance();
     }
 
@@ -138,7 +101,9 @@ public class BasisProgressDialogUtils {
      * 设置进度条显示信息
      */
     public BasisProgressDialogUtils setMessage(String message) {
-        mProgressDialog.setMessage(message);
+        if (dialogLists.size() > 0) {
+            dialogLists.get(dialogLists.size() - 1).setMessage(message);
+        }
         return getInstance();
     }
 
@@ -151,13 +116,19 @@ public class BasisProgressDialogUtils {
     }
 
     public AlertDialog show() {
-        mProgressDialog.show();
-        return mProgressDialog;
+        if (dialogLists.size() > 0) {
+            dialogLists.get(dialogLists.size() - 1).show();
+        }
+        return dialogLists.get(dialogLists.size() - 1);
     }
 
     public static void dismiss() {
-        if (mProgressDialog != null) {
-            mProgressDialog.dismiss();
+        for (int i = dialogLists.size() - 1; i >= 0; i--) {
+            Dialog dialog = dialogLists.get(i);
+            if (dialog != null) {
+                dialog.dismiss();
+            }
         }
+        dialogLists.clear();
     }
 }

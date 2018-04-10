@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.gingold.basisdependency.Base.BaseActivity;
+import com.gingold.basisdependency.activity.AnimationActivity;
 import com.gingold.basisdependency.activity.BugRecycler2To1Activity;
 import com.gingold.basisdependency.activity.DBActivity;
 import com.gingold.basisdependency.activity.DialogActivity;
@@ -57,6 +58,9 @@ public class MainActivity extends BaseActivity {
                         int flag = Paint.DITHER_FLAG;
                         toast(data.des);
                         switch (data.des) {
+                            case MainData.ANIMATION:
+                                startActivity(AnimationActivity.class);
+                                break;
                             case MainData.IMMERSE:
                                 startActivity(ImmerseActivity.class);
                                 break;
