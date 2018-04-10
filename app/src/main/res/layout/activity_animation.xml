@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <include layout="@layout/activity_title"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="152dp"
+        android:src="@drawable/splash"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:text="透明动画"/>
+
+</LinearLayout>

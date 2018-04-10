@@ -3,22 +3,24 @@ package com.gingold.basislibrary.utils.dialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.view.KeyEvent;
 import android.widget.TextView;
 
 import com.gingold.basislibrary.R;
 
+import java.util.ArrayList;
+
 /**
  * ProgressBarLoading 显示工具类
  * dissmiss监听 {@link #setListener(BasisDialogListenrer)}
+ *
  * @see BasisDialogUtils dismiss注意事项
  */
 
 public class BasisPBLoadingUtils {
 
-    private static BasisPBLoadingUtils basisDialog;
-    private static Dialog pbLoadingDialog;
-    private static BasisDialogListenrer dialogListenrer;
+    private static BasisPBLoadingUtils basisPBLoadingUtils;
+    private static ArrayList<Dialog> dialogLists = new ArrayList<>();//dialog集合
+    private static BasisDialogListenrer dialogListenrer;//最后一个显示的dialog的监听器才起作用
 
     private BasisPBLoadingUtils() {
     }
@@ -28,25 +30,20 @@ public class BasisPBLoadingUtils {
      */
     private static BasisPBLoadingUtils getInstance() {
         synchronized (BasisPBLoadingUtils.class) {
-            if (basisDialog == null) {
-                basisDialog = new BasisPBLoadingUtils();
+            if (basisPBLoadingUtils == null) {
+                basisPBLoadingUtils = new BasisPBLoadingUtils();
             }
         }
-        return basisDialog;
+        return basisPBLoadingUtils;
     }
 
     /**
      * 创建
      */
     public static BasisPBLoadingUtils build(final Context context) {
-        if (pbLoadingDialog != null) {//取消上一个dialog
-            pbLoadingDialog.dismiss();
-        }
-        basisDialog = null;
-        pbLoadingDialog = null;
-        dialogListenrer = null;
+        dialogListenrer = null;//将前面dialog的监听器置空
 
-        pbLoadingDialog = new Dialog(context, R.style.dialog);
+        Dialog pbLoadingDialog = new Dialog(context, R.style.dialog);
         pbLoadingDialog.setContentView(R.layout.pb_loading);
         pbLoadingDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
 
@@ -57,27 +54,13 @@ public class BasisPBLoadingUtils {
             public void onDismiss(DialogInterface dialog) {
                 if (dialogListenrer != null) {
                     dialogListenrer.onDismiss();
+                    dialogListenrer = null;//只允许最后一个显示的dialog的监听器起作用
                 }
-                basisDialog = null;
-                pbLoadingDialog = null;
-                dialogListenrer = null;
-            }
-        });
-
-        // 监听Key事件被传递给dialog
-        pbLoadingDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
-
-            @Override
-            public boolean onKey(DialogInterface dialog, int keyCode,
-                                 KeyEvent event) {
-//                BasisBaseUtils.toast(context, "Key" + keyCode);
-                return false;
             }
         });
 
         // 监听cancel事件
         pbLoadingDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-
             @Override
             public void onCancel(DialogInterface dialog) {
                 if (dialogListenrer != null) {
@@ -86,6 +69,7 @@ public class BasisPBLoadingUtils {
             }
         });
 
+        dialogLists.add(pbLoadingDialog);//将dialog添加进集合
         return getInstance();
     }
 
@@ -93,8 +77,10 @@ public class BasisPBLoadingUtils {
      * 设置显示信息
      */
     public BasisPBLoadingUtils setMessage(String message) {
-        TextView msg = (TextView) pbLoadingDialog.findViewById(R.id.tv_pb_loading_message);
-        msg.setText(message);
+        if (dialogLists.size() > 0) {//操作最后显示的Dialog
+            TextView msg = (TextView) dialogLists.get(dialogLists.size() - 1).findViewById(R.id.tv_pb_loading_message);
+            msg.setText(message);
+        }
         return getInstance();
     }
 
@@ -103,8 +89,10 @@ public class BasisPBLoadingUtils {
      * @param touchOutSide 设置在点击Dialog外是否取消Dialog进度条
      */
     public BasisPBLoadingUtils setCancelable(boolean cancelable, boolean touchOutSide) {
-        pbLoadingDialog.setCancelable(cancelable);// 设置是否可以通过点击Back键取消
-        pbLoadingDialog.setCanceledOnTouchOutside(touchOutSide);// 设置在点击Dialog外是否取消Dialog进度条
+        if (dialogLists.size() > 0) {
+            dialogLists.get(dialogLists.size() - 1).setCancelable(cancelable);// 设置是否可以通过点击Back键取消
+            dialogLists.get(dialogLists.size() - 1).setCanceledOnTouchOutside(touchOutSide);// 设置在点击Dialog外是否取消Dialog进度条
+        }
         return getInstance();
     }
 
@@ -120,16 +108,22 @@ public class BasisPBLoadingUtils {
      * 显示dialog
      */
     public Dialog show() {
-        pbLoadingDialog.show();
-        return pbLoadingDialog;
+        if (dialogLists.size() > 0) {
+            dialogLists.get(dialogLists.size() - 1).show();
+        }
+        return dialogLists.get(dialogLists.size() - 1);
     }
 
     /**
      * dismiss dialog
      */
     public static void dismiss() {
-        if (pbLoadingDialog != null) {
-            pbLoadingDialog.dismiss();
+        for (int i = dialogLists.size() - 1; i >= 0; i--) {
+            Dialog dialog = dialogLists.get(i);
+            if (dialog != null) {
+                dialog.dismiss();
+            }
         }
+        dialogLists.clear();
     }
 }

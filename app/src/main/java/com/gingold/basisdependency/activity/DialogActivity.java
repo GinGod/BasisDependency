@@ -169,6 +169,13 @@ public class DialogActivity extends BaseActivity {
      */
     private void showDialog3() {
         BasisProgressDialogUtils.build(mActivity).setTitle(R.drawable.ic_launcher, "title").setMessage("message").show();
+        BasisProgressDialogUtils.build(mActivity).setTitle(R.drawable.ic_launcher, "title").setMessage("message").show();
+        postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                BasisProgressDialogUtils.dismiss();
+            }
+        }, 252 * 10);
     }
 
     /**
@@ -187,6 +194,8 @@ public class DialogActivity extends BaseActivity {
                 BasisLogUtils.e("onCancle");
             }
         }).show();
+
+        BasisPBLoadingUtils.build(mActivity).show();
 
         postDelayed(new Runnable() {
             @Override
