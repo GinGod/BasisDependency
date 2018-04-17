@@ -26,10 +26,12 @@ public class MainData {
     public final static String HTML5 = "HTML5";
     public final static String IMMERSE = "IMMERSE";
     public final static String ANIMATION = "ANIMATION";
+    public final static String DATEPICKER = "DATEPICKER";
 
     public static ArrayList<MainBean> mainList = new ArrayList<>();
 
     static {
+        mainList.add(new MainBean(DATEPICKER, null));
         mainList.add(new MainBean(ANIMATION, null));
         mainList.add(new MainBean(IMMERSE, null));
         mainList.add(new MainBean(HTML5, null));

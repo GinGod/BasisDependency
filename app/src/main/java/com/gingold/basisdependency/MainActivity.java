@@ -9,6 +9,7 @@ import com.gingold.basisdependency.Base.BaseActivity;
 import com.gingold.basisdependency.activity.AnimationActivity;
 import com.gingold.basisdependency.activity.BugRecycler2To1Activity;
 import com.gingold.basisdependency.activity.DBActivity;
+import com.gingold.basisdependency.activity.DateTimePickerActivity;
 import com.gingold.basisdependency.activity.DialogActivity;
 import com.gingold.basisdependency.activity.ExceptionInfoActivity;
 import com.gingold.basisdependency.activity.GlideActivity;
@@ -58,6 +59,9 @@ public class MainActivity extends BaseActivity {
                         int flag = Paint.DITHER_FLAG;
                         toast(data.des);
                         switch (data.des) {
+                            case MainData.DATEPICKER:
+                                startActivity(DateTimePickerActivity.class);
+                                break;
                             case MainData.ANIMATION:
                                 startActivity(AnimationActivity.class);
                                 break;

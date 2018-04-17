@@ -56,4 +56,11 @@
         android:gravity="center"
         android:text="安装软件"/>
 
+    <TextView
+        android:id="@+id/tv_test_gson"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:gravity="center"
+        android:text="Gson"/>
+
 </LinearLayout>

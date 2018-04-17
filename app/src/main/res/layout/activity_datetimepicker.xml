@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <include layout="@layout/activity_title"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_datetimepicker_date"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:gravity="center"
+                android:text="日期选择器"/>
+
+            <TextView
+                android:id="@+id/tv_datetimepicker_yearmonth"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:gravity="center"
+                android:text="年月选择器"/>
+
+            <TextView
+                android:id="@+id/tv_datetimepicker_monthday"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:gravity="center"
+                android:text="月日选择器"/>
+
+            <TextView
+                android:id="@+id/tv_datetimepicker_time"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:gravity="center"
+                android:text="时间选择器"/>
+
+            <DatePicker
+                android:id="@+id/dp_datetimepicker_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:calendarViewShown="false"
+                android:theme="@android:style/Theme.Holo.Light">
+
+            </DatePicker>
+
+            <TimePicker
+                android:id="@+id/tp_datetimepicker_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:calendarViewShown="false"
+                android:theme="@android:style/Theme.Holo.Light">
+
+            </TimePicker>
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
