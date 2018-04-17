@@ -15,6 +15,11 @@ Basis Dependency By Gingod
           compile 'com.github.GinGod:BasisDependency:v1.1.3'
       }
 
+## Warns
+ 
+### v1.1.3 不包含, v1.1.4 计划添加类容:
+- BasisTimesUtils 中DatePickerDialog 和 TimePickerDialog 的使用
+
 ## Contents
 
 ### a. Base
