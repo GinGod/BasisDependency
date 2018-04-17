@@ -11,6 +11,8 @@ import android.view.KeyEvent;
 import android.view.ViewGroup;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
+import android.webkit.WebResourceError;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -104,8 +106,15 @@ public abstract class BasisHtml5Activity extends BasisBaseActivity {
             doScaleChanged(view, oldScale, newScale);
         }
 
-
+        @Override
+        public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+            super.onReceivedError(view, request, error);
+            doReceivedError(view, request, error);
+        }
     };
+
+    public void doReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+    }
 
     public void doScaleChanged(WebView view, float oldScale, float newScale) {
 

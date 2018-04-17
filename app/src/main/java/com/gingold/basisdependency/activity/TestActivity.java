@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.gingold.basisdependency.Base.BaseActivity;
 import com.gingold.basisdependency.MyApplication;
 import com.gingold.basisdependency.R;
+import com.gingold.basisdependency.bean.TestBean;
 import com.gingold.basislibrary.utils.BasisCommonUtils;
 import com.gingold.basislibrary.utils.BasisDeviceUtils;
 import com.gingold.basislibrary.utils.BasisFileUtils;
@@ -26,8 +27,10 @@ import com.gingold.basislibrary.utils.dialog.BasisDialogListenrer;
 import com.gingold.basislibrary.utils.dialog.BasisDialogUtils;
 import com.gingold.basislibrary.utils.dialog.BasisPBLoadingUtils;
 import com.gingold.basislibrary.utils.dialog.BasisProgressDialogUtils;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -69,7 +72,7 @@ public class TestActivity extends BaseActivity {
 
     @Override
     public void listener() {
-        setOnClickListener(R.id.tv_test_installapk);
+        setOnClickListener(R.id.tv_test_installapk, R.id.tv_test_gson);
     }
 
     @Override
@@ -114,7 +117,11 @@ public class TestActivity extends BaseActivity {
                         basisPBLoadingUtils.setMessage("正在复制 " + progress + "%");
                     }
                 });
-
+                break;
+            case R.id.tv_test_gson:
+                String test = "[{\"distributioncode\": \"qlkd\",\"goodsname\": \"你\", \"goodsnum\": \"6\"}]";
+                ArrayList<TestBean> list = gson.fromJson(test, new TypeToken<ArrayList<TestBean>>() {
+                }.getType());
                 break;
         }
     }

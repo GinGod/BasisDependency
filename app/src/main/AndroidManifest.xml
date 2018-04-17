@@ -38,6 +38,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.AnimationActivity"/>
+        <activity android:name=".activity.DateTimePickerActivity"/>
 
         <service android:name=".TestService"/>
     </application>
