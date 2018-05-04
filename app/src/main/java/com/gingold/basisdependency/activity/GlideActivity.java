@@ -25,6 +25,7 @@ public class GlideActivity extends BaseActivity {
     private TextView tv_glide_download;
     private ImageView iv_glide_pic;
     private ImageView iv_glide_pic1;
+    private ImageView iv_glide_pic_cache;
 
     @Override
     public void setupViewLayout() {
@@ -40,11 +41,12 @@ public class GlideActivity extends BaseActivity {
         tv_glide_download = findTextView(R.id.tv_glide_download);
         iv_glide_pic = findImageView(R.id.iv_glide_pic);
         iv_glide_pic1 = findImageView(R.id.iv_glide_pic1);
+        iv_glide_pic_cache = findImageView(R.id.iv_glide_pic_cache);
     }
 
     @Override
     public void listener() {
-        setOnClickListener(R.id.tv_glide_load2);
+        setOnClickListener(R.id.tv_glide_load2, R.id.tv_glide_cache_samll, R.id.tv_glide_cache_big);
     }
 
     @Override
@@ -115,6 +117,14 @@ public class GlideActivity extends BaseActivity {
 //
 //                    }
 //                });
+                break;
+            case R.id.tv_glide_cache_samll://测试Glide缓存
+//                Glide.with(mActivity).load("http://hr.zqlwl.com/upload/ehr/apps/pic/0005.jpg").skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(iv_glide_pic_cache);
+//                Picasso.with(mActivity).load("http://hr.zqlwl.com/upload/ehr/apps/pic/0005.jpg").into(iv_glide_pic);
+                BasisGlideUtils.load(mActivity, "http://hr.zqlwl.com/upload/ehr/apps/pic/0005.jpg", iv_glide_pic_cache);
+                break;
+            case R.id.tv_glide_cache_big://测试Glide缓存
+                startActivity(Glide2Activity.class);
                 break;
         }
     }

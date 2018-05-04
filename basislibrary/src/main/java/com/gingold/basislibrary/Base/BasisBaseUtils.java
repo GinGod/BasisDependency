@@ -366,4 +366,13 @@ public class BasisBaseUtils {
     public static int getDimensionById(Context context, int id) {
         return (int) context.getResources().getDimension(id);
     }
+
+    /**
+     * 清除动画
+     */
+    public static void clearAnimation(View... views) {
+        for (int i = 0; i < views.length; i++) {
+            views[0].clearAnimation();
+        }
+    }
 }

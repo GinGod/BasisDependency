@@ -113,6 +113,7 @@ public class OkHttpPicActivity extends BaseActivity {
 //        BasisProgressDialogUtils.build(mActivity).show();
         String url = "http://img.juimg.com/tuku/yulantu/120926/219049-12092612154377.jpg";
         url = Urls.picUrl2;
+        url = Urls.downurl;
 
         BasisOkHttpUtils.download().get().dialog(mActivity).url(url).fileName(null).build().execute(new BasisDownloadCallback() {
             @Override

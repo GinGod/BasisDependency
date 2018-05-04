@@ -39,6 +39,7 @@
         </activity>
         <activity android:name=".activity.AnimationActivity"/>
         <activity android:name=".activity.DateTimePickerActivity"/>
+        <activity android:name=".activity.Glide2Activity"/>
 
         <service android:name=".TestService"/>
     </application>

@@ -954,4 +954,10 @@ public abstract class BasisBaseActivity extends AppCompatActivity implements OnC
         BasisLogUtils.e(TAG, message);
     }
 
+    /**
+     * 清除动画
+     */
+    public void clearAnimation(View... views) {
+        BasisBaseUtils.clearAnimation(views);
+    }
 }

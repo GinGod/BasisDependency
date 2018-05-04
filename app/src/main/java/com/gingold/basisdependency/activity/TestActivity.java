@@ -2,6 +2,7 @@ package com.gingold.basisdependency.activity;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.os.Build;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,6 +31,7 @@ import com.gingold.basislibrary.utils.dialog.BasisProgressDialogUtils;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.File;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 import butterknife.Bind;
@@ -56,6 +58,8 @@ public class TestActivity extends BaseActivity {
     TextView mTvTestTime;
     @Bind(R.id.et_test_hide)
     EditText mEtTestHide;
+    private TextView et_test_test;
+    public String before = "";
 
 
     @Override
@@ -67,12 +71,20 @@ public class TestActivity extends BaseActivity {
 
     @Override
     public void initView() {
-
+        et_test_test = getViewNoClickable(R.id.et_test_test);
     }
 
     @Override
     public void listener() {
-        setOnClickListener(R.id.tv_test_installapk, R.id.tv_test_gson);
+        setOnClickListener(R.id.tv_test_installapk, R.id.tv_test_gson, R.id.tv_test_test);
+        et_test_test.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_UP) {
+                }
+                return false;
+            }
+        });
     }
 
     @Override
@@ -123,7 +135,34 @@ public class TestActivity extends BaseActivity {
                 ArrayList<TestBean> list = gson.fromJson(test, new TypeToken<ArrayList<TestBean>>() {
                 }.getType());
                 break;
+            case R.id.tv_test_test:
+                BasisLogUtils.e(getMobileInfo() + "");
+//                java.io.InputStream
+//                java.io.OutputStream
+//                java.io.Reader
+//                java.io.Writer
+                break;
         }
+    }
+
+    private String getMobileInfo() {
+        StringBuffer sb = new StringBuffer();
+        //通过反射获取系统的硬件信息
+        try {
+
+            Field[] fields = Build.class.getDeclaredFields();
+            for (Field field : fields) {
+                //暴力反射 ,获取私有的信息
+                field.setAccessible(true);
+                String name = field.getName();
+                String value = field.get(null).toString();
+                sb.append(name + "=" + value);
+                sb.append("\n");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return sb.toString();
     }
 
     @OnClick({R.id.iv_arrow, R.id.tv_test_down, R.id.tv_test_up, R.id.tv_test_clear, R.id.tv_test_time, R.id.et_test_hide})

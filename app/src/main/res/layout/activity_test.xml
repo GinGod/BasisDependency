@@ -13,6 +13,13 @@
         android:layout_gravity="center_horizontal"
         android:src="@drawable/lvgvrv_arrow_down"/>
 
+    <EditText
+        android:id="@+id/et_test_test"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:gravity="center"
+        android:text=""/>
+
     <TextView
         android:id="@+id/tv_test_down"
         android:layout_width="match_parent"
@@ -62,5 +69,12 @@
         android:layout_height="52dp"
         android:gravity="center"
         android:text="Gson"/>
+
+    <TextView
+        android:id="@+id/tv_test_test"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:gravity="center"
+        android:text="test"/>
 
 </LinearLayout>

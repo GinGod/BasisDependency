@@ -6,57 +6,89 @@
 
     <include layout="@layout/activity_title"/>
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/tv_glide_cacheSize"
-            android:layout_width="252dp"
-            android:layout_height="52dp"
-            android:gravity="center"
-            android:text=""/>
-
-        <TextView
-            android:id="@+id/tv_glide_clearCache"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="52dp"
-            android:gravity="center"
-            android:text="清除缓存"/>
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-    </LinearLayout>
 
-    <TextView
-        android:id="@+id/tv_glide_load"
-        android:layout_width="match_parent"
-        android:layout_height="52dp"
-        android:gravity="center"
-        android:text="加载图片"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/tv_glide_load2"
-        android:layout_width="match_parent"
-        android:layout_height="52dp"
-        android:gravity="center"
-        android:text="加载图片"/>
+                <TextView
+                    android:id="@+id/tv_glide_cacheSize"
+                    android:layout_width="252dp"
+                    android:layout_height="52dp"
+                    android:gravity="center"
+                    android:text=""/>
 
-    <TextView
-        android:id="@+id/tv_glide_download"
-        android:layout_width="match_parent"
-        android:layout_height="52dp"
-        android:gravity="center"
-        android:text="下载图片"/>
+                <TextView
+                    android:id="@+id/tv_glide_clearCache"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:gravity="center"
+                    android:text="清除缓存"/>
 
-    <ImageView
-        android:id="@+id/iv_glide_pic"
-        android:layout_width="200dp"
-        android:layout_height="200dp"/>
+            </LinearLayout>
 
-    <ImageView
-        android:id="@+id/iv_glide_pic1"
-        android:layout_width="200dp"
-        android:visibility="gone"
-        android:layout_height="200dp"/>
+            <TextView
+                android:id="@+id/tv_glide_load"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:gravity="center"
+                android:text="加载图片"/>
+
+            <TextView
+                android:id="@+id/tv_glide_load2"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:gravity="center"
+                android:text="加载图片"/>
+
+            <TextView
+                android:id="@+id/tv_glide_download"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:gravity="center"
+                android:text="下载图片"/>
+
+            <TextView
+                android:id="@+id/tv_glide_cache_samll"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:gravity="center"
+                android:text="缓存测试-小图"/>
+
+            <TextView
+                android:id="@+id/tv_glide_cache_big"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:gravity="center"
+                android:text="缓存测试-大图"/>
+
+            <ImageView
+                android:id="@+id/iv_glide_pic_cache"
+                android:layout_width="20dp"
+                android:layout_height="20dp"/>
+
+            <ImageView
+                android:id="@+id/iv_glide_pic"
+                android:layout_width="200dp"
+                android:layout_height="200dp"/>
+
+            <ImageView
+                android:id="@+id/iv_glide_pic1"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:visibility="gone"/>
+
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>
