@@ -15,7 +15,16 @@ Basis Dependency By Gingod
           compile 'com.github.GinGod:BasisDependency:v1.1.3'
       }
 
-## Warns
+## Notes
+
+### 相关博客
+- [Android 在Activity和Fragment中沉浸式状态栏实现][1]
+- [Android 自带日期(DatePicker)和时间(TimePicker)选择器使用][2]
+- [Android 中动画的实现][3]
+ 
+ [1]:https://blog.csdn.net/decetwen1989/article/details/79798838  "沉浸式"
+ [2]:https://blog.csdn.net/decetwen1989/article/details/79974047  "DatePicker和TimePicker"
+ [3]:https://blog.csdn.net/decetwen1989/article/details/80182324  "动画"
  
 ### v1.1.3 不包含, v1.1.4 计划添加类容:
 - BasisTimesUtils 中 DatePickerDialog 和 TimePickerDialog 的使用
