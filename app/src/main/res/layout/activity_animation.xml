@@ -2,62 +2,202 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
+              android:gravity="center_horizontal"
               android:orientation="vertical">
 
-    <include layout="@layout/activity_title"/>
-
-    <TextView
-        android:id="@+id/tv_animation_alpha"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="52dp"
-        android:gravity="center"
-        android:text="透明动画"
-        android:textColor="@color/black"/>
+        android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/tv_animation_translate"
-        android:layout_width="match_parent"
-        android:layout_height="52dp"
-        android:gravity="center"
-        android:text="平移动画"
-        android:textColor="@color/black"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tv_animation_scale"
-        android:layout_width="match_parent"
-        android:layout_height="52dp"
-        android:gravity="center"
-        android:text="缩放动画"
-        android:textColor="@color/black"/>
+            <include layout="@layout/activity_title"/>
 
-    <ImageView
-        android:id="@+id/iv_animation"
-        android:layout_width="wrap_content"
-        android:layout_height="152dp"
-        android:src="@drawable/splash"/>
+            <TextView
+                android:id="@+id/tv_animation_alpha"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:gravity="center"
+                android:text="透明动画"
+                android:textColor="@color/black"/>
 
-    <TextView
-        android:id="@+id/tv_animation_rotate"
-        android:layout_width="match_parent"
-        android:layout_height="52dp"
-        android:gravity="center"
-        android:text="旋转动画"
-        android:textColor="@color/black"/>
+            <TextView
+                android:id="@+id/tv_animation_translate"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:gravity="center"
+                android:text="平移动画"
+                android:textColor="@color/black"/>
 
-    <TextView
-        android:id="@+id/tv_animation_set"
-        android:layout_width="match_parent"
-        android:layout_height="52dp"
-        android:gravity="center"
-        android:text="集合动画"
-        android:textColor="@color/black"/>
+            <TextView
+                android:id="@+id/tv_animation_scale"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:gravity="center"
+                android:text="缩放动画"
+                android:textColor="@color/black"/>
 
-    <TextView
-        android:id="@+id/tv_animation_rotate_contitue"
-        android:layout_width="match_parent"
-        android:layout_height="52dp"
-        android:gravity="center"
-        android:text="连续旋转"
-        android:textColor="@color/black"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="152dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/iv_animation"
+                    android:layout_width="85dp"
+                    android:layout_height="152dp"
+                    android:src="@drawable/splash"/>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_animation_rotate"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:gravity="center"
+                android:text="旋转动画"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:id="@+id/tv_animation_set"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:gravity="center"
+                android:text="集合动画"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:id="@+id/tv_animation_rotate_contitue"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:gravity="center"
+                android:text="连续旋转"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp"
+                android:background="@color/black"/>
+
+            <TextView
+                android:id="@+id/tv_animation_alpha1"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:gravity="center"
+                android:text="透明动画"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:id="@+id/tv_animation_translate1"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:gravity="center"
+                android:text="平移动画"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:id="@+id/tv_animation_scale1"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:gravity="center"
+                android:text="缩放动画"
+                android:textColor="@color/black"/>
+
+
+            <ImageView
+                android:id="@+id/iv_animation1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/bg_pic_round_blue"/>
+
+            <TextView
+                android:id="@+id/tv_animation_rotate1"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:gravity="center"
+                android:text="旋转动画"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:id="@+id/tv_animation_set1"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:gravity="center"
+                android:text="集合动画"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:id="@+id/tv_animation_rotate_contitue1"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:gravity="center"
+                android:text="连续旋转"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp"
+                android:background="@color/black"/>
+
+            <TextView
+                android:id="@+id/tv_animation_alpha2"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:gravity="center"
+                android:text="透明动画"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:id="@+id/tv_animation_translate2"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:gravity="center"
+                android:text="平移动画"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:id="@+id/tv_animation_scale2"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:gravity="center"
+                android:text="缩放动画"
+                android:textColor="@color/black"/>
+
+
+            <ImageView
+                android:id="@+id/iv_animation2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/bg_pic_round_blue"/>
+
+            <TextView
+                android:id="@+id/tv_animation_rotate2"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:gravity="center"
+                android:text="旋转动画"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:id="@+id/tv_animation_set2"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:gravity="center"
+                android:text="集合动画"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:id="@+id/tv_animation_rotate_contitue2"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:gravity="center"
+                android:text="连续旋转"
+                android:textColor="@color/black"/>
+
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

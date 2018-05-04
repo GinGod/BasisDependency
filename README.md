@@ -18,7 +18,13 @@ Basis Dependency By Gingod
 ## Warns
  
 ### v1.1.3 不包含, v1.1.4 计划添加类容:
-- BasisTimesUtils 中DatePickerDialog 和 TimePickerDialog 的使用
+- BasisTimesUtils 中 DatePickerDialog 和 TimePickerDialog 的使用
+- BasisAnimUtils 简单动画的实现(建议参照工具类自定义需要的动画)
+- BasisFileUtils 添加关闭流通用方法close(...)
+
+### 后续版本计划修改类容
+- Glide 缓存经过测试发现有对控件的记忆性, 不同控件间无法复用缓存, 原因未知, Picasso测试未发现该问题, 后续会引进Picasso 2.5.2 版本的依赖
+- Okhttp 使用太过繁琐, 后续改进
 
 ## Contents
 

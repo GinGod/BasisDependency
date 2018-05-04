@@ -24,9 +24,10 @@ public class ImmerseActivity extends BaseActivity {
         postDelayed(new Runnable() {
             @Override
             public void run() {
+                toast("取消沉浸式状态!");
                 BasisImmerseUtils.clearImmerseLayout(mActivity, ll_immerse_title);
             }
-        }, 2520);
+        }, 252 * 10);
     }
 
     @Override
