@@ -25,12 +25,16 @@ dependencies {
 
     compile 'com.google.code.gson:gson:2.8.1'//gson
 
-    //Glide相关
-    compile 'com.github.GinGod:BasisGlide:V1.0.1'
+    //BasisGlide start
+//    compile 'com.github.GinGod:BasisGlide:V1.0.1'
+    compile('com.github.GinGod:BasisGlide:V1.0.1') {//底下依赖会导致集成百度地图时无法初始化, 应用无法启动
+        exclude(group: 'jp.co.cyberagent.android.gpuimage', module: 'gpuimage-library')
+    }
     //依赖项目中已经包含的依赖
 //    compile 'com.github.bumptech.glide:glide:3.8.0'
-//    compile 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.4.1'
+//    compile 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.4.1'//已屏蔽掉依赖, 不能访问
 //    compile 'jp.wasabeef:glide-transformations:2.0.2'
+    //BasisGlide end
 }
 
 publish {
@@ -39,5 +43,5 @@ publish {
     artifactId = 'BasisDependency'//项目名称
     publishVersion = '1.0.0'//版本号
     desc = 'BasisDependency 1.0.0'//描述，不重要
-    website = 'https://github.com/GinGod/BasisDependency'//网站，不重要；尽量模拟github上的地址，例如我这样的；当然你有地址最好了
+    website = 'https://github.com/GinGod/BasisDependency'//网站，不重要；尽量模拟github上的地址
 }

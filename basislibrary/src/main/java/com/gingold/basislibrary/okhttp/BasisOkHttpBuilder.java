@@ -2,12 +2,13 @@ package com.gingold.basislibrary.okhttp;
 
 import android.content.Context;
 
-import com.gingold.basislibrary.Base.BasisBaseUtils;
 import com.gingold.basislibrary.utils.dialog.BasisPBLoadingUtils;
 import com.google.gson.Gson;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -19,10 +20,7 @@ import okhttp3.OkHttpClient;
  * Okhttp请求基类Builder
  */
 
-public class BasisOkHttpBuilder extends BasisBaseUtils {
-    public long connectTimeout = 10;//连接超时(默认10s)
-    public long readTimeout = 10;//读取超时(默认10s)
-
+public class BasisOkHttpBuilder {
     public OkHttpClient mOkHttpClient;
 
     public boolean isLogState = true;//日志打印状态, 默认true
@@ -34,8 +32,16 @@ public class BasisOkHttpBuilder extends BasisBaseUtils {
 
     public Map<String, String> params = new HashMap<>();//参数集合
 
+    public List<BasisFileInputBean> fileList = new ArrayList<>();//文件集合
+
     public Call mCall;
     public Context context;//是否显示进度dialog
+
+    /**
+     * 不允许直接创建类对象操作
+     */
+    protected BasisOkHttpBuilder() {
+    }
 
     /**
      * 本次请求日志打印状态, 默认true, 打印日志
@@ -87,7 +93,7 @@ public class BasisOkHttpBuilder extends BasisBaseUtils {
      * 添加参数
      */
     public BasisOkHttpBuilder addParams(String key, String value) {
-        this.params.put(BasisBaseUtils.showStr(key), BasisBaseUtils.showStr(value));
+        this.params.put(BasisOkHttpUtils.showStr(key), BasisOkHttpUtils.showStr(value));
         return this;
     }
 
@@ -95,8 +101,10 @@ public class BasisOkHttpBuilder extends BasisBaseUtils {
      * 添加参数集合
      */
     public BasisOkHttpBuilder addParams(Map<String, String> map) {
-        for (Map.Entry<String, String> entry : map.entrySet()) {
-            this.params.put(BasisBaseUtils.showStr(entry.getKey()), BasisBaseUtils.showStr(entry.getValue()));
+        if (map != null) {
+            for (Map.Entry<String, String> entry : map.entrySet()) {
+                this.params.put(BasisOkHttpUtils.showStr(entry.getKey()), BasisOkHttpUtils.showStr(entry.getValue()));
+            }
         }
         return this;
     }
@@ -116,7 +124,7 @@ public class BasisOkHttpBuilder extends BasisBaseUtils {
      * 连接超时时间(单位默认 s-秒)
      */
     public BasisOkHttpBuilder connectTimeout(long connectTimeout) {
-        this.connectTimeout = connectTimeout;
+        BasisOkHttpUtils.connectTimeout = connectTimeout;
         return this;
     }
 
@@ -124,7 +132,7 @@ public class BasisOkHttpBuilder extends BasisBaseUtils {
      * 读取超时时间(单位默认 s-秒)
      */
     public BasisOkHttpBuilder readTimeout(long readTimeout) {
-        this.readTimeout = readTimeout;
+        BasisOkHttpUtils.readTimeout = readTimeout;
         return this;
     }
 
@@ -133,8 +141,8 @@ public class BasisOkHttpBuilder extends BasisBaseUtils {
      */
     public BasisOkHttpBuilder build() {
         mOkHttpClient = new OkHttpClient.Builder()
-                .connectTimeout(connectTimeout, TimeUnit.SECONDS)
-                .readTimeout(readTimeout, TimeUnit.SECONDS).build();
+                .connectTimeout(BasisOkHttpUtils.connectTimeout, TimeUnit.SECONDS)
+                .readTimeout(BasisOkHttpUtils.readTimeout, TimeUnit.SECONDS).build();
         return this;
     }
 
@@ -152,7 +160,8 @@ public class BasisOkHttpBuilder extends BasisBaseUtils {
         enqueue(basisCallback);
     }
 
-    public void enqueue(final BasisCallback basisCallback) {}
+    public void enqueue(final BasisCallback basisCallback) {
+    }
 
     /**
      * 储存的文件夹(下载时专用)
@@ -172,6 +181,22 @@ public class BasisOkHttpBuilder extends BasisBaseUtils {
      * 上传文件的集合(上传时专用)
      */
     public BasisOkHttpBuilder addFile(String key, String name, File file) {
+        return this;
+    }
+
+    /**
+     * 上传文件的集合
+     */
+    public BasisOkHttpBuilder addFile(BasisFileInputBean fileInputBean) {
+        this.fileList.add(fileInputBean);
+        return this;
+    }
+
+    /**
+     * 上传文件的集合
+     */
+    public BasisOkHttpBuilder addFile(ArrayList<BasisFileInputBean> fileList) {
+        this.fileList.addAll(fileList);
         return this;
     }
 }

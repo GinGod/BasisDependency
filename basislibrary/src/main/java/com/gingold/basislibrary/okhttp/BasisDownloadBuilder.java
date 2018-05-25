@@ -2,8 +2,6 @@ package com.gingold.basislibrary.okhttp;
 
 import android.text.TextUtils;
 
-import com.gingold.basislibrary.Base.BasisBaseContants;
-import com.gingold.basislibrary.Base.BasisBaseUtils;
 import com.gingold.basislibrary.utils.BasisCommonUtils;
 import com.gingold.basislibrary.utils.BasisFileUtils;
 import com.gingold.basislibrary.utils.BasisLogUtils;
@@ -24,10 +22,11 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 /**
- * 请求参数为jsonStr数据
+ * 下载
+ * 类不公开
  */
 
-public class BasisDownloadBuilder extends BasisOkHttpBuilder {
+class BasisDownloadBuilder extends BasisOkHttpBuilder {
     private String fileDirName = "Download";//文件夹名(默认Download)
     private String fileName = "";//文件名
 
@@ -35,7 +34,9 @@ public class BasisDownloadBuilder extends BasisOkHttpBuilder {
      * 储存的文件夹
      */
     public BasisDownloadBuilder fileDirName(String fileDirName) {
-        this.fileDirName = BasisBaseUtils.showStr(fileDirName);
+        if (!TextUtils.isEmpty(fileDirName)) {
+            this.fileDirName = BasisOkHttpUtils.showStr(fileDirName);
+        }
         return this;
     }
 
@@ -43,7 +44,7 @@ public class BasisDownloadBuilder extends BasisOkHttpBuilder {
      * 储存的文件名
      */
     public BasisDownloadBuilder fileName(String fileName) {
-        this.fileName = BasisBaseUtils.showStr(fileName);
+        this.fileName = BasisOkHttpUtils.showStr(fileName);
         return this;
     }
 
@@ -67,8 +68,8 @@ public class BasisDownloadBuilder extends BasisOkHttpBuilder {
             } else {//提交键值对
                 FormBody.Builder builder = new FormBody.Builder();
                 for (Map.Entry<String, String> entry : this.params.entrySet()) {
-                    builder.add(BasisBaseUtils.showStr(entry.getKey()), BasisBaseUtils.showStr(entry.getValue()));
-                    content = content + BasisBaseUtils.showStr(entry.getKey()) + " : " + BasisBaseUtils.showStr(entry.getValue()) + " , ";//记录参数
+                    builder.add(BasisOkHttpUtils.showStr(entry.getKey()), BasisOkHttpUtils.showStr(entry.getValue()));
+                    content = content + BasisOkHttpUtils.showStr(entry.getKey()) + " : " + BasisOkHttpUtils.showStr(entry.getValue()) + " , ";//记录参数
                 }
                 requestBody = builder.build();
             }
@@ -80,7 +81,7 @@ public class BasisDownloadBuilder extends BasisOkHttpBuilder {
         }
 
         mCall = mOkHttpClient.newCall(request);
-        if (BasisBaseContants.OKHTTP_LOG_STATE && isLogState) {
+        if (BasisOkHttpUtils.OKHTTP_LOG_STATE && isLogState) {
             BasisLogUtils.e("url: " + url + " , jsonStr: " + content);
         }
         return this;
@@ -96,10 +97,8 @@ public class BasisDownloadBuilder extends BasisOkHttpBuilder {
                 if (e != null) {
                     message = BasisCommonUtils.getExceptionInfo(e);
                 }
-                if (BasisBaseContants.OKHTTP_LOG_STATE && isLogState) {
-                    if (BasisBaseContants.OKHTTP_LOG_STATE && isLogState) {
-                        BasisLogUtils.e("onFailure: " + message);
-                    }
+                if (BasisOkHttpUtils.OKHTTP_LOG_STATE && isLogState) {
+                    BasisLogUtils.e("onFailure: " + message);
                 }
                 failure(call, e, message, basisCallback);
             }
@@ -154,7 +153,7 @@ public class BasisDownloadBuilder extends BasisOkHttpBuilder {
                     OutputStream.flush();
 
                     success(call, response, filePath, basisCallback);//下载完成
-                    if (BasisBaseContants.OKHTTP_LOG_STATE && isLogState) {
+                    if (BasisOkHttpUtils.OKHTTP_LOG_STATE && isLogState) {
                         BasisLogUtils.e("文件下载成功: " + filePath);
                     }
                 } catch (Exception e) {
@@ -185,7 +184,7 @@ public class BasisDownloadBuilder extends BasisOkHttpBuilder {
      * 下载成功
      */
     private void success(final Call call, final Response response, final String filePath, final BasisCallback basisCallback) {
-        mHandler.post(new Runnable() {
+        BasisOkHttpUtils.mHandler.post(new Runnable() {
             @Override
             public void run() {
                 if (basisCallback != null) {
@@ -204,7 +203,7 @@ public class BasisDownloadBuilder extends BasisOkHttpBuilder {
      * 下载进度
      */
     private void process(final long totalSize, final long process, final BasisDownloadCallback basisCallback) {
-        mHandler.post(new Runnable() {
+        BasisOkHttpUtils.mHandler.post(new Runnable() {
             @Override
             public void run() {
                 //下载进度
@@ -219,7 +218,7 @@ public class BasisDownloadBuilder extends BasisOkHttpBuilder {
      * 下载失败
      */
     private void failure(final Call call, final Exception e, final String message, final BasisCallback basisCallback) {
-        mHandler.post(new Runnable() {
+        BasisOkHttpUtils.mHandler.post(new Runnable() {
             @Override
             public void run() {
                 if (basisCallback != null) {

@@ -1,4 +1,4 @@
-package com.gingold.basislibrary.bean;
+package com.gingold.basislibrary.okhttp;
 
 import java.io.File;
 

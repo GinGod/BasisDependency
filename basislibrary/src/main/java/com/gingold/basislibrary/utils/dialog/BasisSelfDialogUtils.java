@@ -1,11 +1,11 @@
 package com.gingold.basislibrary.utils.dialog;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 
 import com.gingold.basislibrary.Base.BasisBaseViewUtils;
+import com.gingold.basislibrary.R;
 
 /**
  * 自定义Dialog 显示工具类
@@ -43,12 +43,23 @@ public class BasisSelfDialogUtils {
         selfDialog = null;
         dialogListenrer = null;
 
-        selfDialog = new AlertDialog.Builder(context).create();
-        selfDialog.show();//dialog需显示后才能更改界面, 否则报错
-
-//        Window window = selfDialog.getWindow();
-//        window.setContentView(layoutId);
+        selfDialog = new Dialog(context, R.style.dialog);//自定义主题, 可设置背景是否变暗
         selfDialog.setContentView(layoutId);
+        selfDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        //自定义布局最好添加一下布局, 否则宽度不会全屏显示
+        /*<View android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/transparent"/>*/
+
+        //这种方式无法显示圆角背景
+//        View view = View.inflate(context, layoutId, null);
+//        AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.dialog);
+//        selfDialog = builder.setView(view).show();
+
+        //这种方式会导致EditText无法弹出软键盘, 不能输入
+//        selfDialog = new AlertDialog.Builder(context).create();
+//        selfDialog.show();//dialog需显示后才能更改界面, 否则报错
+//        selfDialog.setContentView(layoutId);
 
         if (listener != null) {//自定义逻辑处理
             listener.onSelfViewListener(selfDialog, new BasisBaseViewUtils(selfDialog));
@@ -78,6 +89,8 @@ public class BasisSelfDialogUtils {
                 }
             }
         });
+
+        selfDialog.show();
 
         return getInstance();
     }

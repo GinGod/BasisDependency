@@ -47,4 +47,5 @@ dependencies {
     //    compile 'com.github.GinGod:BasisDependency:v1.0.3'
     //    compile 'com.gingod:BasisDependency:1.0.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
+    compile "me.leolin:ShortcutBadger:1.1.21@aar"//测试应用图标右上角消息个数, 测试效果不理想
 }

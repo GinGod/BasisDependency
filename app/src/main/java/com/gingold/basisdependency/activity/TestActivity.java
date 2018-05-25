@@ -37,6 +37,7 @@ import java.util.ArrayList;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import me.leolin.shortcutbadger.ShortcutBadger;
 
 /**
  *
@@ -137,11 +138,22 @@ public class TestActivity extends BaseActivity {
                 break;
             case R.id.tv_test_test:
                 BasisLogUtils.e(getMobileInfo() + "");
+//                testFor();//增强for循环测试, 发现操作对象不能为空
 //                java.io.InputStream
 //                java.io.OutputStream
 //                java.io.Reader
 //                java.io.Writer
                 break;
+        }
+    }
+
+    /**
+     * 增强for循环测试, 发现操作对象不能为空
+     */
+    private void testFor() {
+        ArrayList<String> list = null;
+        for (String str : list) {
+            BasisLogUtils.e(str);
         }
     }
 
@@ -241,6 +253,7 @@ public class TestActivity extends BaseActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+                ShortcutBadger.applyCount(mActivity, 3); //for 1.1.4+
                 break;
             case R.id.et_test_hide:
                 BasisLogUtils.e(BasisDeviceUtils.getBrand() + " - " + BasisDeviceUtils.getMac() + " - " +
@@ -263,6 +276,7 @@ public class TestActivity extends BaseActivity {
         AlertDialog dialog = new AlertDialog.Builder(mActivity).setView(view).create();
         dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         dialog.show();
+//        new BasisOkHttpBuilder();//BasisOkHttpBuilder 不允许单独创建对象使用
     }
 
     @Override

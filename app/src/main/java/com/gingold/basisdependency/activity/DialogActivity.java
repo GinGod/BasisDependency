@@ -132,7 +132,7 @@ public class DialogActivity extends BaseActivity {
      * BasisSelfDialogUtils 使用(自定义逻辑)
      */
     private void showDialog5() {
-        BasisSelfDialogUtils.build(mActivity, com.gingold.basislibrary.R.layout.dialog_simple, new BasisOnSelfDialogListener() {
+        BasisSelfDialogUtils.build(mActivity, R.layout.dialog_simple_test, new BasisOnSelfDialogListener() {
             @Override
             public void onSelfViewListener(Dialog dialog, BasisBaseViewUtils basisBaseViewUtils) {
                 basisBaseViewUtils.setOnClickListener(R.id.tv_dialog_simple_confirm, new View.OnClickListener() {
@@ -156,7 +156,7 @@ public class DialogActivity extends BaseActivity {
      * BasisSelfDialogUtils 使用
      */
     private void showDialog4() {
-        BasisSelfDialogUtils.build(mActivity, com.gingold.basislibrary.R.layout.pb_loading, new BasisOnSelfDialogListener() {
+        BasisSelfDialogUtils.build(mActivity, R.layout.item_dialog, new BasisOnSelfDialogListener() {
             @Override
             public void onSelfViewListener(Dialog dialog, BasisBaseViewUtils basisBaseViewUtils) {
 

@@ -20,6 +20,7 @@ import com.gingold.basisdependency.data.Urls;
 import com.gingold.basisdependency.utils.ImageUploadUtils;
 import com.gingold.basislibrary.okhttp.BasisCallback;
 import com.gingold.basislibrary.okhttp.BasisDownloadCallback;
+import com.gingold.basislibrary.okhttp.BasisFileInputBean;
 import com.gingold.basislibrary.okhttp.BasisOkHttpUtils;
 import com.gingold.basislibrary.utils.BasisLogUtils;
 
@@ -51,13 +52,35 @@ public class OkHttpPicActivity extends BaseActivity {
     private TextView tv_uploadpic_save;
     private TextView tv_uploadpic_download;
     private String uploadType = "0";
-    public String picFileFullName;
-    public String imagePath;
-    public OkHttpClient mOkHttpClient;
+    private String picFileFullName;
+    private String imagePath;
+    private OkHttpClient mOkHttpClient;
+    public BasisDownloadCallback mBasisDownloadCallback = new BasisDownloadCallback() {
+        @Override
+        public void onProgress(long totalSize, long currentSize, long progress) {
+            BasisLogUtils.e("progress: " + progress);
+        }
+
+        @Override
+        public void onSuccess(Call call, Response response, String result) {
+
+        }
+
+        @Override
+        public void onFailure(String url, String content, Call call, Exception e, String message) {
+
+        }
+
+        @Override
+        public void onException(String url, String content, String result, Exception e, String errorMessage) {
+
+        }
+    };
+    ;
 
     @Override
     public void setupViewLayout() {
-        setContentView(R.layout.activity_uploadpic);
+        setContentView(R.layout.activity_okhttppic);
         initTitle("上传图片", "");
     }
 
@@ -72,6 +95,7 @@ public class OkHttpPicActivity extends BaseActivity {
 
     @Override
     public void listener() {
+        setOnClickListener(R.id.tv_okhttppic_downloadfile, R.id.tv_okhttppic_downloadpic, R.id.tv_okhttppic_uploadfile);
         rg_uploadpic.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -94,6 +118,20 @@ public class OkHttpPicActivity extends BaseActivity {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.tv_okhttppic_downloadfile:
+                BasisOkHttpUtils.getDownload(Urls.downurl, "abcd", "a.apk", mBasisDownloadCallback);
+                break;
+            case R.id.tv_okhttppic_downloadpic:
+                BasisOkHttpUtils.getDownload(Urls.picurl, "abcd", "a.png", mBasisDownloadCallback);
+                break;
+            case R.id.tv_okhttppic_uploadfile:
+                String name = "/storage/emulated/0/abcd/2018-05-10_16-18-26_a.png";
+                File file = new File(name);
+                Map<String, String> map = new HashMap<>();
+                map.put("emp_no", "qlwl215");
+                map.put("type", "ql");
+                BasisOkHttpUtils.postFiles(Urls.uploadurl, new BasisFileInputBean("file", "a.png", file), map, null);
+                break;
             case R.id.iv_uploadpic:
                 TakePhoto();
                 break;

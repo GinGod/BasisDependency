@@ -39,9 +39,9 @@ import java.util.List;
 public abstract class BasisBaseActivity extends AppCompatActivity implements OnClickListener {
     //自定义的标题栏布局
     /**
-     * 标题左返回
+     * 标题左返回(允许是任意布局)
      */
-    public ImageView iv_base_back;
+    public View iv_base_back;
     /**
      * 标题中
      */
@@ -172,7 +172,7 @@ public abstract class BasisBaseActivity extends AppCompatActivity implements OnC
      * 初始化标题栏
      */
     public void initTitle(String title, String right, int iv_base_back, int tv_base_title, int tv_base_right) {
-        this.iv_base_back = (ImageView) findViewById(iv_base_back);//标题左返回
+        this.iv_base_back = findViewById(iv_base_back);//标题左返回
         this.tv_base_title = (TextView) findViewById(tv_base_title);//标题中
         this.tv_base_right = (TextView) findViewById(tv_base_right);//标题右
 
