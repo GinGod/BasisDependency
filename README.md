@@ -12,7 +12,7 @@ Basis Dependency By Gingod
       
       dependencies {
           ...
-          compile 'com.github.GinGod:BasisDependency:v1.1.3'
+          compile 'com.github.GinGod:BasisDependency:v1.1.4'
       }
 
 ## Notes
