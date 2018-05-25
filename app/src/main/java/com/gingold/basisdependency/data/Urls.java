@@ -12,5 +12,9 @@ public class Urls {
     public static final String picUrl3 = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1504093669349&di=4764ed336dbb9a7c226cbe1a52e84afc&imgtype=0&src=http%3A%2F%2Fpic23.photophoto.cn%2F20120530%2F0020033092420808_b.jpg";
     public static final String gifPicUrl = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1504094438179&di=1aedc9b1da47893665658183d2a57972&imgtype=0&src=http%3A%2F%2Fm.qqzhi.com%2Fupload%2Fimg_3_35800959D2993158806_23.jpg";
 
-    public static final String downurl = "http://file.tswlsys.com/shenyueapp/dituibao_android/dituibao_android.apk?5";
+    public static final String downurl = "http://file.tswlsys.com/shenyueapp/QLYiGou/QLYiGou.apk";
+    public static final String timeurl = "http://expapi.tswlsys.com/api/dateTime/getServerCurrentTime";
+    public static final String picurl = "http://file.tswlsys.com/shenyueapp/O2O/O2O.png";
+    public static final String geturl = "http://weixin.zqlwl.com/weixin/lq/lqGetToken.do";
+    public static final String uploadurl = "http://hrapi.zqlwl.com/ehr/check/updateHead.do";
 }

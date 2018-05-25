@@ -228,6 +228,7 @@ public class BasisFileUtils {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        inputStream = null;
     }
 
     /**
@@ -241,6 +242,7 @@ public class BasisFileUtils {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        outputStream = null;
     }
 
     /**
@@ -254,6 +256,7 @@ public class BasisFileUtils {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        reader = null;
     }
 
     /**
@@ -267,6 +270,7 @@ public class BasisFileUtils {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        writer = null;
     }
 
     /**
@@ -280,6 +284,7 @@ public class BasisFileUtils {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        cursor = null;//置空
     }
 
 }

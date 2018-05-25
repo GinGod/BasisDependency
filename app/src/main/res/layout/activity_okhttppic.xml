@@ -8,13 +8,40 @@
 
     <include layout="@layout/activity_title"/>
 
+    <TextView
+        android:id="@+id/tv_okhttppic_downloadfile"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:gravity="center"
+        android:text="下载文件"
+        android:textColor="@color/black"/>
+
+    <TextView
+        android:id="@+id/tv_okhttppic_downloadpic"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:text="下载图片"
+        android:textColor="@color/black"/>
+
+    <TextView
+        android:id="@+id/tv_okhttppic_uploadfile"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:text="上传文件"
+        android:textColor="@color/black"/>
+
     <RadioGroup
         android:id="@+id/rg_uploadpic"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
 
         <RadioButton
             android:id="@+id/rb_uploadpic_paijian"
@@ -39,7 +66,8 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
 
         <EditText
             android:id="@+id/et_uploadpic_scanNo"
@@ -65,12 +93,12 @@
             android:id="@+id/tv_uploadpic_download"
             android:layout_width="72dp"
             android:layout_height="match_parent"
+            android:layout_marginLeft="12dp"
             android:background="#347ed7"
             android:gravity="center"
             android:paddingLeft="13dp"
             android:paddingRight="13dp"
             android:text="下载"
-            android:layout_marginLeft="12dp"
             android:textColor="#ffffffff"/>
 
     </LinearLayout>

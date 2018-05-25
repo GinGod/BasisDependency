@@ -26,14 +26,21 @@ Basis Dependency By Gingod
  [2]:https://blog.csdn.net/decetwen1989/article/details/79974047  "DatePicker和TimePicker"
  [3]:https://blog.csdn.net/decetwen1989/article/details/80182324  "动画"
  
-### v1.1.3 不包含, v1.1.4 计划添加类容:
+### 后续版本计划修改类容
+- Glide 缓存经过测试发现有对控件的记忆性, 不同控件间无法复用缓存, 原因未知, Picasso测试未发现该问题, 后续会引进Picasso 2.5.2 版本的依赖
+
+### v1.1.4 不包含, v1.1.5 计划添加类容:
+- 暂无
+
+### v1.1.4 更新 (2018-5-25)
 - BasisTimesUtils 中 DatePickerDialog 和 TimePickerDialog 的使用
 - BasisAnimUtils 简单动画的实现(建议参照工具类自定义需要的动画)
 - BasisFileUtils 添加关闭流通用方法close(...)
+- Okhttp 使用太过繁琐, 已封装简便方法, 原使用逻辑仍可使用
+- BasisSelfDialogUtils 解决布局中含有EditText, 但无法弹出软键盘问题
+- BasisGlide 中 jp.co.cyberagent.android.gpuimage:gpuimage-library 依赖会导致集成百度地图时报错(未定位具体原因), v1.1.4以后版本会将该依赖屏蔽
+- 自定义标题initTitle()方法的左返回允许任意布局, 以前强转为ImageView, 当前为View
 
-### 后续版本计划修改类容
-- Glide 缓存经过测试发现有对控件的记忆性, 不同控件间无法复用缓存, 原因未知, Picasso测试未发现该问题, 后续会引进Picasso 2.5.2 版本的依赖
-- Okhttp 使用太过繁琐, 后续改进
 
 ## Contents
 

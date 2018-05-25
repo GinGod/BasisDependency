@@ -2,8 +2,6 @@ package com.gingold.basislibrary.okhttp;
 
 import android.text.TextUtils;
 
-import com.gingold.basislibrary.Base.BasisBaseContants;
-import com.gingold.basislibrary.Base.BasisBaseUtils;
 import com.gingold.basislibrary.utils.BasisCommonUtils;
 import com.gingold.basislibrary.utils.BasisLogUtils;
 import com.gingold.basislibrary.utils.dialog.BasisPBLoadingUtils;
@@ -20,9 +18,10 @@ import okhttp3.Response;
 
 /**
  * 请求参数为jsonStr数据
+ * 类不公开
  */
 
-public class BasisPostStringBuilder extends BasisOkHttpBuilder {
+class BasisPostStringBuilder extends BasisOkHttpBuilder {
 
     /**
      * 建立请求
@@ -44,8 +43,8 @@ public class BasisPostStringBuilder extends BasisOkHttpBuilder {
             } else {//提交键值对
                 FormBody.Builder builder = new FormBody.Builder();
                 for (Map.Entry<String, String> entry : this.params.entrySet()) {
-                    builder.add(BasisBaseUtils.showStr(entry.getKey()), BasisBaseUtils.showStr(entry.getValue()));
-                    content = content + BasisBaseUtils.showStr(entry.getKey()) + " : " + BasisBaseUtils.showStr(entry.getValue()) + " , ";//记录参数
+                    builder.add(BasisOkHttpUtils.showStr(entry.getKey()), BasisOkHttpUtils.showStr(entry.getValue()));
+                    content = content + BasisOkHttpUtils.showStr(entry.getKey()) + " : " + BasisOkHttpUtils.showStr(entry.getValue()) + " , ";//记录参数
                 }
                 requestBody = builder.build();
             }
@@ -58,7 +57,7 @@ public class BasisPostStringBuilder extends BasisOkHttpBuilder {
 
         mCall = mOkHttpClient.newCall(request);
 
-        if (BasisBaseContants.OKHTTP_LOG_STATE && isLogState) {
+        if (BasisOkHttpUtils.OKHTTP_LOG_STATE && isLogState) {
             BasisLogUtils.e("url: " + url + " , jsonStr: " + content);
         }
         return this;
@@ -76,11 +75,11 @@ public class BasisPostStringBuilder extends BasisOkHttpBuilder {
                 } else {
                     message = "";
                 }
-                if (BasisBaseContants.OKHTTP_LOG_STATE && isLogState) {
+                if (BasisOkHttpUtils.OKHTTP_LOG_STATE && isLogState) {
                     BasisLogUtils.e("onFailure: " + message);
                 }
                 if (basisCallback != null) {
-                    mHandler.post(new Runnable() {
+                    BasisOkHttpUtils.mHandler.post(new Runnable() {
                         @Override
                         public void run() {
                             try {
@@ -102,11 +101,11 @@ public class BasisPostStringBuilder extends BasisOkHttpBuilder {
                 } else {
                     message = "";
                 }
-                if (BasisBaseContants.OKHTTP_LOG_STATE && isLogState) {
+                if (BasisOkHttpUtils.OKHTTP_LOG_STATE && isLogState) {
                     BasisLogUtils.e("onSuccess: " + message);
                 }
                 if (basisCallback != null) {
-                    mHandler.post(new Runnable() {
+                    BasisOkHttpUtils.mHandler.post(new Runnable() {
                         @Override
                         public void run() {
                             try {
