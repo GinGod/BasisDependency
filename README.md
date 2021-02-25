@@ -12,27 +12,31 @@ Basis Dependency By Gingod
       
       dependencies {
           ...
-          compile 'com.github.GinGod:BasisDependency:v1.1.4'
+          compile 'com.github.GinGod:BasisDependency:v1.1.5'(尚未发版, 请先自行复制需要的代码使用)
       }
 
 ## Notes
 
 ### 相关博客
-- [Android 在Activity和Fragment中沉浸式状态栏实现][1]
-- [Android 自带日期(DatePicker)和时间(TimePicker)选择器使用][2]
-- [Android 中动画的实现][3]
- 
- [1]:https://blog.csdn.net/decetwen1989/article/details/79798838  "沉浸式"
- [2]:https://blog.csdn.net/decetwen1989/article/details/79974047  "DatePicker和TimePicker"
- [3]:https://blog.csdn.net/decetwen1989/article/details/80182324  "动画"
+- [Android 自带日期(DatePicker)和时间(TimePicker)选择器使用][1]
+- [Android 中动画的实现][2]
+
+ [1]:https://blog.csdn.net/decetwen1989/article/details/79974047  "DatePicker和TimePicker"
+ [2]:https://blog.csdn.net/decetwen1989/article/details/80182324  "动画"
  
 ### 后续版本计划修改类容
-- Glide 缓存经过测试发现有对控件的记忆性, 不同控件间无法复用缓存, 原因未知, Picasso测试未发现该问题, 后续会引进Picasso 2.5.2 版本的依赖
+-
 
-### v1.1.4 不包含, v1.1.5 计划添加类容:
+### v1.1.5 不包含, v1.1.6 计划添加类容:
 - 暂无
 
-### v1.1.4 更新 (2018-5-25)
+### v1.1.5 更新 (2021-2-25) (修改中, 尚未发版)
+- 更新到androidx
+- 删除recyclerview相关内容
+- 删除Okhttp相关内容
+- 删除Glide等图片操作相关内容
+
+### v1.1.4 更新 (2018-5-25) (v1.1.4及其以下版本已废弃, 建议使用v1.1.5及其以上版本)
 - BasisTimesUtils 中 DatePickerDialog 和 TimePickerDialog 的使用
 - BasisAnimUtils 简单动画的实现(建议参照工具类自定义需要的动画)
 - BasisFileUtils 添加关闭流通用方法close(...)
@@ -59,27 +63,14 @@ Basis Dependency By Gingod
 - version
 - dialog
 - popupwindow
-- immerse
 
 ### c. Adapter
 - ListView和GridView 的适配器
-- RecyclerView 的适配器
 
 ### d. 自定义View
 - ListViewWithMaxH
 - GridViewWithMaxH
 - BasisListView
-- BasisRecyclerView
-
-### e. Okhttp
-- postString
-- postFile && postFiles
-- download
-
-### f. Glide
-- load
-- cache
-- download
 
 ## 1. BasisBase
 一些基本类和常用方法封装
@@ -103,8 +94,6 @@ str为空时返回 ""; 便于展示
 ### b. BasisBaseService
 
 ### c. BasisBaseFragment
-
-android.support.v4.app.Fragment
 
 ### d. BasisBaseUtils
 
@@ -204,21 +193,6 @@ SharedPreferences常用方法封装
             }
         }
 
-### b. RecyclerView 的适配器
-
-- 使用方法  
-BasisRvAdapter  
-MultiRvAdapter  
-与listView适配器类似
-- 可重写方法  
-onItemClickListener: 条目点击事件  
-onItemLongClickListener: 条目长点击事件  
-isSpecific(int position): true 则该position显示为一整行  
-- BasisRvHeaderAndFooterWrapper  
-头布局脚布局功能适配器 
-- BasisRvEmptyWrapper  
-空布局适配器(数据为空时,显示设置好的空布局)  
-
 ## 4. 自定义View
 
 ### a. ListViewWithMaxH  
@@ -229,91 +203,3 @@ isSpecific(int position): true 则该position显示为一整行
 
 ### c. BasisListView
 上拉加载下拉刷新ListView
-
-### d. BasisRecyclerView
-上拉加载下拉刷新RecyclerView, 可以兼容前面封装的RecyclerView适配器
-
-## 5. BasisOkHttpUtils
-
-### a. postString  
-上传参数未json字符串
-
-- url  
-网址
-- mediaType  
-默认为 application/json; charset=utf-8
-- content  
-上传的json字符串, 或者封装的json对象  
-不能与addParams方法共用, 否则addParams方法不生效  
-- addParams  
-键值对提交参数  
-不能与content方法共用, 否则addParams方法不生效  
-- build  
-建立请求
-- execute  
-执行请求, 结果在主线程中执行
-
-### b. postFile && postFiles
-上传文件(默认图片)
-
-- url  
-网址
-- mediaType  
-image/* //默认上传图片
-- addParams  
-键值对提交参数  
-- addFile  
-上传文件(可上传多个)  
-- build  
-建立请求
-- execute  
-执行请求, 结果在主线程中执行  
-
-### c. download
-下载文件
-
-- url  
-网址
-- fileName  
-储存的文件名, 默认为当前设备时间
-- build  
-建立请求
-- execute  
-执行请求, 结果在主线程中执行  
-onProgress: 下载进度
-
-## 6. BasisGlideUtils
-
-### a. load  
-图片加载
-
-#### 部分参数
-- context  
-支持类型: Context, Activity, Fragment, FragmentActivity, View
-- placeholder || placeholderId  
-占位图片
-- duration  
-过度时长
-- sizeMultiplier || thumbnailRequest  
-thumbnail()方法参数
-- isDrawable  
-确定thumbnail()参数类别
-
-### b. cache
-缓存管理
-
-- getCacheSize  
-获取磁盘缓存大小
-- clearDiskCacheSelf  
-清除图片磁盘缓存
-- clearCacheMemory  
-清除内存缓存
-- clearAllCacheMemory  
-清除所有缓存
-
-### c. 图片下载
-
-- downloadPic  
-jpg图片下载
-- downloadGif  
-gif图片下载
