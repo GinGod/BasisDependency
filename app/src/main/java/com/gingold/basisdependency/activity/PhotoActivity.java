@@ -7,7 +7,6 @@ import android.widget.TextView;
 
 import com.gingold.basisdependency.Base.BaseActivity;
 import com.gingold.basisdependency.R;
-import com.gingold.basisglidelibrary.BasisGlideUtils;
 import com.gingold.basislibrary.utils.BasisPhotoUtils;
 
 /**
@@ -62,12 +61,10 @@ public class PhotoActivity extends BaseActivity {
         switch (requestCode) {
             case TAKEPHOTO:
                 if (resultCode == RESULT_OK) {
-                    BasisGlideUtils.load(mActivity, mTakePhotoPath, iv_photo_show);
                 }
                 break;
             case PICKPIC:
                 if (resultCode == RESULT_OK) {
-                    BasisGlideUtils.load(mActivity, BasisPhotoUtils.pickedPhotoResult(mActivity, data), iv_photo_show);
                 }
                 break;
         }

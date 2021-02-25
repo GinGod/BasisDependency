@@ -5,7 +5,6 @@ import android.widget.ImageView;
 
 import com.gingold.basisdependency.Base.BaseActivity;
 import com.gingold.basisdependency.R;
-import com.gingold.basisglidelibrary.BasisGlideUtils;
 
 /**
  * 加载大图, 测试Glide缓存
@@ -23,7 +22,6 @@ public class Glide2Activity extends BaseActivity {
         iv_glide2_pic = getViewNoClickable(R.id.iv_glide2_pic);
 //        Glide.with(mActivity).load("http://hr.zqlwl.com/upload/ehr/apps/pic/0005.jpg").error(R.drawable.splash).into(iv_glide2_pic);
 //        Picasso.with(mActivity).load("http://hr.zqlwl.com/upload/ehr/apps/pic/0005.jpg").into(iv_glide2_pic);
-        BasisGlideUtils.load(mActivity, "http://hr.zqlwl.com/upload/ehr/apps/pic/0005.jpg", iv_glide2_pic);
     }
 
     @Override

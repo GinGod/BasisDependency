@@ -10,8 +10,6 @@ import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -25,6 +23,8 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.gingold.basislibrary.utils.BasisLogUtils;
 import com.google.gson.Gson;
@@ -742,9 +742,9 @@ public abstract class BasisBaseActivity extends AppCompatActivity implements OnC
      * <p>(使用{@link #getView(int)}或者{@link #getViewNoClickable(int)} (int)}方法替代)
      */
     @Deprecated
-    public RecyclerView findRecyclerView(int id) {
-        return (RecyclerView) findViewById(id);
-    }
+    //public RecyclerView findRecyclerView(int id) {
+    //    return (RecyclerView) findViewById(id);
+    //}
 
     /**
      * 设置text

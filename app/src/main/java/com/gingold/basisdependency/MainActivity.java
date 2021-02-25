@@ -7,7 +7,6 @@ import android.widget.TextView;
 
 import com.gingold.basisdependency.Base.BaseActivity;
 import com.gingold.basisdependency.activity.AnimationActivity;
-import com.gingold.basisdependency.activity.BugRecycler2To1Activity;
 import com.gingold.basisdependency.activity.DBActivity;
 import com.gingold.basisdependency.activity.DateTimePickerActivity;
 import com.gingold.basisdependency.activity.DialogActivity;
@@ -17,11 +16,7 @@ import com.gingold.basisdependency.activity.Html5Activity;
 import com.gingold.basisdependency.activity.ImmerseActivity;
 import com.gingold.basisdependency.activity.LvRefreshActivity;
 import com.gingold.basisdependency.activity.MultiLvActivity;
-import com.gingold.basisdependency.activity.MultiRvActivity;
-import com.gingold.basisdependency.activity.OkHttpActivity;
-import com.gingold.basisdependency.activity.OkHttpPicActivity;
 import com.gingold.basisdependency.activity.PhotoActivity;
-import com.gingold.basisdependency.activity.RvRefreshActivity;
 import com.gingold.basisdependency.activity.SPActivity;
 import com.gingold.basisdependency.activity.TestActivity;
 import com.gingold.basisdependency.data.MainData;
@@ -85,19 +80,15 @@ public class MainActivity extends BaseActivity {
                                 startActivity(MultiLvActivity.class);
                                 break;
                             case MainData.RVADAPTER:
-                                startActivity(MultiRvActivity.class);
                                 break;
                             case MainData.RVREFRESH:
-                                startActivity(RvRefreshActivity.class);
                                 break;
                             case MainData.LVREFRESH:
                                 startActivity(LvRefreshActivity.class);
                                 break;
                             case MainData.OKHTTP:
-                                startActivity(OkHttpActivity.class);
                                 break;
                             case MainData.OKHTTPPIC:
-                                startActivity(OkHttpPicActivity.class);
                                 break;
                             case MainData.GLIDE:
                                 startActivity(GlideActivity.class);
@@ -112,7 +103,6 @@ public class MainActivity extends BaseActivity {
                                 startActivity(DialogActivity.class);
                                 break;
                             case MainData.BUGRECYCLER2TO1:
-                                startActivity(BugRecycler2To1Activity.class);
                                 break;
                             case MainData.EXCEPTIONINFO:
                                 startActivity(ExceptionInfoActivity.class);

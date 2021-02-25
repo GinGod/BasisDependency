@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -405,9 +404,9 @@ public class BasisBaseViewUtils {
      * RecyclerView查找
      */
     @Deprecated
-    public RecyclerView findRecyclerView(int id) {
-        return getView(id);
-    }
+    //public RecyclerView findRecyclerView(int id) {
+    //    return getView(id);
+    //}
 
     /**
      * 设置text

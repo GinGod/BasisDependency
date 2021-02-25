@@ -1,47 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.gingold.basisdependency">
+    package="com.gingold.basisdependency">
 
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.SYSTEM_OVERLAY_WINDOW" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"></uses-permission>
 
     <application
         android:name="com.gingold.basisdependency.MyApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"/>
-        <activity android:name=".activity.SPActivity"/>
-        <activity android:name=".activity.MultiLvActivity"/>
-        <activity android:name=".activity.MultiRvActivity"/>
-        <activity android:name=".activity.RvRefreshActivity"/>
-        <activity android:name=".activity.LvRefreshActivity"/>
-        <activity android:name=".activity.TestActivity"/>
-        <activity android:name=".activity.OkHttpActivity"/>
-        <activity android:name=".activity.OkHttpPicActivity"/>
-        <activity android:name=".activity.GlideActivity"/>
-        <activity android:name=".activity.PhotoActivity"/>
-        <activity android:name=".activity.DBActivity"/>
-        <activity android:name=".activity.DialogActivity"/>
-        <activity android:name=".activity.BugRecycler2To1Activity"/>
-        <activity android:name=".activity.ExceptionInfoActivity"/>
-        <activity android:name=".activity.Html5Activity"/>
-        <activity android:name=".activity.ImmerseActivity"/>
-        <activity android:name=".activity.ImmerseFragmentActivity"/>
-        <activity
-            android:name=".activity.SplashActivity">
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".activity.SplashActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.AnimationActivity"/>
-        <activity android:name=".activity.DateTimePickerActivity"/>
-        <activity android:name=".activity.Glide2Activity"/>
+        <activity android:name=".MainActivity" />
+        <activity android:name=".activity.SPActivity" />
+        <activity android:name=".activity.MultiLvActivity" />
+        <activity android:name=".activity.LvRefreshActivity" />
+        <activity android:name=".activity.TestActivity" />
+        <activity android:name=".activity.GlideActivity" />
+        <activity android:name=".activity.PhotoActivity" />
+        <activity android:name=".activity.DBActivity" />
+        <activity android:name=".activity.DialogActivity" />
+        <activity android:name=".activity.ExceptionInfoActivity" />
+        <activity android:name=".activity.Html5Activity" />
+        <activity android:name=".activity.ImmerseActivity" />
+        <activity android:name=".activity.ImmerseFragmentActivity" />
+        <activity android:name=".activity.AnimationActivity" />
+        <activity android:name=".activity.DateTimePickerActivity" />
+        <activity android:name=".activity.Glide2Activity" />
 
-        <service android:name=".TestService"/>
+        <service android:name=".TestService" />
     </application>
 
 </manifest>

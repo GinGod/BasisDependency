@@ -1,47 +1,39 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.novoda.bintray-release'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.3"
+    compileSdkVersion 30
+    buildToolsVersion "30.0.2"
 
     defaultConfig {
-        minSdkVersion 14
-        targetSdkVersion 22
+        minSdkVersion 21
+        targetSdkVersion 30
         versionCode 1
-        versionName "1.0"
+        versionName "1.1.5"
     }
 
-    repositories {
-        mavenCentral() // jcenter() works as well because it pulls from Maven Central
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'com.android.support:recyclerview-v7:25.3.1'
-
-    compile 'com.squareup.okhttp3:okhttp:3.8.1'//Okhttp
-
-    compile 'com.google.code.gson:gson:2.8.1'//gson
-
-    //BasisGlide start
-//    compile 'com.github.GinGod:BasisGlide:V1.0.1'
-    compile('com.github.GinGod:BasisGlide:V1.0.1') {//底下依赖会导致集成百度地图时无法初始化, 应用无法启动
-        exclude(group: 'jp.co.cyberagent.android.gpuimage', module: 'gpuimage-library')
-    }
-    //依赖项目中已经包含的依赖
-//    compile 'com.github.bumptech.glide:glide:3.8.0'
-//    compile 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.4.1'//已屏蔽掉依赖, 不能访问
-//    compile 'jp.wasabeef:glide-transformations:2.0.2'
-    //BasisGlide end
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+//    implementation "com.google.code.gson:gson:${gsonVersion}" //gson
+    implementation "com.google.code.gson:gson:2.8.6" //gson
 }
 
-publish {
-    userOrg = 'gingod'//bintray.com用户名
-    groupId = 'com.gingod'//jcenter上的路径
-    artifactId = 'BasisDependency'//项目名称
-    publishVersion = '1.0.0'//版本号
-    desc = 'BasisDependency 1.0.0'//描述，不重要
-    website = 'https://github.com/GinGod/BasisDependency'//网站，不重要；尽量模拟github上的地址
-}
+//publish {
+//    userOrg = 'gingod'//bintray.com用户名
+//    groupId = 'com.gingod'//jcenter上的路径
+//    artifactId = 'BasisDependency'//项目名称
+//    publishVersion = '1.0.0'//版本号
+//    desc = 'BasisDependency 1.0.0'//描述，不重要
+//    website = 'https://github.com/GinGod/BasisDependency'//网站，不重要；尽量模拟github上的地址
+//}

@@ -4,8 +4,6 @@ import android.view.View;
 
 import com.gingold.basisdependency.Base.BaseActivity;
 import com.gingold.basisdependency.R;
-import com.gingold.basislibrary.okhttp.BasisCallback;
-import com.gingold.basislibrary.okhttp.BasisOkHttpUtils;
 import com.gingold.basislibrary.utils.BasisLogUtils;
 
 import java.io.PrintWriter;
@@ -55,24 +53,7 @@ public class ExceptionInfoActivity extends BaseActivity {
                 }
                 break;
             case R.id.tv_exceptioninfo_net:
-                BasisOkHttpUtils.postString().url("http://www.baidu.con").build().execute(new BasisCallback() {
-                    @Override
-                    public void onSuccess(Call call, Response response, String result) {
 
-                    }
-
-                    @Override
-                    public void onFailure(String url, String content, Call call, Exception e, String message) {
-                        BasisLogUtils.e(e.getMessage() + " --- \n" + message);
-                        BasisLogUtils.e(e.getLocalizedMessage() + " --- \n");
-                        BasisLogUtils.e(getExceptionInfo(e));
-                    }
-
-                    @Override
-                    public void onException(String url, String content, String result, Exception e, String errorMessage) {
-
-                    }
-                });
                 break;
         }
     }

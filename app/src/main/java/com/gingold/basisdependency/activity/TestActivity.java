@@ -34,10 +34,9 @@ import java.io.File;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import me.leolin.shortcutbadger.ShortcutBadger;
 
 /**
  *
@@ -47,17 +46,17 @@ public class TestActivity extends BaseActivity {
     public RotateAnimation mRotateUpAnim;
     public RotateAnimation mRotateDownAnim;
     public long ROTATE_ANIM_DURATION = 252;
-    @Bind(R.id.iv_arrow)
+    @BindView(R.id.iv_arrow)
     ImageView mIvArrow;
-    @Bind(R.id.tv_test_down)
+    @BindView(R.id.tv_test_down)
     TextView mTvTestDown;
-    @Bind(R.id.tv_test_up)
+    @BindView(R.id.tv_test_up)
     TextView mTvTestUp;
-    @Bind(R.id.tv_test_clear)
+    @BindView(R.id.tv_test_clear)
     TextView mTvTestClear;
-    @Bind(R.id.tv_test_time)
+    @BindView(R.id.tv_test_time)
     TextView mTvTestTime;
-    @Bind(R.id.et_test_hide)
+    @BindView(R.id.et_test_hide)
     EditText mEtTestHide;
     private TextView et_test_test;
     public String before = "";
@@ -253,7 +252,6 @@ public class TestActivity extends BaseActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                ShortcutBadger.applyCount(mActivity, 3); //for 1.1.4+
                 break;
             case R.id.et_test_hide:
                 BasisLogUtils.e(BasisDeviceUtils.getBrand() + " - " + BasisDeviceUtils.getMac() + " - " +

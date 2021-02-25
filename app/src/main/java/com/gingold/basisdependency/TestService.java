@@ -3,7 +3,6 @@ package com.gingold.basisdependency;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.IBinder;
-import android.support.annotation.Nullable;
 import android.widget.Toast;
 
 import com.gingold.basislibrary.Base.BasisBaseService;
@@ -37,7 +36,7 @@ public class TestService extends BasisBaseService {
         }, 1000);
     }
 
-    @Nullable
+    
     @Override
     public IBinder onBind(Intent intent) {
         return null;

@@ -1,6 +1,7 @@
 package com.gingold.basislibrary.adapter.lvgv;
 
-import android.support.v4.util.SparseArrayCompat;
+
+import androidx.collection.SparseArrayCompat;
 
 /**
  * item多类型管理器

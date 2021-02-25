@@ -1,10 +1,11 @@
 package com.gingold.basisdependency.activity;
 
 import android.os.Build;
-import android.support.annotation.RequiresApi;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
+
+import androidx.annotation.RequiresApi;
 
 import com.gingold.basisdependency.Base.BaseActivity;
 import com.gingold.basisdependency.R;

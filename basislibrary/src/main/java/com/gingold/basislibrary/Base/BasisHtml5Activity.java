@@ -6,7 +6,6 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Message;
-import android.support.annotation.RequiresApi;
 import android.view.KeyEvent;
 import android.view.ViewGroup;
 import android.webkit.ValueCallback;
@@ -17,6 +16,8 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
+
+import androidx.annotation.RequiresApi;
 
 /**
  * BasisHtml5Activity

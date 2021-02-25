@@ -8,8 +8,6 @@ import android.widget.TextView;
 import com.gingold.basisdependency.Base.BaseActivity;
 import com.gingold.basisdependency.R;
 import com.gingold.basisdependency.data.Urls;
-import com.gingold.basisglidelibrary.BasisCallBack;
-import com.gingold.basisglidelibrary.BasisGlideUtils;
 
 import java.io.File;
 import java.util.HashMap;
@@ -51,20 +49,12 @@ public class GlideActivity extends BaseActivity {
 
     @Override
     public void logicDispose() {
-        tv_glide_cacheSize.setText(BasisGlideUtils.getCacheSize(mActivity));
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_glide_clearCache:
-                BasisGlideUtils.clearAllCacheMemory(mActivity);
-                postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        tv_glide_cacheSize.setText(BasisGlideUtils.getCacheSize(mActivity));
-                    }
-                }, 1000);
                 toast("清除缓存中...");
                 break;
             case R.id.tv_glide_load:
@@ -76,7 +66,6 @@ public class GlideActivity extends BaseActivity {
 //                        .into(iv_glide_pic);
 //                Glide.with(mActivity).load(Urls.picUrl1).transition(new DrawableTransitionOptions().crossFade(2000)).thumbnail(0.5f).into(iv_glide_pic);
 //                BasisGlideUtils.load(iv_glide_pic, R.drawable.lvgvrv_arrow_down, iv_glide_pic);
-                BasisGlideUtils.load(mActivity, Urls.picUrl1, iv_glide_pic);
 //                BasisGlideUtils.load(iv_glide_pic, Urls.picUrl1, iv_glide_pic, 2000, R.drawable.lvgvrv_arrow_down, true);
 //                BasisGlideUtils.loadSpecial(iv_glide_pic, Urls.picUrl1, iv_glide_pic, mActivity, BasisGlideUtils.CROPCIRCLE);
 //                select();
@@ -84,22 +73,9 @@ public class GlideActivity extends BaseActivity {
                 toast("加载图片中...");
                 break;
             case R.id.tv_glide_load2:
-                BasisGlideUtils.load(mActivity, Urls.picUrl1, iv_glide_pic);
                 break;
             case R.id.tv_glide_download:
-                BasisGlideUtils.downloadPic(mActivity, Urls.picUrl1, "测试", new BasisCallBack() {
-                    @Override
-                    public void onSuccess(Bitmap bitmap, File file, String fileName) {
-                        toast(fileName);
-//                        iv_glide_pic.setImageBitmap(bitmap);
-                        BasisGlideUtils.load(mActivity, fileName, iv_glide_pic);
-                    }
 
-                    @Override
-                    public void onFailure() {
-                        toast("下载失败");
-                    }
-                });
 
 //                BasisOkHttpUtils.postString().url("http://hrtest.zqlwl.com/maintain/getPath.do").build().execute(new BasisCallback() {
 //                    @Override
@@ -121,7 +97,6 @@ public class GlideActivity extends BaseActivity {
             case R.id.tv_glide_cache_samll://测试Glide缓存
 //                Glide.with(mActivity).load("http://hr.zqlwl.com/upload/ehr/apps/pic/0005.jpg").skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(iv_glide_pic_cache);
 //                Picasso.with(mActivity).load("http://hr.zqlwl.com/upload/ehr/apps/pic/0005.jpg").into(iv_glide_pic);
-                BasisGlideUtils.load(mActivity, "http://hr.zqlwl.com/upload/ehr/apps/pic/0005.jpg", iv_glide_pic_cache);
                 break;
             case R.id.tv_glide_cache_big://测试Glide缓存
                 startActivity(Glide2Activity.class);
