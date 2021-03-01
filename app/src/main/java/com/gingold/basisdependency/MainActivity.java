@@ -11,9 +11,7 @@ import com.gingold.basisdependency.activity.DBActivity;
 import com.gingold.basisdependency.activity.DateTimePickerActivity;
 import com.gingold.basisdependency.activity.DialogActivity;
 import com.gingold.basisdependency.activity.ExceptionInfoActivity;
-import com.gingold.basisdependency.activity.GlideActivity;
 import com.gingold.basisdependency.activity.Html5Activity;
-import com.gingold.basisdependency.activity.ImmerseActivity;
 import com.gingold.basisdependency.activity.LvRefreshActivity;
 import com.gingold.basisdependency.activity.MultiLvActivity;
 import com.gingold.basisdependency.activity.PhotoActivity;
@@ -60,9 +58,6 @@ public class MainActivity extends BaseActivity {
                             case MainData.ANIMATION:
                                 startActivity(AnimationActivity.class);
                                 break;
-                            case MainData.IMMERSE:
-                                startActivity(ImmerseActivity.class);
-                                break;
                             case MainData.HTML5:
                                 startActivity(Html5Activity.class);
                                 break;
@@ -79,19 +74,8 @@ public class MainActivity extends BaseActivity {
                             case MainData.LVADAPTER:
                                 startActivity(MultiLvActivity.class);
                                 break;
-                            case MainData.RVADAPTER:
-                                break;
-                            case MainData.RVREFRESH:
-                                break;
                             case MainData.LVREFRESH:
                                 startActivity(LvRefreshActivity.class);
-                                break;
-                            case MainData.OKHTTP:
-                                break;
-                            case MainData.OKHTTPPIC:
-                                break;
-                            case MainData.GLIDE:
-                                startActivity(GlideActivity.class);
                                 break;
                             case MainData.PHOTO:
                                 startActivity(PhotoActivity.class);
@@ -101,8 +85,6 @@ public class MainActivity extends BaseActivity {
                                 break;
                             case MainData.DIALOG:
                                 startActivity(DialogActivity.class);
-                                break;
-                            case MainData.BUGRECYCLER2TO1:
                                 break;
                             case MainData.EXCEPTIONINFO:
                                 startActivity(ExceptionInfoActivity.class);
@@ -127,23 +109,8 @@ public class MainActivity extends BaseActivity {
                     case MainData.LVADAPTER:
                         flag = Paint.SUBPIXEL_TEXT_FLAG;
                         break;
-                    case MainData.RVADAPTER:
-                        flag = Paint.UNDERLINE_TEXT_FLAG;
-                        break;
-                    case MainData.RVREFRESH:
-                        flag = Paint.DEV_KERN_TEXT_FLAG;
-                        break;
                     case MainData.LVREFRESH:
                         flag = Paint.DITHER_FLAG;
-                        break;
-                    case MainData.OKHTTP:
-                        flag = Paint.EMBEDDED_BITMAP_TEXT_FLAG;
-                        break;
-                    case MainData.OKHTTPPIC:
-                        flag = Paint.FAKE_BOLD_TEXT_FLAG;
-                        break;
-                    case MainData.GLIDE:
-                        flag = Paint.STRIKE_THRU_TEXT_FLAG;
                         break;
                     case MainData.PHOTO:
                         flag = Paint.HINTING_OFF;

@@ -42,7 +42,6 @@
         <activity android:name=".activity.MultiLvActivity" />
         <activity android:name=".activity.LvRefreshActivity" />
         <activity android:name=".activity.TestActivity" />
-        <activity android:name=".activity.GlideActivity" />
         <activity android:name=".activity.PhotoActivity" />
         <activity android:name=".activity.DBActivity" />
         <activity android:name=".activity.DialogActivity" />
@@ -52,7 +51,6 @@
         <activity android:name=".activity.ImmerseFragmentActivity" />
         <activity android:name=".activity.AnimationActivity" />
         <activity android:name=".activity.DateTimePickerActivity" />
-        <activity android:name=".activity.Glide2Activity" />
 
         <service android:name=".TestService" />
     </application>
