@@ -12,7 +12,7 @@ Basis Dependency By Gingod
       
       dependencies {
           ...
-          compile 'com.github.GinGod:BasisDependency:v1.1.5'(尚未发版, 请先自行复制需要的代码使用)
+          compile 'com.github.GinGod:BasisDependency:v1.1.5'
       }
 
 ## Notes
@@ -30,7 +30,7 @@ Basis Dependency By Gingod
 ### v1.1.5 不包含, v1.1.6 计划添加类容:
 - 暂无
 
-### v1.1.5 更新 (2021-2-25) (修改中, 尚未发版)
+### v1.1.5 更新 (2021-3-1)
 - 更新到androidx
 - 删除recyclerview相关内容
 - 删除Okhttp相关内容
