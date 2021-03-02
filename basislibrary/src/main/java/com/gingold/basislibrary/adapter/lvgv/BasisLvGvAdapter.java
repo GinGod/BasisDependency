@@ -35,6 +35,7 @@ public abstract class BasisLvGvAdapter<T> extends BasisLvGvMultiAdapter<T> {
 
     }
 
+    @Override
     protected abstract void initView(BasisLvGvViewHolder basisViewHolder, T data, int position);
 
 }

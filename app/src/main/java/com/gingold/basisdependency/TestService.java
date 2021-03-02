@@ -16,7 +16,7 @@ public class TestService extends BasisBaseService {
     private int num = 0;
 
     @Override
-    public void logicDispose() {
+    public void initData() {
         Toast.makeText(TestService.this, "test", Toast.LENGTH_SHORT).show();
         test();
     }

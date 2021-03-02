@@ -30,14 +30,14 @@ public class AnimationActivity extends BaseActivity {
     }
 
     @Override
-    public void listener() {
+    public void initListener() {
         setOnClickListener(R.id.tv_animation_alpha, R.id.tv_animation_translate, R.id.tv_animation_scale, R.id.tv_animation_rotate, R.id.tv_animation_set, R.id.tv_animation_rotate_contitue
                 , R.id.tv_animation_alpha1, R.id.tv_animation_translate1, R.id.tv_animation_scale1, R.id.tv_animation_rotate1, R.id.tv_animation_set1, R.id.tv_animation_rotate_contitue1
                 , R.id.tv_animation_alpha2, R.id.tv_animation_translate2, R.id.tv_animation_scale2, R.id.tv_animation_rotate2, R.id.tv_animation_set2, R.id.tv_animation_rotate_contitue2);
     }
 
     @Override
-    public void logicDispose() {
+    public void initData() {
 
     }
 

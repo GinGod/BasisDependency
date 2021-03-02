@@ -26,12 +26,12 @@ public class Test3Fragment extends BasisBaseFragment {
     }
 
     @Override
-    public void listener() {
+    public void initListener() {
 
     }
 
     @Override
-    public void logicDispose() {
+    public void initData() {
 
     }
 

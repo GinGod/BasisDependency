@@ -29,13 +29,13 @@ public class DateTimePickerActivity extends BaseActivity {
     }
 
     @Override
-    public void listener() {
+    public void initListener() {
         setOnClickListener(R.id.tv_datetimepicker_date, R.id.tv_datetimepicker_time, R.id.tv_datetimepicker_yearmonth, R.id.tv_datetimepicker_monthday);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
-    public void logicDispose() {
+    public void initData() {
         //日期选择器初始化和变化监听
         dp_datetimepicker_date.init(2016, 1, 1, new DatePicker.OnDateChangedListener() {
             @Override

@@ -38,12 +38,12 @@ public class LvRefreshActivity extends BaseActivity implements BasisListView.Bas
     }
 
     @Override
-    public void listener() {
+    public void initListener() {
         mListView.setBasisLvRefreshListener(this);
     }
 
     @Override
-    public void logicDispose() {
+    public void initData() {
         geneItems();
         mAdapter = new ArrayAdapter<String>(this, R.layout.list_item, items);
         TextView view1 = new TextView(mActivity);

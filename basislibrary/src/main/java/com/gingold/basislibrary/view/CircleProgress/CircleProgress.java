@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by yukuo on 2016/4/29.
+ *
  */
 public class CircleProgress extends CircleProgressController {
 

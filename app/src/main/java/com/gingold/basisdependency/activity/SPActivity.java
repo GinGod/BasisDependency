@@ -1,6 +1,7 @@
 package com.gingold.basisdependency.activity;
 
 import android.view.View;
+import android.widget.ListView;
 
 import com.gingold.basisdependency.Base.BaseActivity;
 import com.gingold.basisdependency.R;
@@ -29,13 +30,13 @@ public class SPActivity extends BaseActivity {
     }
 
     @Override
-    public void listener() {
+    public void initListener() {
 
     }
 
     @Override
-    public void logicDispose() {
-        findListView(R.id.lv_sp).setAdapter(new BasisLvGvAdapter<String>(mActivity, R.layout.item_textview, TestData.SPList) {
+    public void initData() {
+        ((ListView) getView(R.id.lv_sp)).setAdapter(new BasisLvGvAdapter<String>(mActivity, R.layout.item_textview, TestData.SPList) {
             @Override
             protected void initView(BasisLvGvViewHolder basisViewHolder, final String data, int position) {
                 basisViewHolder.setTvTextListener(R.id.tv_item_main, data, new View.OnClickListener() {
@@ -45,14 +46,14 @@ public class SPActivity extends BaseActivity {
                             case SPData.STRING:
                                 BasisSPUtils.setStringPreferences(mActivity, "string", "string" + times);
                                 BasisSPUtils.setStringPreferences(mActivity, "string", "string", "string" + times);
-                                toast(BasisSPUtils.getStringPreference(mActivity, "string", "错误"));
-                                toast(BasisSPUtils.getStringPreference(mActivity, "string", "string", "错误") + "第二次");
+                                toast(BasisSPUtils.getStringPreferences(mActivity, "string", "错误"));
+                                toast(BasisSPUtils.getStringPreferences(mActivity, "string", "string", "错误") + "第二次");
                                 break;
                             case SPData.INT:
                                 BasisSPUtils.setIntPreferences(mActivity, "int", 252 + times);
                                 BasisSPUtils.setIntPreferences(mActivity, "int", "int", 252 + times);
-                                toast(BasisSPUtils.getIntPreference(mActivity, "int", 0) + "");
-                                toast(BasisSPUtils.getIntPreference(mActivity, "int", "int", 0) + "第二次");
+                                toast(BasisSPUtils.getIntPreferences(mActivity, "int", 0) + "");
+                                toast(BasisSPUtils.getIntPreferences(mActivity, "int", "int", 0) + "第二次");
                                 break;
                             case SPData.LONG:
                                 BasisSPUtils.setLongPreferences(mActivity, "LONG", 0 + times);

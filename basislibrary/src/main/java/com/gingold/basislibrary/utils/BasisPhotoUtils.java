@@ -35,6 +35,7 @@ public class BasisPhotoUtils {
             File outFile = new File(outDir, BasisTimesUtils.getDeviceTime()
                     .replace(" ", "_").replace("-", "_").replace(":", "_") + ".jpg");
             intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(outFile));
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, BasisCommonUtils.getUri(activity, outFile));
             intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
             activity.startActivityForResult(intent, requestCode);
             return outFile.getAbsolutePath();

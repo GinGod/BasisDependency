@@ -9,55 +9,56 @@ import android.content.IntentFilter;
 import android.os.Handler;
 
 import com.gingold.basislibrary.utils.BasisLogUtils;
-import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * BasisBaseService
+ *
+ * @author
  */
 public abstract class BasisBaseService extends Service {
     public Application app;//application
     public BasisBaseService mService;// 上下文
     public Context context;// 上下文
-    public Handler mHandler;//Handler
-    public Gson gson;//Gson
+    public Handler mBasisHandler;//Handler
 
     private BroadcastReceiver mReceiver;//广播
     private IntentFilter mFilter;//广播接受过滤器
     private ArrayList<BroadcastReceiver> mReceiverList = new ArrayList<>();//广播集合
 
-    private final String TAG = this.getClass().getSimpleName() + "TAG";//类名日志tag
+    private final String TAG = this.getClass().getSimpleName() + "TAG: ";//类名日志tag
 
     @Override
     public void onCreate() {
-        super.onCreate();
-        initData();// 初始化数据
-        logicDispose();// 逻辑
-        additionalLogic();//附加逻辑
+        try {
+            super.onCreate();
+            init();// 初始化数据
+            initData();// 逻辑
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
      * 初始化数据
      */
-    private void initData() {
-        app = getApplication();
-        mService = BasisBaseService.this;
-        context = BasisBaseService.this;
-        mHandler = new Handler();
-        gson = new Gson();
+    public void init() {
+        try {
+            app = getApplication();
+            mService = BasisBaseService.this;
+            context = BasisBaseService.this;
+            mBasisHandler = new Handler();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
      * 逻辑
      */
-    public abstract void logicDispose();
-
-    /**
-     * 附加逻辑
-     */
-    public void additionalLogic() {
+    public void initData() {
     }
 
     @Override
@@ -77,7 +78,7 @@ public abstract class BasisBaseService extends Service {
 
             removeAllReceiver();//取消所有已经添加注册的广播
 
-            mHandler.removeCallbacksAndMessages(null);//清空所有消息
+            mBasisHandler.removeCallbacksAndMessages(null);//清空所有消息
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -206,7 +207,7 @@ public abstract class BasisBaseService extends Service {
      * 执行延迟消息
      */
     public void postDelayed(Runnable r, long delayMillis) {
-        mHandler.postDelayed(r, delayMillis);
+        mBasisHandler.postDelayed(r, delayMillis);
     }
 
     /**
@@ -252,27 +253,35 @@ public abstract class BasisBaseService extends Service {
      */
     @Deprecated
     public void registerReceiver(String... action) {
-//        if (action != null) {//不做非空判断, 异常时需暴露异常, 便于查错
-        mFilter = new IntentFilter();
-        for (int i = 0; i < action.length; i++) {
-            mFilter.addAction(action[i]);
-        }
-        mReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                String action = intent.getAction();
-                handlerReceiver(context, action, intent);
+        try {
+            mFilter = new IntentFilter();
+            for (int i = 0; i < action.length; i++) {
+                mFilter.addAction(action[i]);
             }
-        };
-        registerReceiver(mReceiver, mFilter);
-//        }
+            if (mReceiver != null) {
+                unregisterReceiver(mReceiver);
+            }
+            mReceiver = new BroadcastReceiver() {
+                @Override
+                public void onReceive(Context context, Intent intent) {
+                    String action = intent.getAction();
+                    try {
+                        handlerReceiver(context, action, intent);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            };
+            registerReceiver(mReceiver, mFilter);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
      * 根据接受到的action处理不同消息, 与注册广播方法关联使用
      * <p>{@link #registerReceiver(String...)}
      */
-    @Deprecated
     public void handlerReceiver(Context context, String action, Intent intent) {
     }
 
@@ -280,31 +289,40 @@ public abstract class BasisBaseService extends Service {
      * 注册添加广播, 可添加多条广播, 用于替代 {@link #registerReceiver(String...)} 方法
      */
     public BroadcastReceiver addReceiver(final OnReceiverListener receiverListener, String... action) {
-        IntentFilter filter = new IntentFilter();
-        for (int i = 0; i < action.length; i++) {
-            filter.addAction(action[i]);
-        }
-        BroadcastReceiver receiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                String action = intent.getAction();
-                if (receiverListener != null) {
-                    receiverListener.onReceiver(context, action, intent);
-                }
+        try {
+            IntentFilter filter = new IntentFilter();
+            for (int i = 0; i < action.length; i++) {
+                filter.addAction(action[i]);
             }
-        };
-        registerReceiver(receiver, filter);
-        mReceiverList.add(receiver);
-        return receiver;
+            BroadcastReceiver receiver = new BroadcastReceiver() {
+                @Override
+                public void onReceive(Context context, Intent intent) {
+                    String action = intent.getAction();
+                    if (receiverListener != null) {
+                        receiverListener.onReceiver(context, action, intent);
+                    }
+                }
+            };
+            registerReceiver(receiver, filter);
+            mReceiverList.add(receiver);
+            return receiver;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     /**
      * 取消注册广播
      */
     public void removeReceiver(BroadcastReceiver receiver) {
-        if (receiver != null) {
-            unregisterReceiver(receiver);
-            mReceiverList.remove(receiver);
+        try {
+            if (receiver != null) {
+                unregisterReceiver(receiver);
+                mReceiverList.remove(receiver);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -312,11 +330,15 @@ public abstract class BasisBaseService extends Service {
      * 取消所有已经添加注册的广播
      */
     public void removeAllReceiver() {
-        for (int i = 0; i < mReceiverList.size(); i++) {
-            BroadcastReceiver receiver = mReceiverList.get(i);
-            unregisterReceiver(receiver);
+        try {
+            for (int i = 0; i < mReceiverList.size(); i++) {
+                BroadcastReceiver receiver = mReceiverList.get(i);
+                unregisterReceiver(receiver);
+            }
+            mReceiverList.clear();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        mReceiverList.clear();
     }
 
     /**

@@ -28,11 +28,11 @@ public class Html5Activity extends BaseHtml5Activity {
     }
 
     @Override
-    public void listener() {
+    public void initListener() {
     }
 
     @Override
-    public void logicDispose() {
+    public void initData() {
         mHomeUrl = "http://flower.zqlwl.com/index.php/Shop";
         initWebView(mLayout);
         //重新设置后将取代前面设置的client对象

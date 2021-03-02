@@ -20,15 +20,8 @@ public class BasisSPUtils {
     /**
      * 获取字符(采用默认sp名)
      */
-    public static String getStringPreference(Context context, String key, String defaultValue) {
-        return getStringPreference(context, preference, key, defaultValue);
-    }
-
-    /**
-     * 获取字符(采用默认sp名)
-     */
     public static String getStringPreferences(Context context, String key, String defaultValue) {
-        return getStringPreference(context, preference, key, defaultValue);
+        return getStringPreferences(context, preference, key, defaultValue);
     }
 
     /**
@@ -69,8 +62,8 @@ public class BasisSPUtils {
     /**
      * 获取int(采用默认sp名)
      */
-    public static int getIntPreference(Context context, String key, int defaultValue) {
-        return getIntPreference(context, preference, key, defaultValue);
+    public static int getIntPreferences(Context context, String key, int defaultValue) {
+        return getIntPreferences(context, preference, key, defaultValue);
     }
 
     /**
@@ -95,14 +88,6 @@ public class BasisSPUtils {
         Editor editor = sharedPreferences.edit();
         editor.putString(key, value);
         editor.commit();
-    }
-
-    /**
-     * 获取字符(自定义sp名)
-     */
-    public static String getStringPreference(Context context, String preference, String key, String defaultValue) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(preference, Context.MODE_PRIVATE);
-        return sharedPreferences.getString(key, defaultValue);
     }
 
     /**
@@ -157,14 +142,6 @@ public class BasisSPUtils {
         Editor editor = sharedPreferences.edit();
         editor.putInt(key, value);
         editor.commit();
-    }
-
-    /**
-     * 获取int(自定义sp名)
-     */
-    public static int getIntPreference(Context context, String preference, String key, int defaultValue) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(preference, Context.MODE_PRIVATE);
-        return sharedPreferences.getInt(key, defaultValue);
     }
 
     /**

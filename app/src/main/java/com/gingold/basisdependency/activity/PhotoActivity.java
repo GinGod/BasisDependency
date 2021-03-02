@@ -34,12 +34,12 @@ public class PhotoActivity extends BaseActivity {
     }
 
     @Override
-    public void listener() {
+    public void initListener() {
 
     }
 
     @Override
-    public void logicDispose() {
+    public void initData() {
 
     }
 

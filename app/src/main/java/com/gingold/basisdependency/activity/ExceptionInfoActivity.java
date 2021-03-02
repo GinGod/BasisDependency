@@ -29,13 +29,13 @@ public class ExceptionInfoActivity extends BaseActivity {
     }
 
     @Override
-    public void listener() {
+    public void initListener() {
         setOnClickListener(R.id.tv_exceptioninfo_null);
         setOnClickListener(R.id.tv_exceptioninfo_net);
     }
 
     @Override
-    public void logicDispose() {
+    public void initData() {
 
     }
 

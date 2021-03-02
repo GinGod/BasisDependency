@@ -5,7 +5,7 @@ import android.view.View;
 import com.gingold.basisdependency.Base.BaseActivity;
 import com.gingold.basisdependency.MainActivity;
 import com.gingold.basisdependency.R;
-import com.gingold.basislibrary.utils.BasisImmerseUtils;
+import com.gingold.basislibrary.utils.BasisDisplayUtils;
 
 /**
  * 启动页
@@ -14,9 +14,9 @@ import com.gingold.basislibrary.utils.BasisImmerseUtils;
 public class SplashActivity extends BaseActivity {
     @Override
     public void setupViewLayout() {
-        BasisImmerseUtils.setFullScreen(mActivity);//全屏
+        BasisDisplayUtils.setFullScreen(mActivity);//全屏
         setContentView(R.layout.activity_splash);
-        postDelayed(new Runnable() {
+       mBasisHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 startActivityAndFinish(MainActivity.class);
@@ -30,12 +30,12 @@ public class SplashActivity extends BaseActivity {
     }
 
     @Override
-    public void listener() {
+    public void initListener() {
 
     }
 
     @Override
-    public void logicDispose() {
+    public void initData() {
 
     }
 

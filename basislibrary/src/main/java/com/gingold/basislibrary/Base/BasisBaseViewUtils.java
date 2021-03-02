@@ -317,98 +317,6 @@ public class BasisBaseViewUtils {
     }
 
     /**
-     * TextView查找并设置监听
-     */
-    @Deprecated
-    public TextView findTextView(int id) {
-        TextView view = getView(id);
-        setClickableTrue(view);
-        return view;
-    }
-
-    /**
-     * EditText查找并设置监听
-     */
-    @Deprecated
-    public EditText findEditText(int id) {
-        EditText view = getView(id);
-        setClickableTrue(view);
-        return view;
-    }
-
-    /**
-     * ImageView查找并设置监听
-     */
-    @Deprecated
-    public ImageView findImageView(int id) {
-        ImageView view = getView(id);
-        setClickableTrue(view);
-        return view;
-    }
-
-    /**
-     * RelativeLayout查找并设置监听
-     */
-    @Deprecated
-    public RelativeLayout findRelativeLayout(int id) {
-        RelativeLayout view = getView(id);
-        setClickableTrue(view);
-        return view;
-    }
-
-    /**
-     * LinearLayout查找并设置监听
-     */
-    @Deprecated
-    public LinearLayout findLinearLayout(int id) {
-        LinearLayout view = getView(id);
-        setClickableTrue(view);
-        return view;
-    }
-
-    /**
-     * Button查找并设置监听
-     */
-    @Deprecated
-    public Button findButton(int id) {
-        Button view = getView(id);
-        setClickableTrue(view);
-        return view;
-    }
-
-    /**
-     * Spinner查找
-     */
-    @Deprecated
-    public Spinner findSpinner(int id) {
-        return getView(id);
-    }
-
-    /**
-     * ListView查找
-     */
-    @Deprecated
-    public ListView findListView(int id) {
-        return getView(id);
-    }
-
-    /**
-     * GridView查找
-     */
-    @Deprecated
-    public GridView findGridView(int id) {
-        return getView(id);
-    }
-
-    /**
-     * RecyclerView查找
-     */
-    @Deprecated
-    //public RecyclerView findRecyclerView(int id) {
-    //    return getView(id);
-    //}
-
-    /**
      * 设置text
      */
     public BasisBaseViewUtils setTVText(String text, TextView... views) {
@@ -425,28 +333,6 @@ public class BasisBaseViewUtils {
         for (int i = 0; i < ids.length; i++) {
             ((TextView) (getView(ids[i]))).setText(text);
         }
-        return this;
-    }
-
-    /**
-     * 设置text
-     * <p>(使用{@link #setTVText(String, int...)} (int)}方法替代)
-     */
-    @Deprecated
-    public BasisBaseViewUtils setTvText(int id, String text) {
-        TextView view = getView(id);
-        view.setText(showStr(text));
-        return this;
-    }
-
-    /**
-     * 设置text
-     * <p>(使用{@link #setTVText(String, int...)} (int)}方法替代)
-     */
-    @Deprecated
-    public BasisBaseViewUtils setEtText(int id, String text) {
-        EditText view = getView(id);
-        view.setText(showStr(text));
         return this;
     }
 

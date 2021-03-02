@@ -10,7 +10,7 @@ import android.widget.LinearLayout;
 
 import com.gingold.basisdependency.R;
 import com.gingold.basislibrary.Base.BasisBaseFragment;
-import com.gingold.basislibrary.utils.BasisImmerseUtils;
+import com.gingold.basislibrary.utils.BasisDisplayUtils;
 import com.gingold.basislibrary.utils.BasisLogUtils;
 
 /**
@@ -31,14 +31,14 @@ public class Test1Fragment extends BasisBaseFragment {
     }
 
     @Override
-    public void listener() {
+    public void initListener() {
 
     }
 
     @Override
-    public void logicDispose() {
+    public void initData() {
         //设置沉浸式布局ll_fragment_test1的paddingtop, 防止显示异常
-        BasisImmerseUtils.setPaddingTop(mActivity, ll_fragment_test1);
+        BasisDisplayUtils.setPaddingTop(mActivity, ll_fragment_test1);
     }
 
     @Override

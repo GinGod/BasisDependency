@@ -24,12 +24,12 @@ public class MultiLvActivity extends BaseActivity {
     }
 
     @Override
-    public void listener() {
+    public void initListener() {
 
     }
 
     @Override
-    public void logicDispose() {
+    public void initData() {
         findGridView(R.id.gv_multilv).setAdapter(new MultiLvAdapter(context, LVRVData.lvrvList));
     }
 

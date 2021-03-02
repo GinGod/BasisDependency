@@ -77,7 +77,7 @@ Basis Dependency By Gingod
 
 #### 部分方法
 - initData  
-在加载视图前对一些常用对象, 如app, mActivity, context,mHandler, gson等进行初始化赋值
+在加载视图前对一些常用对象, 如app, mActivity, context, mHandler等进行初始化赋值
 - ondestory  
 取消注册封装的广播
 - initTitle  

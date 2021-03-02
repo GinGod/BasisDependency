@@ -26,7 +26,6 @@ android {
 dependencies {
     implementation 'androidx.appcompat:appcompat:1.2.0'
 //    implementation "com.google.code.gson:gson:${gsonVersion}" //gson
-    implementation "com.google.code.gson:gson:2.8.6" //gson
 }
 
 //publish {

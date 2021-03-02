@@ -34,12 +34,12 @@ public class DBActivity extends BasisBaseActivity {
     }
 
     @Override
-    public void listener() {
+    public void initListener() {
         setOnClickListener(R.id.tv_db_save, R.id.tv_db_query, R.id.tv_db_delete, R.id.tv_db_deleteAll, R.id.tv_db_update, R.id.tv_db_queryName, R.id.tv_db_queryAll);
     }
 
     @Override
-    public void logicDispose() {
+    public void initData() {
         queryAll(null);
     }
 

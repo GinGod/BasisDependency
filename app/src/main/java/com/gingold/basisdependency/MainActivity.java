@@ -1,5 +1,6 @@
 package com.gingold.basisdependency;
 
+import android.Manifest;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.view.View;
@@ -22,6 +23,9 @@ import com.gingold.basisdependency.data.TestData;
 import com.gingold.basislibrary.adapter.lvgv.BasisLvGvAdapter;
 import com.gingold.basislibrary.adapter.lvgv.BasisLvGvViewHolder;
 import com.gingold.basislibrary.utils.BasisLogUtils;
+import com.orhanobut.logger.Logger;
+
+import pub.devrel.easypermissions.EasyPermissions;
 
 public class MainActivity extends BaseActivity {
 
@@ -34,15 +38,33 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void initView() {
+        initPermission();
     }
 
     @Override
-    public void listener() {
+    public void initListener() {
 
     }
 
+    //申请必要的权限
+    private void initPermission() {
+        String[] perms = {Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO,
+                Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+        boolean isPer = EasyPermissions.hasPermissions(this, perms);
+        if (isPer) {
+
+        } else {
+//            EasyPermissions.requestPermissions(this,
+//                    "Need permissions for camera & microphone & read_external_storage", 0, perms);
+
+            EasyPermissions.requestPermissions(this,
+                    "需要相机和麦克风的权限以及外部存储器的读取权限", 0, perms);
+        }
+        Logger.e(14 % 7 + " " + 15 % 7 + " " + 16 % 7 + " " + 17 % 7 + " " + 18 % 7 + " " + 19 % 7 + " " + 20 % 7);
+    }
+
     @Override
-    public void logicDispose() {
+    public void initData() {
         findListView(R.id.lv_main).setAdapter(new BasisLvGvAdapter<MainData.MainBean>(mActivity, R.layout.item_textview, TestData.mainList) {
             @Override
             protected void initView(final BasisLvGvViewHolder basisViewHolder, final MainData.MainBean data, int position) {

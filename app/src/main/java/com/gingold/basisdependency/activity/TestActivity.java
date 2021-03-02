@@ -75,7 +75,7 @@ public class TestActivity extends BaseActivity {
     }
 
     @Override
-    public void listener() {
+    public void initListener() {
         setOnClickListener(R.id.tv_test_installapk, R.id.tv_test_gson, R.id.tv_test_test);
         et_test_test.setOnKeyListener(new View.OnKeyListener() {
             @Override
@@ -88,7 +88,7 @@ public class TestActivity extends BaseActivity {
     }
 
     @Override
-    public void logicDispose() {
+    public void initData() {
         //箭头旋转向上动画(默认向下)
         mRotateUpAnim = new RotateAnimation(0.0f, -180.0f,
                 Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);

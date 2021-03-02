@@ -47,13 +47,13 @@ public class DialogActivity extends BaseActivity {
     }
 
     @Override
-    public void listener() {
+    public void initListener() {
         setOnClickListener(R.id.tv_dialog_1, R.id.tv_dialog_2, R.id.tv_dialog_3, R.id.tv_dialog_4,
                 R.id.tv_dialog_5, R.id.tv_dialog_6, R.id.tv_dialog_7, R.id.tv_dialog_8);
     }
 
     @Override
-    public void logicDispose() {
+    public void initData() {
 
     }
 

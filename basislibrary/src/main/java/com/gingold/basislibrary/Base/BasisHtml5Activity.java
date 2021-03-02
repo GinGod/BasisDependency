@@ -20,10 +20,12 @@ import android.widget.LinearLayout;
 import androidx.annotation.RequiresApi;
 
 /**
- * BasisHtml5Activity
+ * BasisHtml5Activity(后续废弃)
+ *
+ * @author
  */
 
-public abstract class BasisHtml5Activity extends BasisBaseActivity {
+public abstract class BasisHtml5Activity extends BasisMultiMethodActivity {
     public String mHomeUrl = "http://www.baidu.com";//测试主页
     public WebView mWebView;//webView
     public float mNewScale = 1;//缩放比列, 默认为 1
