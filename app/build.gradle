@@ -54,8 +54,8 @@ dependencies {
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.4'
     implementation 'com.jakewharton:butterknife:10.2.3'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.3'
-    implementation project(':basislibrary')
-//    implementation 'com.github.GinGod:BasisDependency:v1.1.5'
+//    implementation project(':basislibrary')
+    implementation 'com.github.GinGod:BasisDependency:v1.1.6'
     //    compile 'com.github.GinGod:BasisDependency:v1.0.3'
     //    compile 'com.gingod:BasisDependency:1.0.0'
 }
