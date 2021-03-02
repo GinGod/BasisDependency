@@ -214,4 +214,37 @@ public abstract class BasisBaseFragment extends Fragment implements OnClickListe
      */
     public void onClick(int id) {
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (getUserVisibleHint()) {
+            onVisible();
+        }
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+
+        if (getUserVisibleHint() && isResumed()) {
+            onVisible();
+        } else {
+            onInvisible();
+        }
+    }
+
+    /**
+     * Fragment显示
+     */
+    public void onVisible() {
+
+    }
+
+    /**
+     * Fragment隐藏
+     */
+    public void onInvisible() {
+
+    }
 }
